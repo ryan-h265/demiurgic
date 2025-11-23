@@ -188,6 +188,10 @@ Examples:
     parser.add_argument('--seed', type=int, default=42,
                         help='Random seed')
 
+    # Tokenizer
+    parser.add_argument('--tokenizer', type=str, default='gpt2',
+                        help='Tokenizer name or path (use your trained tokenizer to match the data)')
+
     args = parser.parse_args()
 
     # Validate
@@ -242,12 +246,11 @@ Examples:
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(config.seed)
 
-    # Load tokenizer
-    # For now, use a standard tokenizer
-    # TODO: Train custom tokenizer for code
+    # Load tokenizer (path or model name)
     print("\nLoading tokenizer...")
-    tokenizer = AutoTokenizer.from_pretrained('gpt2')
-    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
 
     # Load student model
     print(f"\nLoading student model from {args.student_config}...")

@@ -18,12 +18,14 @@ from .model import (
     DemiurgicForCausalLM,
     DemiurgicPreTrainedModel,
 )
+from .generation_config import GenerationConfig
 
 __all__ = [
     "DemiurgicConfig",
     "DemiurgicModel",
     "DemiurgicForCausalLM",
     "DemiurgicPreTrainedModel",
+    "GenerationConfig",
     "get_100m_config",
     "get_350m_config",
     "get_1b_config",

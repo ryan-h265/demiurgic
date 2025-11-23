@@ -1,0 +1,10 @@
+{
+  "additional_special_tokens": [
+    "<|fim_prefix|>",
+    "<|fim_middle|>",
+    "<|fim_suffix|>"
+  ],
+  "bos_token": "<|bos|>",
+  "eos_token": "<|eos|>",
+  "pad_token": "<|pad|>"
+}

@@ -12,6 +12,16 @@ source venv/bin/activate
 python scripts/test_distillation_trainer.py
 ```
 
+### (Optional) Train a code-focused tokenizer
+
+```bash
+python scripts/train_tokenizer.py \
+  --input data/distillation/train.jsonl data/distillation/dev.jsonl \
+  --output-dir tokenizers/code-50k
+```
+
+Use `--tokenizer tokenizers/code-50k` in the training command below to align vocab with your data.
+
 ## Three Simple Steps
 
 ### Step 1: Generate Training Data (~6 hours, $1000-1500)
@@ -45,10 +55,13 @@ python scripts/train_with_distillation.py \
     --distillation-type output \
     --train-data data/distillation/train.jsonl \
     --student-config configs/model/100m_laptop.json \
+    --tokenizer tokenizers/code-50k \
     --batch-size 8 \
     --gradient-accumulation-steps 4 \
     --max-steps 50000 \
     --output-dir checkpoints/100m
+
+# If you skip training a tokenizer, drop the --tokenizer flag to use gpt2.
 
 # Time: ~24-48 hours on laptop
 # Result: 100M parameter model

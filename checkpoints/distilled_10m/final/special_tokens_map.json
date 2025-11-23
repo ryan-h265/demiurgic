@@ -1,0 +1,28 @@
+{
+  "additional_special_tokens": [
+    "<|fim_prefix|>",
+    "<|fim_middle|>",
+    "<|fim_suffix|>"
+  ],
+  "bos_token": {
+    "content": "<|bos|>",
+    "lstrip": false,
+    "normalized": false,
+    "rstrip": false,
+    "single_word": false
+  },
+  "eos_token": {
+    "content": "<|eos|>",
+    "lstrip": false,
+    "normalized": false,
+    "rstrip": false,
+    "single_word": false
+  },
+  "pad_token": {
+    "content": "<|pad|>",
+    "lstrip": false,
+    "normalized": false,
+    "rstrip": false,
+    "single_word": false
+  }
+}
