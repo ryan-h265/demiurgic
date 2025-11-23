@@ -1,0 +1,13 @@
+plaintext
+```text
+Topological sort produces an ordering of directed acyclic graph nodes where every edge (u -> v) places u before v.
+```
+**Explanation:** Kahn’s algorithm repeatedly removes zero-indegree nodes, while DFS-based approaches post-order nodes; both detect cycles when all nodes cannot be ordered. A cycle means no valid topological order.
+**Complexity:** Time: O(V + E); Space: O(V + E) for adjacency, indegrees/stack.
+**Example:**
+Input: edges = [(0,1),(1,2)]
+Output: [0,1,2]
+**Notes:**
+- Presence of a cycle leaves nodes with nonzero indegree (Kahn) or revisits on DFS; report error.
+- Multiple valid orders may exist depending on edge structure.
+- Useful for scheduling tasks with dependencies or resolving build orders.

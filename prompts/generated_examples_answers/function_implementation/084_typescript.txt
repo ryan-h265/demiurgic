@@ -1,0 +1,24 @@
+typescript
+```typescript
+import * as fs from 'fs';
+import { ReadStream } from 'fs';
+
+// Stream a file in chunks, invoking a handler per chunk with error handling.
+export function streamFile(path: string, onChunk: (chunk: Buffer) => void): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const stream: ReadStream = fs.createReadStream(path);
+    stream.on('data', onChunk);
+    stream.on('error', reject);
+    stream.on('end', resolve);
+  });
+}
+```
+**Explanation:** Uses Node’s `createReadStream` to read the file incrementally. Attaches listeners for data, error, and end events, exposing a promise that resolves when streaming finishes or rejects on errors.
+**Complexity:** Time: O(file_size); Space: O(chunk_size) buffered by the stream.
+**Example:**
+Input: `await streamFile('large.log', (c) => console.log(c.length))`
+Output: Logs chunk sizes until EOF
+**Notes:**
+- Pass `highWaterMark` in `createReadStream` options to tune chunk size.
+- Ensure the handler is fast; otherwise, pause/resume the stream to apply backpressure.
+- Wrap in try/catch when awaiting to surface errors.

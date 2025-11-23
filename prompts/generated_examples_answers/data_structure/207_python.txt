@@ -1,0 +1,40 @@
+python
+```python
+import heapq
+from typing import List, Tuple
+
+class BoundedPriorityQueue:
+    def __init__(self, capacity: int):
+        if capacity <= 0:
+            raise ValueError("capacity must be positive")
+        self.capacity = capacity
+        self.heap: List[Tuple[int, object]] = []  # (priority, item)
+
+    def push(self, priority: int, item: object) -> None:
+        if len(self.heap) < self.capacity:
+            heapq.heappush(self.heap, (priority, item))
+        else:
+            # Evict the lowest priority if new priority is higher
+            if priority > self.heap[0][0]:
+                heapq.heapreplace(self.heap, (priority, item))
+            # else drop the new item silently
+
+    def pop(self):
+        if not self.heap:
+            raise IndexError("pop from empty priority queue")
+        return heapq.heappop(self.heap)
+
+    def peek(self):
+        if not self.heap:
+            raise IndexError("peek from empty priority queue")
+        return self.heap[0]
+```
+**Explanation:** Maintains a min-heap with fixed capacity. New items are pushed until full; once full, only items with priority higher than the current minimum replace it, keeping the top-k highest priorities.
+**Complexity:** Time: O(log k) for push/pop; Space: O(k) where k = capacity.
+**Example:**
+Input: capacity=2; push(1,'a'); push(5,'b'); push(3,'c')
+Output: queue retains (3,'c') and (5,'b'), dropping (1,'a')
+**Notes:**
+- Change the replacement rule if you want to always drop new items on full instead.
+- For max-heap semantics, invert priorities.
+- No wrap-around indexes needed; capacity enforced via heap size.

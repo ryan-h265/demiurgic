@@ -1,0 +1,29 @@
+c++
+```cpp
+#include <string>
+#include <vector>
+
+int longestCommonSubstring(const std::string& a, const std::string& b) {
+    int m = a.size(), n = b.size();
+    std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));
+    int best = 0;
+    for (int i = 1; i <= m; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            if (a[i - 1] == b[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                best = std::max(best, dp[i][j]);
+            }
+        }
+    }
+    return best;
+}
+```
+**Explanation:** Uses dynamic programming where `dp[i][j]` stores the length of the longest common suffix ending at `a[i-1]` and `b[j-1]`. Matching characters extend the previous diagonal; non-matches leave the cell at 0. Track the maximum seen.
+**Complexity:** Time: O(mn); Space: O(mn) (reduce to O(n) with rolling rows).
+**Example:**
+Input: a="abcdxyz", b="xyzabcd"
+Output: 4 ("abcd")
+**Notes:**
+- For memory savings, keep only two rows.
+- Substring requires contiguity; for subsequence use a different DP.
+- Returns length; to retrieve the substring, store the end position when updating `best`.

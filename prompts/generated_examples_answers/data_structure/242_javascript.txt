@@ -1,0 +1,48 @@
+javascript
+```javascript
+class TrieNode {
+  constructor() {
+    this.children = new Map();
+    this.end = false;
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode();
+  }
+  insert(word) {
+    let node = this.root;
+    for (const ch of word) {
+      if (!node.children.has(ch)) node.children.set(ch, new TrieNode());
+      node = node.children.get(ch);
+    }
+    node.end = true;
+  }
+  search(word) {
+    let node = this.root;
+    for (const ch of word) {
+      if (!node.children.has(ch)) return false;
+      node = node.children.get(ch);
+    }
+    return node.end;
+  }
+  startsWith(prefix) {
+    let node = this.root;
+    for (const ch of prefix) {
+      if (!node.children.has(ch)) return false;
+      node = node.children.get(ch);
+    }
+    return true;
+  }
+}
+```
+**Explanation:** Each node holds a map of children and an end-of-word flag. Insertion walks/creates nodes for each character; search follows the path and returns true only if the end flag is set; `startsWith` checks prefix existence regardless of the end flag.
+**Complexity:** Time: O(L) per insert/search; Space: O(total characters stored).
+**Example:**
+Input: insert('car'), search('car'), startsWith('ca')
+Output: true, true
+**Notes:**
+- Case-sensitive; normalize input if needed.
+- For deletion, unset end and prune childless nodes.
+- Replace Map with array indexed by character for fixed alphabets to improve speed.

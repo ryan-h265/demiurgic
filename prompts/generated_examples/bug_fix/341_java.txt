@@ -1,0 +1,11 @@
+Category: bug_fix
+Language: java
+
+============================================================
+
+Find and fix the bug in this Java code:
+for i in range(len(nums)):
+    if nums[i] == target:
+        return i
+    return -1
+The code should not go out of bounds

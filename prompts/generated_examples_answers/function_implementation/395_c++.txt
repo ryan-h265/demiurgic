@@ -1,0 +1,26 @@
+c++
+```cpp
+#include <vector>
+#include <string>
+
+struct Record { std::string msg; int level; };
+
+// Append a suffix to messages of all records
+std::vector<Record> processRecords(const std::vector<Record>& records, const std::string& suffix) {
+    std::vector<Record> out;
+    out.reserve(records.size());
+    for (const auto& r : records) {
+        out.push_back(Record{r.msg + suffix, r.level});
+    }
+    return out;
+}
+```
+**Explanation:** Processes an array of objects (records) by copying them and appending a suffix to each message field, returning the transformed array.
+**Complexity:** Time: O(n * m) where m is avg message length; Space: O(n) for the output.
+**Example:**
+Input: [{msg:"hi", level:1}], suffix="!"
+Output: [{msg:"hi!", level:1}]
+**Notes:**
+- Adjust transformation to meet your domain needs (filtering, normalization, etc.).
+- Reserve space to avoid reallocations.
+- Keep immutable input; modify in place if allowed.

@@ -1,0 +1,23 @@
+c++
+```cpp
+long long fib(int n) {
+    if (n < 0) throw std::invalid_argument("n must be non-negative");
+    if (n == 0) return 0;
+    long long a = 0, b = 1;
+    for (int i = 2; i <= n; ++i) {
+        long long next = a + b;
+        a = b;
+        b = next;
+    }
+    return b;
+}
+```
+**Explanation:** Iteratively computes Fibonacci numbers with two accumulators, handling the base case n=0. Avoids recursion depth and recomputation.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: fib(7)
+Output: 13
+**Notes:**
+- For very large n, `long long` may overflow; use big integer libraries if needed.
+- Returns 1 for n=1 as per standard sequence.
+- Validate input to keep the function well-defined.

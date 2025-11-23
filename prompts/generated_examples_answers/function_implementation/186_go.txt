@@ -1,0 +1,27 @@
+go
+```go
+package main
+
+// GCD computes the greatest common divisor using the Euclidean algorithm.
+func GCD(a, b int) int {
+	if a < 0 {
+		a = -a
+	}
+	if b < 0 {
+		b = -b
+	}
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+```
+**Explanation:** Iteratively applies Euclid’s algorithm, replacing (a, b) with (b, a % b) until b is zero; the remaining a is the GCD. Handles negative inputs by taking absolute values.
+**Complexity:** Time: O(log min(a, b)); Space: O(1).
+**Example:**
+Input: GCD(54, 24)
+Output: 6
+**Notes:**
+- If both inputs are zero, result is zero; define behavior explicitly if needed.
+- Use `uint` if only non-negative inputs are expected.
+- Extend to compute LCM via `abs(a*b)/gcd(a,b)` with overflow checks.

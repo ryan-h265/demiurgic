@@ -1,0 +1,28 @@
+java
+```java
+public class LinkedListCycle {
+    static class ListNode {
+        int val; ListNode next;
+        ListNode(int v) { val = v; }
+    }
+
+    public static boolean hasCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) return true;
+        }
+        return false;
+    }
+}
+```
+**Explanation:** Floyd’s tortoise-hare algorithm advances `fast` two steps and `slow` one; if a cycle exists, they eventually meet. Reaching the end (`fast == null` or `fast.next == null`) implies no cycle.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> 2 (cycle)
+Output: true
+**Notes:**
+- To find the cycle start, reset one pointer to head after meeting and move both one step until they meet again.
+- Works for empty and single-node lists (returns false).
+- Avoid modifying list structure during detection.

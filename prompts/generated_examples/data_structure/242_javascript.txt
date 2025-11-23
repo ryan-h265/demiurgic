@@ -1,0 +1,6 @@
+Category: data_structure
+Language: javascript
+
+============================================================
+
+Implement a trie in JavaScript with all basic operations

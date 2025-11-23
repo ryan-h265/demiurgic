@@ -1,0 +1,41 @@
+java
+```java
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+public class LoggingExample {
+    private static final Logger LOGGER = Logger.getLogger(LoggingExample.class.getName());
+
+    static {
+        ConsoleHandler handler = new ConsoleHandler();
+        handler.setFormatter(new SimpleFormatter());
+        handler.setLevel(Level.INFO);
+        LOGGER.addHandler(handler);
+        LOGGER.setUseParentHandlers(false);
+        LOGGER.setLevel(Level.INFO);
+    }
+
+    public static void doWork() {
+        LOGGER.info("Starting work");
+        try {
+            // business logic here
+            LOGGER.fine("Detailed debug message");
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Unexpected error", ex);
+        } finally {
+            LOGGER.info("Finished work");
+        }
+    }
+}
+```
+**Explanation:** Configures a `Logger` with a console handler and simple formatter, sets log levels, and uses it to emit info/debug/error messages around a unit of work. Disables parent handlers to prevent duplicate logging.
+**Complexity:** Time: O(1) per log call (ignoring I/O); Space: O(1).
+**Example:**
+Input: call `LoggingExample.doWork()`
+Output: Console logs such as "INFO: Starting work" and "INFO: Finished work"
+**Notes:**
+- Adjust handler levels and add file handlers for persistent logs.
+- In larger apps, prefer SLF4J + Logback/Log4j2 for richer configuration.
+- Avoid expensive string concatenation by using parameterized logging or guards around debug statements.

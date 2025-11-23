@@ -1,0 +1,6 @@
+Category: algorithm
+Language: rust
+
+============================================================
+
+Implement dynamic programming for coin change in Rust with detailed comments

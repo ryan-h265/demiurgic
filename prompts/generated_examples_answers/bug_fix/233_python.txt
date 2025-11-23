@@ -1,0 +1,26 @@
+python
+```python
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def has_cycle(head: ListNode) -> bool:
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+**Explanation:** Replaces unsafe `head.next.next` traversal with Floyd’s cycle detection that checks `fast` and `fast.next` before advancing two steps. Returns a boolean indicating presence of a cycle, covering empty or single-node lists safely.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> 2
+Output: True
+**Notes:**
+- Handles n=0 without throwing.
+- To find the cycle start, reset one pointer to head after detection and move both one step at a time.
+- Leaves the list unmodified.

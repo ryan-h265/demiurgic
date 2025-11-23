@@ -1,0 +1,27 @@
+java
+```java
+import java.util.regex.Pattern;
+
+public class InputValidator {
+    private static final Pattern EMAIL = Pattern.compile("^[\\w.+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+
+    public static boolean validateEmail(String s) {
+        return s != null && EMAIL.matcher(s.trim()).matches();
+    }
+
+    public static boolean validateLength(String s, int min, int max) {
+        if (s == null) return false;
+        int len = s.trim().length();
+        return len >= min && len <= max;
+    }
+}
+```
+**Explanation:** Provides reusable validation helpers: email pattern check and length bounds. Strings are trimmed before evaluation to avoid spurious whitespace issues.
+**Complexity:** Time: O(n) for regex/length; Space: O(1).
+**Example:**
+Input: validateEmail(" user@example.com ")
+Output: true
+**Notes:**
+- Add domain-specific rules (blocked words, profanity) as needed.
+- Prefer `Pattern` reuse to avoid recompilation costs.
+- Throw descriptive exceptions instead of booleans if you need error messages.

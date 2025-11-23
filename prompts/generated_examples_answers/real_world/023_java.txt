@@ -1,0 +1,53 @@
+java
+```java
+import java.util.Scanner;
+
+public class CliTool {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            printHelp();
+            return;
+        }
+        String cmd = args[0];
+        switch (cmd) {
+            case "greet" -> greet(args);
+            case "sum" -> sum(args);
+            default -> {
+                System.err.println("Unknown command: " + cmd);
+                printHelp();
+            }
+        }
+    }
+
+    private static void greet(String[] args) {
+        if (args.length < 2) {
+            System.err.println("Usage: greet <name>");
+            return;
+        }
+        System.out.println("Hello, " + args[1] + "!");
+    }
+
+    private static void sum(String[] args) {
+        if (args.length < 3) {
+            System.err.println("Usage: sum <a> <b>");
+            return;
+        }
+        int a = Integer.parseInt(args[1]);
+        int b = Integer.parseInt(args[2]);
+        System.out.println(a + b);
+    }
+
+    private static void printHelp() {
+        System.out.println("Commands: greet <name> | sum <a> <b>");
+    }
+}
+```
+**Explanation:** Simple Java CLI: first argument selects a subcommand (`greet` or `sum`), subsequent arguments are parsed per command. Errors print usage hints.
+**Complexity:** Time: O(1); Space: O(1).
+**Example:**
+Input: `java CliTool sum 2 5`
+Output: `7`
+**Notes:**
+- For richer CLIs, use libraries like picocli or Commons CLI.
+- Validate number parsing to handle `NumberFormatException` gracefully.
+- Extend `switch` with more subcommands as needed.

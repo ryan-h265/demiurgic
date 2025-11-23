@@ -1,0 +1,13 @@
+plaintext
+```text
+DFS explores a branch as deep as possible before backtracking; BFS explores neighbors level by level using a queue.
+```
+**Explanation:** On a graph with V vertices and E edges, both traverse each edge and vertex at most once. DFS uses a stack (explicit or recursion) to dive deep; BFS uses a queue to fan out by distance from the start.
+**Complexity:** Time: O(V + E) for both; Space: O(V) for visited plus O(V) recursion stack for DFS or queue for BFS.
+**Example:**
+Input: graph = {0:[1,2], 1:[3], 2:[3], 3:[]}, start = 0
+Output DFS order: [0,1,3,2]; BFS order: [0,1,2,3]
+**Notes:**
+- BFS finds shortest paths in unweighted graphs; DFS does not guarantee shortest routes.
+- Recursive DFS may overflow on very deep graphs; use an explicit stack if needed.
+- Space dominates when the frontier (BFS) or recursion depth (DFS) grows to O(V).

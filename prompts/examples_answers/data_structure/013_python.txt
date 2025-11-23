@@ -1,0 +1,32 @@
+python
+```python
+from collections import defaultdict
+from typing import Dict, List
+
+
+class Graph:
+    def __init__(self) -> None:
+        # adjacency list: node -> list of neighbors
+        self.adj: Dict[str, List[str]] = defaultdict(list)
+
+    def add_edge(self, u: str, v: str, bidirectional: bool = False) -> None:
+        """Add an edge u->v; optionally add v->u."""
+        self.adj[u].append(v)
+        if bidirectional:
+            self.adj[v].append(u)
+
+    def neighbors(self, node: str) -> List[str]:
+        return list(self.adj.get(node, []))
+
+    def has_edge(self, u: str, v: str) -> bool:
+        return v in self.adj.get(u, [])
+```
+**Explanation:** Store the graph as a `defaultdict` of adjacency lists for O(1) insertion and average O(deg) neighbor lookup. `add_edge` appends to the source's list and can optionally add the reverse edge for undirected graphs. Helper methods expose neighbor retrieval and edge existence checks.
+**Complexity:** Time: O(1) average for insertion, O(deg(v)) to list neighbors; Space: O(V + E).
+**Example:**
+Input: add_edge('A','B'), add_edge('B','C', bidirectional=True)
+Output: neighbors('B') -> ['C', 'A']
+**Notes:**
+- Use sets instead of lists if you want O(1) edge existence checks and no duplicates.
+- Node identifiers are strings here but can be any hashable type.
+- Extend with weight maps (dict of neighbor -> weight) for weighted graphs.

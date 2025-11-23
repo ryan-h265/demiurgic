@@ -1,0 +1,20 @@
+python
+```python
+def factorial(n: int) -> int:
+    """Return n! for n >= 0."""
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+```
+**Explanation:** Validate input, then multiply integers from 2 through n into an accumulator. This computes factorial iteratively, avoiding recursion overhead.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 4
+Output: 24
+**Notes:**
+- Returns 1 for n = 0 as defined by factorial.
+- Python's big integers grow quickly; consider limiting n for user input.
+- For repeated calls, memoize results to avoid recomputation.

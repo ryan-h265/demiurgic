@@ -1,0 +1,19 @@
+c++
+```cpp
+#include <vector>
+
+long long sumList(const std::vector<int>& nums) {
+    long long total = 0;
+    for (int v : nums) total += v;
+    return total;
+}
+```
+**Explanation:** Iterates through the list and accumulates the sum in a 64-bit accumulator.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [1,2,3]
+Output: 6
+**Notes:**
+- Use `std::accumulate` for brevity.
+- Switch to a larger type or arbitrary-precision if overflow is a concern.
+- Extend to compute min/max/average as needed.

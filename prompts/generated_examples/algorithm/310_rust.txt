@@ -1,0 +1,6 @@
+Category: algorithm
+Language: rust
+
+============================================================
+
+Implement topological sort with cycle detection in Rust with detailed comments

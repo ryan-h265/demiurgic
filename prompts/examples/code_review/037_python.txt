@@ -1,0 +1,19 @@
+Category: code_review
+Language: python
+
+============================================================
+
+Review this Python code and suggest improvements for best practices:
+```python
+def process_data(data):
+    try:
+        result = []
+        for item in data:
+            result.append(item * 2)
+        return result
+    except:
+        return None
+
+def calculate(x, y):
+    return x / y
+```

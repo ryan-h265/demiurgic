@@ -1,0 +1,29 @@
+python
+```python
+import heapq
+from typing import List
+
+def k_way_merge(lists: List[List[int]]) -> List[int]:
+    """Merge k sorted lists into one sorted list using a min-heap."""
+    heap = []
+    result: List[int] = []
+    for i, arr in enumerate(lists):
+        if arr:
+            heapq.heappush(heap, (arr[0], i, 0))
+    while heap:
+        val, li, idx = heapq.heappop(heap)
+        result.append(val)
+        nxt = idx + 1
+        if nxt < len(lists[li]):
+            heapq.heappush(heap, (lists[li][nxt], li, nxt))
+    return result
+```
+**Explanation:** Initializes a min-heap with the first element of each list and repeatedly pops the smallest, pushing the next element from that list. This maintains the overall sorted order across all lists.
+**Complexity:** Time: O(N log k) where N is total elements and k is number of lists; Space: O(k) for the heap plus output.
+**Example:**
+Input: [[1,4],[2,3],[0,5]]
+Output: [0,1,2,3,4,5]
+**Notes:**
+- Handles empty lists gracefully.
+- For custom ordering, store comparator keys accordingly.
+- Keep tuples small to minimize heap overhead.

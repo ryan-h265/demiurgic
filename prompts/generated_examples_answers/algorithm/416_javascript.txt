@@ -1,0 +1,26 @@
+javascript
+```javascript
+function ListNode(val, next = null) {
+  this.val = val;
+  this.next = next;
+}
+
+function hasCycle(head) {
+  let slow = head, fast = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) return true;
+  }
+  return false;
+}
+```
+**Explanation:** Uses Floyd’s tortoise-hare pointers; if the fast pointer laps the slow one, a cycle exists. Terminates when reaching list end (no cycle).
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> 2
+Output: true
+**Notes:**
+- Handles empty/one-node lists safely.
+- To locate the cycle entry, reset one pointer to head after detection and step both one node at a time.
+- Leaves the list structure unchanged.

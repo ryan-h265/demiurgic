@@ -1,0 +1,34 @@
+javascript
+```javascript
+class Graph {
+  constructor() {
+    this.adj = new Map();
+    this.minEdge = null;
+    this.maxEdge = null;
+  }
+  addEdge(u, v, weight = 0, bidirectional = false) {
+    if (!this.adj.has(u)) this.adj.set(u, []);
+    this.adj.get(u).push({ v, weight });
+    if (bidirectional) {
+      if (!this.adj.has(v)) this.adj.set(v, []);
+      this.adj.get(v).push({ v: u, weight });
+    }
+    if (this.minEdge === null || weight < this.minEdge.weight) this.minEdge = { u, v, weight };
+    if (this.maxEdge === null || weight > this.maxEdge.weight) this.maxEdge = { u, v, weight };
+  }
+  neighbors(u) {
+    return this.adj.get(u) || [];
+  }
+  getMinEdge() { return this.minEdge; }
+  getMaxEdge() { return this.maxEdge; }
+}
+```
+**Explanation:** Adjacency-list graph with O(1) access to current min/max edge weights by tracking them on insertion. Supports optional bidirectional edges and neighbor retrieval.
+**Complexity:** Time: O(1) average for insert/lookup; Space: O(V + E).
+**Example:**
+Input: addEdge('A','B',5); addEdge('B','C',2)
+Output: getMinEdge() -> {u:'B', v:'C', weight:2}
+**Notes:**
+- For deletions, recompute min/max or maintain heaps.
+- Unweighted graphs can ignore weight/min/max fields.
+- Ensure vertices exist before querying neighbors to avoid undefined.

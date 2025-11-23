@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: java
+
+============================================================
+
+Implement a Java function to validate given a list of numbers

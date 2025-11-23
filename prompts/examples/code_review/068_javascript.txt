@@ -1,0 +1,14 @@
+Category: code_review
+Language: javascript
+
+============================================================
+
+Review this JavaScript code and suggest improvements for readability:
+```javascript
+function p(d){let r=[];for(let i=0;i<d.length;i++){if(d[i].s>100&&d[i].a){
+r.push({n:d[i].n,v:d[i].s*0.9,t:d[i].t||'default'})}}return r.sort((a,b)=>
+b.v-a.v).slice(0,10).map(x=>({name:x.n,value:x.v,type:x.t}))}
+
+const x=p(getData());
+console.log(x);
+```

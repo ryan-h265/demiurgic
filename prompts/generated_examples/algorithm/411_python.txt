@@ -1,0 +1,6 @@
+Category: algorithm
+Language: python
+
+============================================================
+
+Write Python code to solve: Count islands in a grid

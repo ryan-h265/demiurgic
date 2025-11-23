@@ -1,0 +1,42 @@
+python
+```python
+from typing import List
+
+class SegmentTree:
+    """Iterative segment tree for range sum queries and point updates."""
+    def __init__(self, nums: List[int]):
+        self.n = len(nums)
+        self.tree = [0] * (2 * self.n)
+        # build leaves
+        self.tree[self.n:] = nums[:]
+        # build parents
+        for i in range(self.n - 1, 0, -1):
+            self.tree[i] = self.tree[2 * i] + self.tree[2 * i + 1]
+
+    def update(self, idx: int, val: int) -> None:
+        i = idx + self.n
+        self.tree[i] = val
+        while i > 1:
+            i //= 2
+            self.tree[i] = self.tree[2 * i] + self.tree[2 * i + 1]
+
+    def query(self, l: int, r: int) -> int:
+        l += self.n; r += self.n
+        res = 0
+        while l <= r:
+            if l % 2 == 1:
+                res += self.tree[l]; l += 1
+            if r % 2 == 0:
+                res += self.tree[r]; r -= 1
+            l //= 2; r //= 2
+        return res
+```
+**Explanation:** Stores the tree in a flat array. Leaves start at index `n`; parents are sums of children. `update` rewrites a leaf and walks up to refresh sums. `query` uses two pointers to accumulate contributions while climbing toward the root.
+**Complexity:** Time: O(log n) for update/query; Space: O(n).
+**Example:**
+Input: nums=[1,3,5], query(0,2)
+Output: 9
+**Notes:**
+- Change the merge operation for min/max or other associative functions.
+- Ensure 0 <= idx,l,r < n; r is inclusive here.
+- For immutable updates, build new trees or use a persistent segment tree.

@@ -1,0 +1,26 @@
+rust
+```rust
+/// Compute minimum coins to make up `amount` using unlimited coins via DP.
+pub fn coin_change(coins: &[i32], amount: i32) -> i32 {
+    let mut dp = vec![amount + 1; (amount + 1) as usize];
+    dp[0] = 0;
+    for &coin in coins {
+        for a in coin..=amount {
+            let idx = a as usize;
+            let prev = (a - coin) as usize;
+            dp[idx] = dp[idx].min(dp[prev] + 1);
+        }
+    }
+    let ans = dp[amount as usize];
+    if ans > amount { -1 } else { ans }
+}
+```
+**Explanation:** Bottom-up dynamic programming where `dp[a]` stores the minimum coins to form amount `a`. Initialize unreachable states to a sentinel (`amount+1`), iterate coins and update amounts from coin value upward (unbounded knapsack). If the final state remains sentinel, return -1 to signal impossibility.
+**Complexity:** Time: O(amount * |coins|); Space: O(amount).
+**Example:**
+Input: coins = [1, 2, 5], amount = 11
+Output: 3 (5 + 5 + 1)
+**Notes:**
+- Assumes non-negative coin values and amount.
+- For large `amount`, consider early exits when `dp[a]` stops changing.
+- To reconstruct which coins were used, track a parent array alongside `dp`.

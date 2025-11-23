@@ -1,0 +1,36 @@
+rust
+```rust
+pub fn quicksort(arr: &mut [i32]) {
+    if arr.len() <= 1 {
+        return;
+    }
+    let pivot_index = partition(arr);
+    let (left, right) = arr.split_at_mut(pivot_index);
+    quicksort(left);
+    quicksort(&mut right[1..]); // skip pivot in right half
+}
+
+fn partition(arr: &mut [i32]) -> usize {
+    let len = arr.len();
+    let pivot_index = len - 1;
+    let pivot = arr[pivot_index];
+    let mut store = 0;
+    for i in 0..pivot_index {
+        if arr[i] <= pivot {
+            arr.swap(i, store);
+            store += 1;
+        }
+    }
+    arr.swap(store, pivot_index);
+    store
+}
+```
+**Explanation:** Choose the last element as pivot, partition the slice so elements <= pivot move left, then recursively quicksort the left and right partitions. Splitting the mutable slice avoids extra allocations.
+**Complexity:** Time: O(n log n) average, O(n²) worst-case when pivots are poor; Space: O(log n) for recursion stack.
+**Example:**
+Input: [3, 1, 4, 1, 5]
+Output: [1, 1, 3, 4, 5]
+**Notes:**
+- Pivot choice affects performance; randomizing pivot reduces worst-case likelihood.
+- Recursion depth may hit stack limits for large degenerate inputs; tail-call elimination is not guaranteed.
+- For large arrays, switch to insertion sort for small partitions to improve constants.

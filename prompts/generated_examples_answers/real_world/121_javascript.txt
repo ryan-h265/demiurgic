@@ -1,0 +1,20 @@
+javascript
+```javascript
+export function validateInput(value, { min = 1, max = 100, pattern } = {}) {
+  if (typeof value !== 'string') return { valid: false, error: 'must be a string' };
+  const trimmed = value.trim();
+  if (trimmed.length < min) return { valid: false, error: `min length ${min}` };
+  if (trimmed.length > max) return { valid: false, error: `max length ${max}` };
+  if (pattern && !pattern.test(trimmed)) return { valid: false, error: 'pattern mismatch' };
+  return { valid: true, value: trimmed };
+}
+```
+**Explanation:** Normalizes the input by trimming, enforces length bounds, and optionally checks a regex. Returns a result object with validity and either the cleaned value or an error message.
+**Complexity:** Time: O(n) for length/pattern checks; Space: O(1).
+**Example:**
+Input: validateInput(" user@example.com ", { pattern: /^[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/ })
+Output: { valid: true, value: 'user@example.com' }
+**Notes:**
+- Expand with domain-specific checks (blocked words, profanity, etc.).
+- Run validation on both client and server to maintain integrity.
+- Provide field-specific defaults for min/max as needed.

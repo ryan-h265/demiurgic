@@ -1,0 +1,38 @@
+java
+```java
+import java.util.*;
+
+public class BreadthFirstSearch {
+    /**
+     * Return BFS traversal order from start on an adjacency-list graph.
+     */
+    public static List<Integer> bfs(List<List<Integer>> graph, int start) {
+        List<Integer> order = new ArrayList<>();
+        if (start < 0 || start >= graph.size()) return order;
+        boolean[] visited = new boolean[graph.size()];
+        Queue<Integer> q = new ArrayDeque<>();
+        visited[start] = true;
+        q.add(start);
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            order.add(node);
+            for (int nei : graph.get(node)) {
+                if (!visited[nei]) {
+                    visited[nei] = true;
+                    q.add(nei);
+                }
+            }
+        }
+        return order;
+    }
+}
+```
+**Explanation:** Typical BFS with a queue and visited array. Start node enqueued and marked; pop nodes in FIFO order, visit neighbors, mark them, and enqueue to explore by layers.
+**Complexity:** Time: O(V + E); Space: O(V) for visited and queue.
+**Example:**
+Input: graph=[[1,2],[3],[3],[]], start=0
+Output: [0,1,2,3]
+**Notes:**
+- Bounds-check start to avoid exceptions.
+- For shortest paths in unweighted graphs, store parent pointers alongside visited.
+- Works for directed or undirected graphs depending on adjacency input.

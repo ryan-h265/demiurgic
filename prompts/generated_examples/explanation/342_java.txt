@@ -1,0 +1,7 @@
+Category: explanation
+Language: java
+
+============================================================
+
+Explain what this Java code does and how it works:
+[x for x in range(100) if x % 3 == 0 and x % 5 == 0]

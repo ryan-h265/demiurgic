@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: javascript
+
+============================================================
+
+Create a JavaScript utility that debounces an async function call with proper error handling

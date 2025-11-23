@@ -1,0 +1,26 @@
+python
+```python
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def has_cycle_safe(head: ListNode) -> bool:
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+**Explanation:** Replaces the unsafe pointer jumping with Floyd's cycle detection, advancing `fast` two steps only when `fast` and `fast.next` are non-null to avoid out-of-bounds.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> (back to 2)
+Output: True
+**Notes:**
+- Works for empty and single-node lists without throwing.
+- If you just need to check for null next, guard before `next.next` access as shown.
+- To find the cycle start, reset one pointer to head after detection and advance both one step at a time.

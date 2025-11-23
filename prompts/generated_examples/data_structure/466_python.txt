@@ -1,0 +1,6 @@
+Category: data_structure
+Language: python
+
+============================================================
+
+Implement a binary search tree in Python with all basic operations

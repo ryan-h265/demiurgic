@@ -1,0 +1,30 @@
+typescript
+```typescript
+class ListNode {
+  val: number;
+  next: ListNode | null;
+  constructor(val?: number, next?: ListNode | null) {
+    this.val = val ?? 0;
+    this.next = next ?? null;
+  }
+}
+
+export function hasCycle(head: ListNode | null): boolean {
+  let slow = head, fast = head;
+  while (fast && fast.next) {
+    slow = slow!.next;
+    fast = fast.next.next;
+    if (slow === fast) return true;
+  }
+  return false;
+}
+```
+**Explanation:** Floyd’s tortoise-hare algorithm advances `fast` twice as quickly; if a cycle exists, pointers meet. Null checks prevent out-of-bounds access.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> (points back to 2)
+Output: true
+**Notes:**
+- Handles empty and single-node lists safely.
+- To find the cycle entry, reset one pointer to head after detection and step both until they meet again.
+- Leaves list unmodified.

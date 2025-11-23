@@ -1,0 +1,6 @@
+Category: algorithm
+Language: c++
+
+============================================================
+
+Implement union-find with path compression in C++ with detailed comments

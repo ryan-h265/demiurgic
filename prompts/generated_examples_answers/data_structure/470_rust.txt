@@ -1,0 +1,44 @@
+rust
+```rust
+use std::cmp::Reverse;
+use std::collections::BinaryHeap;
+
+pub struct BoundedMinPQ {
+    cap: usize,
+    heap: BinaryHeap<Reverse<i32>>, // stores smallest at top via Reverse
+}
+
+impl BoundedMinPQ {
+    pub fn new(capacity: usize) -> Self {
+        Self { cap: capacity, heap: BinaryHeap::new() }
+    }
+
+    pub fn push(&mut self, val: i32) {
+        if self.heap.len() < self.cap {
+            self.heap.push(Reverse(val));
+        } else if let Some(&Reverse(min)) = self.heap.peek() {
+            if val > min {
+                self.heap.pop();
+                self.heap.push(Reverse(val));
+            }
+        }
+    }
+
+    pub fn pop(&mut self) -> Option<i32> {
+        self.heap.pop().map(|r| r.0)
+    }
+
+    pub fn peek(&self) -> Option<i32> {
+        self.heap.peek().map(|r| r.0)
+    }
+}
+```
+**Explanation:** Capacity-limited min-priority queue keeping the top-K largest values: insert until full, then replace the smallest only if the new value is larger. Uses `Reverse` to implement a min-heap atop `BinaryHeap`.
+**Complexity:** Time: O(log k) per push/pop; Space: O(k).
+**Example:**
+Input: cap=2; push 1,5,3
+Output: heap contains {3,5}; peek -> 3
+**Notes:**
+- For different eviction policy, adjust the push logic.
+- Replace `i32` with a generic type and comparator as needed.
+- Not thread-safe; wrap in Mutex for shared use.

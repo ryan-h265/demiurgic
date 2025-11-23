@@ -1,0 +1,33 @@
+python
+```python
+class HashTable:
+    def __init__(self, capacity: int = 16):
+        self.buckets = [[] for _ in range(capacity)]
+
+    def _idx(self, key) -> int:
+        return hash(key) % len(self.buckets)
+
+    def put(self, key, value) -> None:
+        bucket = self.buckets[self._idx(key)]
+        for i, (k, _) in enumerate(bucket):
+            if k == key:
+                bucket[i] = (k, value)
+                return
+        bucket.append((key, value))
+
+    def get(self, key):
+        bucket = self.buckets[self._idx(key)]
+        for k, v in bucket:
+            if k == key:
+                return v
+        return None
+```
+**Explanation:** Separate-chaining hash table using a list of buckets. Put updates existing keys or appends new pairs; get scans the bucket for a matching key.
+**Complexity:** Time: O(1) average per op; Space: O(n).
+**Example:**
+Input: put('a',1); get('a')
+Output: 1
+**Notes:**
+- Resize when load factor grows to maintain performance.
+- Return None on miss; adjust to raise if preferred.
+- Keys must be hashable; behavior on collisions is handled by chaining.

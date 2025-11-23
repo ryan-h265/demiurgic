@@ -1,0 +1,6 @@
+Category: algorithm
+Language: javascript
+
+============================================================
+
+Write JavaScript code to solve: Detect a cycle in a linked list

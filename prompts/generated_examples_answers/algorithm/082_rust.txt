@@ -1,0 +1,29 @@
+rust
+```rust
+pub fn dfs(graph: &[Vec<usize>], start: usize) -> Vec<usize> {
+    let mut visited = vec![false; graph.len()];
+    let mut stack = vec![start];
+    let mut order = Vec::new();
+
+    while let Some(node) = stack.pop() {
+        if visited[node] { continue; }
+        visited[node] = true;
+        order.push(node);
+        for &nei in graph[node].iter().rev() { // reverse to preserve adjacency order
+            if !visited[nei] {
+                stack.push(nei);
+            }
+        }
+    }
+    order
+}
+```
+**Explanation:** Iterative DFS with an explicit stack. Pop a node, skip if already visited, mark visited, record it, then push unvisited neighbors (reversed so earlier neighbors are processed first).
+**Complexity:** Time: O(V + E); Space: O(V) for visited and stack.
+**Example:**
+Input: graph = vec![vec![1,2], vec![2], vec![3], vec![]], start = 0
+Output: [0,2,3,1] (one valid DFS order)
+**Notes:**
+- Use recursion if depth is small, but iterative avoids stack overflow.
+- For directed graphs, adjacency should reflect edge direction.
+- Add bounds checks for `start` in production.

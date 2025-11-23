@@ -1,0 +1,39 @@
+java
+```java
+public class CircularBuffer {
+    private final int[] data;
+    private int head = 0, tail = 0, size = 0;
+
+    public CircularBuffer(int capacity) {
+        if (capacity <= 0) throw new IllegalArgumentException("capacity>0");
+        data = new int[capacity];
+    }
+
+    public void push(int val) {
+        if (size == data.length) throw new IllegalStateException("buffer full");
+        data[tail] = val;
+        tail = (tail + 1) % data.length;
+        size++;
+    }
+
+    public int pop() {
+        if (size == 0) throw new IllegalStateException("buffer empty");
+        int v = data[head];
+        head = (head + 1) % data.length;
+        size--;
+        return v;
+    }
+
+    public boolean isEmpty() { return size == 0; }
+    public boolean isFull() { return size == data.length; }
+}
+```
+**Explanation:** Fixed-size ring buffer with head/tail indices and a size counter. Push writes at tail and advances; pop reads at head and advances; modulo arithmetic wraps around.
+**Complexity:** Time: O(1) per op; Space: O(capacity).
+**Example:**
+Input: capacity=2; push 1; push 2; pop() -> 1; push 3
+Output: buffer now holds 2,3 in logical order
+**Notes:**
+- Throws on overflow/underflow; change to overwrite-on-full if needed.
+- Generalize to generics for non-int payloads.
+- Not thread-safe; guard with locks for concurrent access.

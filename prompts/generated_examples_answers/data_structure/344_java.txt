@@ -1,0 +1,46 @@
+java
+```java
+import java.util.NoSuchElementException;
+
+public class BoundedQueue {
+    private final int[] data;
+    private int head = 0, tail = 0, size = 0;
+
+    public BoundedQueue(int capacity) {
+        if (capacity <= 0) throw new IllegalArgumentException("capacity>0");
+        data = new int[capacity];
+    }
+
+    // O(1) eviction: overwrite oldest when full
+    public void offer(int val) {
+        if (size == data.length) {
+            data[tail] = val;
+            tail = (tail + 1) % data.length;
+            head = tail; // oldest evicted
+        } else {
+            data[tail] = val;
+            tail = (tail + 1) % data.length;
+            size++;
+        }
+    }
+
+    public int poll() {
+        if (size == 0) throw new NoSuchElementException("empty");
+        int v = data[head];
+        head = (head + 1) % data.length;
+        size--;
+        return v;
+    }
+
+    public boolean isEmpty() { return size == 0; }
+}
+```
+**Explanation:** Implements a fixed-capacity circular queue where insertion is O(1) and evicts the oldest element when full. `poll` removes the head in O(1); wrap-around handled via modulo indices.
+**Complexity:** Time: O(1) per op; Space: O(capacity).
+**Example:**
+Input: capacity=2; offer 1; offer 2; offer 3 (evicts 1); poll() -> 2
+Output: 2
+**Notes:**
+- Adjust eviction policy to throw instead of overwrite if desired.
+- Uses ints; generalize with generics for other types.
+- Not thread-safe; add synchronization for concurrent access.

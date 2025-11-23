@@ -1,0 +1,28 @@
+javascript
+```javascript
+/**
+ * Transform a stream of log lines into structured objects.
+ * Each line format: "<timestamp> <level> <message>".
+ */
+function transformLogLines(lines) {
+  return lines
+    .filter(Boolean)
+    .map((line) => {
+      const [timestamp, level, ...msgParts] = line.trim().split(/\s+/);
+      return {
+        timestamp,
+        level: level ? level.toUpperCase() : 'INFO',
+        message: msgParts.join(' '),
+      };
+    });
+}
+```
+**Explanation:** Cleans empty lines, splits each log line into timestamp, level, and message tokens, normalizes the level to upper-case, and returns structured objects for downstream processing.
+**Complexity:** Time: O(n * m) where n is line count and m average tokens; Space: O(n) for the output array.
+**Example:**
+Input: `["2024-01-01T00:00:00Z info started", "2024-01-01T00:01:00Z warn high load"]`
+Output: `[{timestamp: "2024-01-01T00:00:00Z", level: "INFO", message: "started"}, {timestamp: "2024-01-01T00:01:00Z", level: "WARN", message: "high load"}]`
+**Notes:**
+- Adjust parsing if timestamps contain spaces; use regex capture groups for richer formats.
+- Add validation to skip malformed lines or emit errors as needed.
+- Extend with JSON parsing when logs are structured JSON lines.

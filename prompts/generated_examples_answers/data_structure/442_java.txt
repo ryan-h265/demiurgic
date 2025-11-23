@@ -1,0 +1,44 @@
+java
+```java
+public class SegmentTree {
+    private final int n;
+    private final int[] tree;
+
+    public SegmentTree(int[] nums) {
+        this.n = nums.length;
+        this.tree = new int[2 * n];
+        System.arraycopy(nums, 0, tree, n, n);
+        for (int i = n - 1; i > 0; i--) {
+            tree[i] = tree[2 * i] + tree[2 * i + 1];
+        }
+    }
+
+    public void update(int idx, int val) {
+        int i = idx + n;
+        tree[i] = val;
+        for (i >>= 1; i > 0; i >>= 1) {
+            tree[i] = tree[2 * i] + tree[2 * i + 1];
+        }
+    }
+
+    public int query(int l, int r) {
+        l += n; r += n;
+        int res = 0;
+        while (l <= r) {
+            if ((l & 1) == 1) res += tree[l++];
+            if ((r & 1) == 0) res += tree[r--];
+            l >>= 1; r >>= 1;
+        }
+        return res;
+    }
+}
+```
+**Explanation:** Builds an iterative segment tree for range sums. Leaves are at offset n; internal nodes store child sums. Point updates refresh ancestors; range queries walk two pointers inward to accumulate sums.
+**Complexity:** Time: O(log n) per update/query; Space: O(n).
+**Example:**
+Input: nums=[1,3,5], query(0,2)
+Output: 9
+**Notes:**
+- Adapt merge operation for min/max or other associative functions.
+- Ensure indices are validated in production code.
+- Thread-safety not included; add synchronization if needed.

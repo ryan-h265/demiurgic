@@ -1,0 +1,33 @@
+python
+```python
+from collections import OrderedDict
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        if capacity <= 0:
+            raise ValueError("capacity must be positive")
+        self.cap = capacity
+        self.cache = OrderedDict()
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache.move_to_end(key)
+        self.cache[key] = value
+        if len(self.cache) > self.cap:
+            self.cache.popitem(last=False)
+```
+**Explanation:** Uses an access-ordered `OrderedDict` to track recency. `get` refreshes the key’s position; `put` inserts/updates and evicts the least-recently used entry when capacity is exceeded.
+**Complexity:** Time: O(1) average per op; Space: O(capacity).
+**Example:**
+Input: cap=2; put(1,1); put(2,2); get(1); put(3,3); get(2)
+Output: get(1)=1, get(2)=-1
+**Notes:**
+- Returns -1 for missing keys; adjust to raise if preferred.
+- Keys/values typed as int here; generalize as needed.
+- For thread safety, wrap operations with a lock.

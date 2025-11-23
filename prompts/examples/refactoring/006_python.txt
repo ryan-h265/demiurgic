@@ -1,0 +1,16 @@
+Category: refactoring
+Language: python
+
+============================================================
+
+Refactor this Python code to be more idiomatic:
+```python
+def calculate_sum(numbers):
+    total = 0
+    for i in range(len(numbers)):
+        total = total + numbers[i]
+    return total
+
+my_numbers = [10, 20, 30, 40, 50]
+sum_result = calculate_sum(my_numbers)
+```

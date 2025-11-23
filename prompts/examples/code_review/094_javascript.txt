@@ -1,0 +1,21 @@
+Category: code_review
+Language: javascript
+
+============================================================
+
+Review this JavaScript code and suggest improvements for best practices:
+```javascript
+var data = null;
+
+function fetchData() {
+    fetch('/api/data')
+        .then(response => response.json())
+        .then(result => {
+            data = result;
+        });
+    return data;
+}
+
+var result = fetchData();
+console.log(result.items);
+```

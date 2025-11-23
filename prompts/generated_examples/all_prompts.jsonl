@@ -1,0 +1,500 @@
+{"prompt": "Refactor this Python code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Implement depth-first search (DFS) in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Write Python code to implement a CLI tool with subcommands", "category": "real_world", "language": "python"}
+{"prompt": "Write Java code to make an HTTP GET request and parse JSON", "category": "real_world", "language": "java"}
+{"prompt": "Find and fix the bug in this JavaScript code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Implement a JavaScript function to transform given a stream of log lines", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Find and fix the bug in this Python code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "python"}
+{"prompt": "Implement dynamic programming for coin change in Rust with detailed comments", "category": "algorithm", "language": "rust"}
+{"prompt": "Write Python code to solve: Serialize and deserialize a binary tree", "category": "algorithm", "language": "python"}
+{"prompt": "Review this Python code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Write JavaScript code to solve: Implement LRU cache", "category": "algorithm", "language": "javascript"}
+{"prompt": "Review this JavaScript code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Design and implement a disjoint set (union-find) in Java supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "java"}
+{"prompt": "Find and fix the bug in this JavaScript code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Design and implement a disjoint set (union-find) in Java supporting thread-safe operations", "category": "data_structure", "language": "java"}
+{"prompt": "Implement a heap in Java with insert, delete, and search operations", "category": "data_structure", "language": "java"}
+{"prompt": "Write a Rust function that finds the nth Fibonacci number", "category": "function_implementation", "language": "rust"}
+{"prompt": "Review this JavaScript code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Implement a C++ function to validate given a dictionary", "category": "function_implementation", "language": "c++"}
+{"prompt": "Refactor this JavaScript code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Implement a queue in Rust with efficient lookup and insertion", "category": "data_structure", "language": "rust"}
+{"prompt": "Write Java code to implement a CLI tool with subcommands", "category": "real_world", "language": "java"}
+{"prompt": "Implement a Go function to normalize given a string", "category": "function_implementation", "language": "go"}
+{"prompt": "Explain the time and space complexity of topological sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Implement quick sort in JavaScript with detailed comments", "category": "algorithm", "language": "javascript"}
+{"prompt": "Design and implement a circular buffer in C++ supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "c++"}
+{"prompt": "Review this Python code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Review this JavaScript code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Implement a JavaScript function to aggregate given a matrix", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Implement a queue in Rust with O(1) get-min or get-max support", "category": "data_structure", "language": "rust"}
+{"prompt": "Design and implement a priority queue in C++ supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "c++"}
+{"prompt": "Create a JavaScript utility that generates paginated results from a collection with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Explain the time and space complexity of Dijkstra's algorithm", "category": "explanation", "language": "unknown"}
+{"prompt": "Write TypeScript code to solve: Validate binary search tree", "category": "algorithm", "language": "typescript"}
+{"prompt": "Design and implement a circular buffer in C++ supporting O(1) eviction and retrieval", "category": "data_structure", "language": "c++"}
+{"prompt": "Explain the time and space complexity of DFS and BFS", "category": "explanation", "language": "unknown"}
+{"prompt": "Implement a Python function to summarize given a list of numbers", "category": "function_implementation", "language": "python"}
+{"prompt": "Create a Go utility that debounces an async function call with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Review this Java code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Design and implement a priority queue in Rust supporting thread-safe operations", "category": "data_structure", "language": "rust"}
+{"prompt": "Write Python code to solve: Rotate a matrix 90 degrees", "category": "algorithm", "language": "python"}
+{"prompt": "Write Python code to implement a CLI tool with subcommands", "category": "real_world", "language": "python"}
+{"prompt": "Explain the time and space complexity of two-pointer techniques", "category": "explanation", "language": "unknown"}
+{"prompt": "Write Java code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "java"}
+{"prompt": "Write TypeScript code to solve: Find all permutations of a string", "category": "algorithm", "language": "typescript"}
+{"prompt": "Explain what this Python code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "python"}
+{"prompt": "Write JavaScript code to create a simple web scraper", "category": "real_world", "language": "javascript"}
+{"prompt": "Review this Python code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Refactor this Java code to be more idiomatic:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Create a TypeScript utility that debounces an async function call with proper error handling", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Explain the time and space complexity of two-pointer techniques", "category": "explanation", "language": "unknown"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Find and fix the bug in this JavaScript code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Implement a Java function to summarize given an array of objects", "category": "function_implementation", "language": "java"}
+{"prompt": "Implement binary search in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Find and fix the bug in this Python code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "python"}
+{"prompt": "Implement a Go function to summarize given a string", "category": "function_implementation", "language": "go"}
+{"prompt": "Create a Go utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Explain the time and space complexity of merge sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write TypeScript code to solve: Implement LRU cache", "category": "algorithm", "language": "typescript"}
+{"prompt": "Explain the time and space complexity of two-pointer techniques", "category": "explanation", "language": "unknown"}
+{"prompt": "Write Java code to connect to a database and run a query", "category": "real_world", "language": "java"}
+{"prompt": "Write JavaScript code to handle exceptions gracefully", "category": "real_world", "language": "javascript"}
+{"prompt": "Refactor this Java code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Explain the time and space complexity of DFS and BFS", "category": "explanation", "language": "unknown"}
+{"prompt": "Implement a JavaScript function to transform given a list of numbers", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Implement a stack in Go with iterators with lazy traversal", "category": "data_structure", "language": "go"}
+{"prompt": "Implement Kruskal's minimum spanning tree in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Write a Python function that flattens a nested list of numbers", "category": "function_implementation", "language": "python"}
+{"prompt": "Refactor this Python code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Write a Go function that validates an email address", "category": "function_implementation", "language": "go"}
+{"prompt": "Implement a Go function to transform given an array of objects", "category": "function_implementation", "language": "go"}
+{"prompt": "Refactor this JavaScript code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Write Java code to validate user input", "category": "real_world", "language": "java"}
+{"prompt": "Explain what this Python code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "python"}
+{"prompt": "Review this JavaScript code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Implement a Rust function to filter given an array of objects", "category": "function_implementation", "language": "rust"}
+{"prompt": "Design and implement a priority queue in Rust supporting union and find with path compression", "category": "data_structure", "language": "rust"}
+{"prompt": "Refactor this Java code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Design and implement a circular buffer in Python supporting O(1) eviction and retrieval", "category": "data_structure", "language": "python"}
+{"prompt": "Implement depth-first search (DFS) in Rust with detailed comments", "category": "algorithm", "language": "rust"}
+{"prompt": "Explain what this Python code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "python"}
+{"prompt": "Create a TypeScript utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Implement union-find with path compression in Python with detailed comments", "category": "algorithm", "language": "python"}
+{"prompt": "Explain what this Java code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "java"}
+{"prompt": "Write a Rust function that implements a simple calculator", "category": "function_implementation", "language": "rust"}
+{"prompt": "Write a Python function that evaluates a postfix expression", "category": "function_implementation", "language": "python"}
+{"prompt": "Implement quick sort in JavaScript with detailed comments", "category": "algorithm", "language": "javascript"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Design and implement a disjoint set (union-find) in C++ supporting range queries and point updates", "category": "data_structure", "language": "c++"}
+{"prompt": "Write a Java function that sorts an array using quicksort", "category": "function_implementation", "language": "java"}
+{"prompt": "Review this JavaScript code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Write Java code to stream large uploads with retry support", "category": "real_world", "language": "java"}
+{"prompt": "Explain the time and space complexity of topological sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write JavaScript code to create a REST API endpoint", "category": "real_world", "language": "javascript"}
+{"prompt": "Implement breadth-first search (BFS) in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Write a C++ function that flattens a nested list of numbers", "category": "function_implementation", "language": "c++"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write JavaScript code to read a CSV file and calculate statistics", "category": "real_world", "language": "javascript"}
+{"prompt": "Write a C++ function that finds the longest common substring", "category": "function_implementation", "language": "c++"}
+{"prompt": "Explain the time and space complexity of two-pointer techniques", "category": "explanation", "language": "unknown"}
+{"prompt": "Explain the time and space complexity of merge sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write a C++ function that checks if a string is a palindrome", "category": "function_implementation", "language": "c++"}
+{"prompt": "Create a Python utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "python"}
+{"prompt": "Implement a Rust function to summarize given a string", "category": "function_implementation", "language": "rust"}
+{"prompt": "Design and implement a disjoint set (union-find) in C++ supporting thread-safe operations", "category": "data_structure", "language": "c++"}
+{"prompt": "Find and fix the bug in this Python code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "python"}
+{"prompt": "Refactor this Java code to be more idiomatic:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Write JavaScript code to solve: Rotate a matrix 90 degrees", "category": "algorithm", "language": "javascript"}
+{"prompt": "Write JavaScript code to connect to a database and run a query", "category": "real_world", "language": "javascript"}
+{"prompt": "Write TypeScript code to solve: Find all permutations of a string", "category": "algorithm", "language": "typescript"}
+{"prompt": "Refactor this Java code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Implement a graph in Python with insert, delete, and search operations", "category": "data_structure", "language": "python"}
+{"prompt": "Explain what this Java code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "java"}
+{"prompt": "Implement a Python function to aggregate given a string", "category": "function_implementation", "language": "python"}
+{"prompt": "Explain the time and space complexity of binary search", "category": "explanation", "language": "unknown"}
+{"prompt": "Create a TypeScript utility that parses and validates configuration files with proper error handling", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Implement Dijkstra's shortest path in C++ with detailed comments", "category": "algorithm", "language": "c++"}
+{"prompt": "Create a Java utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "java"}
+{"prompt": "Write JavaScript code to validate user input", "category": "real_world", "language": "javascript"}
+{"prompt": "Review this Java code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Refactor this Python code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Implement a Python function to normalize given a stream of log lines", "category": "function_implementation", "language": "python"}
+{"prompt": "Create a TypeScript utility that memoizes expensive computations with proper error handling", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Find and fix the bug in this Python code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should not go out of bounds", "category": "bug_fix", "language": "python"}
+{"prompt": "Refactor this Java code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Write Python code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "python"}
+{"prompt": "Refactor this JavaScript code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Write a TypeScript function that evaluates a postfix expression", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Create a Go utility that memoizes expensive computations with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Create a Go utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Explain the time and space complexity of topological sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Design and implement a segment tree in Python supporting union and find with path compression", "category": "data_structure", "language": "python"}
+{"prompt": "Implement a Rust function to transform given a stream of log lines", "category": "function_implementation", "language": "rust"}
+{"prompt": "Write a Go function that validates an email address", "category": "function_implementation", "language": "go"}
+{"prompt": "Find and fix the bug in this Java code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "java"}
+{"prompt": "Create a Python utility that memoizes expensive computations with proper error handling", "category": "function_implementation", "language": "python"}
+{"prompt": "Implement a graph in Python with efficient lookup and insertion", "category": "data_structure", "language": "python"}
+{"prompt": "Implement topological sort with cycle detection in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Refactor this Python code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Find and fix the bug in this Java code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should not go out of bounds", "category": "bug_fix", "language": "java"}
+{"prompt": "Create a JavaScript utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Write a JavaScript function that flattens a nested list of numbers", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Implement a graph in JavaScript with all basic operations", "category": "data_structure", "language": "javascript"}
+{"prompt": "Write JavaScript code to solve: Serialize and deserialize a binary tree", "category": "algorithm", "language": "javascript"}
+{"prompt": "Write Python code to handle exceptions gracefully", "category": "real_world", "language": "python"}
+{"prompt": "Write a Go function that finds the longest common substring", "category": "function_implementation", "language": "go"}
+{"prompt": "Implement depth-first search (DFS) in JavaScript with detailed comments", "category": "algorithm", "language": "javascript"}
+{"prompt": "Implement a binary search tree in Java with all basic operations", "category": "data_structure", "language": "java"}
+{"prompt": "Write a Rust function that finds the nth Fibonacci number", "category": "function_implementation", "language": "rust"}
+{"prompt": "Design and implement a circular buffer in Java supporting union and find with path compression", "category": "data_structure", "language": "java"}
+{"prompt": "Review this JavaScript code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Refactor this Java code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Implement a Java function to transform given a stream of log lines", "category": "function_implementation", "language": "java"}
+{"prompt": "Write Python code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "python"}
+{"prompt": "Find and fix the bug in this JavaScript code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should avoid null pointer exceptions", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Design and implement a segment tree in Python supporting range queries and point updates", "category": "data_structure", "language": "python"}
+{"prompt": "Find and fix the bug in this Python code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "python"}
+{"prompt": "Write JavaScript code to read a CSV file and calculate statistics", "category": "real_world", "language": "javascript"}
+{"prompt": "Explain the time and space complexity of two-pointer techniques", "category": "explanation", "language": "unknown"}
+{"prompt": "Explain the time and space complexity of topological sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write Java code to schedule recurring background tasks", "category": "real_world", "language": "java"}
+{"prompt": "Refactor this Python code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Implement a Rust function to validate given a stream of log lines", "category": "function_implementation", "language": "rust"}
+{"prompt": "Implement a trie in Python with efficient lookup and insertion", "category": "data_structure", "language": "python"}
+{"prompt": "Explain the time and space complexity of binary search", "category": "explanation", "language": "unknown"}
+{"prompt": "Refactor this JavaScript code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Write JavaScript code to create a simple web scraper", "category": "real_world", "language": "javascript"}
+{"prompt": "Create a JavaScript utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Refactor this JavaScript code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Design and implement a segment tree in Python supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "python"}
+{"prompt": "Write JavaScript code to solve: Word ladder problem", "category": "algorithm", "language": "javascript"}
+{"prompt": "Review this Java code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "javascript"}
+{"prompt": "Implement backtracking for N-queens in JavaScript with detailed comments", "category": "algorithm", "language": "javascript"}
+{"prompt": "Review this Java code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Write Java code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "java"}
+{"prompt": "Review this Python code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Review this Python code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Write a JavaScript function that finds the longest common substring", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Find and fix the bug in this Python code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "python"}
+{"prompt": "Refactor this Java code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Create a Go utility that generates paginated results from a collection with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Write a Go function that computes the greatest common divisor (GCD)", "category": "function_implementation", "language": "go"}
+{"prompt": "Review this Python code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Create a Go utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Explain what this Python code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "python"}
+{"prompt": "Implement k-way merge using heaps in Python with detailed comments", "category": "algorithm", "language": "python"}
+{"prompt": "Explain what this Python code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "python"}
+{"prompt": "Refactor this Java code to be more idiomatic:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Review this JavaScript code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Create a Go utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Refactor this JavaScript code to be more idiomatic:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Refactor this Python code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Implement a Rust function to validate given a string", "category": "function_implementation", "language": "rust"}
+{"prompt": "Write Java code to solve: Longest increasing subsequence", "category": "algorithm", "language": "java"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Create a JavaScript utility that debounces an async function call with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Design and implement a LRU cache in C++ supporting union and find with path compression", "category": "data_structure", "language": "c++"}
+{"prompt": "Design and implement a priority queue in Java supporting thread-safe operations", "category": "data_structure", "language": "java"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Implement union-find with path compression in JavaScript with detailed comments", "category": "algorithm", "language": "javascript"}
+{"prompt": "Design and implement a segment tree in Python supporting thread-safe operations", "category": "data_structure", "language": "python"}
+{"prompt": "Design and implement a priority queue in Python supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "python"}
+{"prompt": "Write TypeScript code to solve: Word ladder problem", "category": "algorithm", "language": "typescript"}
+{"prompt": "Explain the time and space complexity of topological sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write Java code to stream large uploads with retry support", "category": "real_world", "language": "java"}
+{"prompt": "Find and fix the bug in this Python code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should not go out of bounds", "category": "bug_fix", "language": "python"}
+{"prompt": "Write TypeScript code to solve: Trapping rain water", "category": "algorithm", "language": "typescript"}
+{"prompt": "Write a Java function that validates an email address", "category": "function_implementation", "language": "java"}
+{"prompt": "Refactor this Java code to be more pythonic:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Explain what this Python code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "python"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Design and implement a segment tree in Python supporting union and find with path compression", "category": "data_structure", "language": "python"}
+{"prompt": "Refactor this JavaScript code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Create a Python utility that memoizes expensive computations with proper error handling", "category": "function_implementation", "language": "python"}
+{"prompt": "Design and implement a circular buffer in C++ supporting range queries and point updates", "category": "data_structure", "language": "c++"}
+{"prompt": "Implement a binary search tree in JavaScript with efficient lookup and insertion", "category": "data_structure", "language": "javascript"}
+{"prompt": "Review this JavaScript code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Explain what this Python code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "python"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Implement a queue in Rust with insert, delete, and search operations", "category": "data_structure", "language": "rust"}
+{"prompt": "Review this Java code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Implement depth-first search (DFS) in Python with detailed comments", "category": "algorithm", "language": "python"}
+{"prompt": "Find and fix the bug in this Python code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should not go out of bounds", "category": "bug_fix", "language": "python"}
+{"prompt": "Explain what this Java code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "java"}
+{"prompt": "Find and fix the bug in this Python code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should avoid null pointer exceptions", "category": "bug_fix", "language": "python"}
+{"prompt": "Review this JavaScript code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Review this Python code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Find and fix the bug in this Python code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "python"}
+{"prompt": "Design and implement a LRU cache in Python supporting thread-safe operations", "category": "data_structure", "language": "python"}
+{"prompt": "Write Java code to connect to a database and run a query", "category": "real_world", "language": "java"}
+{"prompt": "Implement a Rust function to summarize given an array of objects", "category": "function_implementation", "language": "rust"}
+{"prompt": "Refactor this Java code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Implement a heap in JavaScript with efficient lookup and insertion", "category": "data_structure", "language": "javascript"}
+{"prompt": "Implement a Go function to normalize given an array of objects", "category": "function_implementation", "language": "go"}
+{"prompt": "Write a Go function that converts a decimal number to binary", "category": "function_implementation", "language": "go"}
+{"prompt": "Explain what this Python code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "python"}
+{"prompt": "Implement a trie in JavaScript with all basic operations", "category": "data_structure", "language": "javascript"}
+{"prompt": "Design and implement a LRU cache in Java supporting thread-safe operations", "category": "data_structure", "language": "java"}
+{"prompt": "Review this Java code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Design and implement a segment tree in Java supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "java"}
+{"prompt": "Implement union-find with path compression in Python with detailed comments", "category": "algorithm", "language": "python"}
+{"prompt": "Write TypeScript code to solve: Implement LRU cache", "category": "algorithm", "language": "typescript"}
+{"prompt": "Review this JavaScript code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Write a Java function that computes the greatest common divisor (GCD)", "category": "function_implementation", "language": "java"}
+{"prompt": "Implement a queue in JavaScript with all basic operations", "category": "data_structure", "language": "javascript"}
+{"prompt": "Implement a graph in C++ with efficient lookup and insertion", "category": "data_structure", "language": "c++"}
+{"prompt": "Write Java code to solve: Maximum subarray sum (Kadane)", "category": "algorithm", "language": "java"}
+{"prompt": "Write a C++ function that finds the nth Fibonacci number", "category": "function_implementation", "language": "c++"}
+{"prompt": "Implement a JavaScript function to normalize given a dictionary", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Explain what this Java code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "java"}
+{"prompt": "Write JavaScript code to implement a CLI tool with subcommands", "category": "real_world", "language": "javascript"}
+{"prompt": "Write JavaScript code to implement logging", "category": "real_world", "language": "javascript"}
+{"prompt": "Review this Python code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Implement A* pathfinding in Go with detailed comments", "category": "algorithm", "language": "go"}
+{"prompt": "Implement breadth-first search (BFS) in Go with detailed comments", "category": "algorithm", "language": "go"}
+{"prompt": "Find and fix the bug in this JavaScript code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should avoid null pointer exceptions", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Design and implement a segment tree in Java supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "java"}
+{"prompt": "Write JavaScript code to parse command-line arguments", "category": "real_world", "language": "javascript"}
+{"prompt": "Write Java code to solve: Implement LRU cache", "category": "algorithm", "language": "java"}
+{"prompt": "Implement a Rust function to transform given an array of objects", "category": "function_implementation", "language": "rust"}
+{"prompt": "Implement a Rust function to aggregate given a matrix", "category": "function_implementation", "language": "rust"}
+{"prompt": "Create a JavaScript utility that debounces an async function call with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Write JavaScript code to parse command-line arguments", "category": "real_world", "language": "javascript"}
+{"prompt": "Write Java code to stream large uploads with retry support", "category": "real_world", "language": "java"}
+{"prompt": "Explain the time and space complexity of Dijkstra's algorithm", "category": "explanation", "language": "unknown"}
+{"prompt": "Write Python code to solve: Implement LRU cache", "category": "algorithm", "language": "python"}
+{"prompt": "Write JavaScript code to solve: Longest increasing subsequence", "category": "algorithm", "language": "javascript"}
+{"prompt": "Create a TypeScript utility that parses and validates configuration files with proper error handling", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Write Java code to create a REST API endpoint", "category": "real_world", "language": "java"}
+{"prompt": "Write Python code to solve: Find the kth largest element in an array", "category": "algorithm", "language": "python"}
+{"prompt": "Explain the time and space complexity of binary search", "category": "explanation", "language": "unknown"}
+{"prompt": "Write Python code to implement a CLI tool with subcommands", "category": "real_world", "language": "python"}
+{"prompt": "Review this JavaScript code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Find and fix the bug in this JavaScript code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Write a TypeScript function that computes the greatest common divisor (GCD)", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Explain what this Python code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "python"}
+{"prompt": "Design and implement a priority queue in Python supporting thread-safe operations", "category": "data_structure", "language": "python"}
+{"prompt": "Refactor this Java code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Create a C# utility that memoizes expensive computations with proper error handling", "category": "function_implementation", "language": "c#"}
+{"prompt": "Implement a JavaScript function to process given a stream of log lines", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Review this JavaScript code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Explain what this JavaScript code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "javascript"}
+{"prompt": "Find and fix the bug in this JavaScript code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Find and fix the bug in this Java code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should not go out of bounds", "category": "bug_fix", "language": "java"}
+{"prompt": "Refactor this Python code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Create a JavaScript utility that debounces an async function call with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Create a Python utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "python"}
+{"prompt": "Explain what this Java code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "java"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Implement breadth-first search (BFS) in Go with detailed comments", "category": "algorithm", "language": "go"}
+{"prompt": "Write TypeScript code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "typescript"}
+{"prompt": "Refactor this Python code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Design and implement a disjoint set (union-find) in C++ supporting O(1) eviction and retrieval", "category": "data_structure", "language": "c++"}
+{"prompt": "Write JavaScript code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "javascript"}
+{"prompt": "Write a JavaScript function that evaluates a postfix expression", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Write Java code to solve: Trapping rain water", "category": "algorithm", "language": "java"}
+{"prompt": "Implement a C++ function to normalize given an array of objects", "category": "function_implementation", "language": "c++"}
+{"prompt": "Write JavaScript code to parse command-line arguments", "category": "real_world", "language": "javascript"}
+{"prompt": "Explain the time and space complexity of Dijkstra's algorithm", "category": "explanation", "language": "unknown"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Find and fix the bug in this Python code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should avoid null pointer exceptions", "category": "bug_fix", "language": "python"}
+{"prompt": "Find and fix the bug in this JavaScript code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Implement topological sort with cycle detection in Rust with detailed comments", "category": "algorithm", "language": "rust"}
+{"prompt": "Find and fix the bug in this Python code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "python"}
+{"prompt": "Review this Python code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Write JavaScript code to solve: Validate binary search tree", "category": "algorithm", "language": "javascript"}
+{"prompt": "Design and implement a priority queue in Python supporting range queries and point updates", "category": "data_structure", "language": "python"}
+{"prompt": "Implement a hash table in C++ with efficient lookup and insertion", "category": "data_structure", "language": "c++"}
+{"prompt": "Refactor this Python code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Design and implement a priority queue in Java supporting range queries and point updates", "category": "data_structure", "language": "java"}
+{"prompt": "Review this Java code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Implement a Java function to validate given an array of objects", "category": "function_implementation", "language": "java"}
+{"prompt": "Implement a C++ function to summarize given a stream of log lines", "category": "function_implementation", "language": "c++"}
+{"prompt": "Write a Rust function that computes the greatest common divisor (GCD)", "category": "function_implementation", "language": "rust"}
+{"prompt": "Explain the time and space complexity of DFS and BFS", "category": "explanation", "language": "unknown"}
+{"prompt": "Design and implement a disjoint set (union-find) in C++ supporting thread-safe operations", "category": "data_structure", "language": "c++"}
+{"prompt": "Implement a heap in JavaScript with O(1) get-min or get-max support", "category": "data_structure", "language": "javascript"}
+{"prompt": "Review this Python code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Explain the time and space complexity of merge sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write TypeScript code to solve: Count islands in a grid", "category": "algorithm", "language": "typescript"}
+{"prompt": "Explain what this Python code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "python"}
+{"prompt": "Refactor this Java code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Write Python code to solve: Maximum subarray sum (Kadane)", "category": "algorithm", "language": "python"}
+{"prompt": "Design and implement a disjoint set (union-find) in C++ supporting union and find with path compression", "category": "data_structure", "language": "c++"}
+{"prompt": "Explain what this Python code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "python"}
+{"prompt": "Create a Java utility that generates paginated results from a collection with proper error handling", "category": "function_implementation", "language": "java"}
+{"prompt": "Write Java code to solve: Word ladder problem", "category": "algorithm", "language": "java"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "javascript"}
+{"prompt": "Explain what this Java code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "java"}
+{"prompt": "Design and implement a LRU cache in C++ supporting union and find with path compression", "category": "data_structure", "language": "c++"}
+{"prompt": "Write TypeScript code to solve: Longest increasing subsequence", "category": "algorithm", "language": "typescript"}
+{"prompt": "Review this Java code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Write Java code to solve: Validate binary search tree", "category": "algorithm", "language": "java"}
+{"prompt": "Find and fix the bug in this Java code:\nfor i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1\nThe code should not go out of bounds", "category": "bug_fix", "language": "java"}
+{"prompt": "Explain what this Java code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "java"}
+{"prompt": "Implement a binary search tree in Go with iterators with lazy traversal", "category": "data_structure", "language": "go"}
+{"prompt": "Design and implement a priority queue in Java supporting O(1) eviction and retrieval", "category": "data_structure", "language": "java"}
+{"prompt": "Write Python code to validate user input", "category": "real_world", "language": "python"}
+{"prompt": "Design and implement a LRU cache in Rust supporting union and find with path compression", "category": "data_structure", "language": "rust"}
+{"prompt": "Implement a trie in JavaScript with O(1) get-min or get-max support", "category": "data_structure", "language": "javascript"}
+{"prompt": "Design and implement a LRU cache in Rust supporting union and find with path compression", "category": "data_structure", "language": "rust"}
+{"prompt": "Create a C# utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "c#"}
+{"prompt": "Implement a graph in Python with O(1) get-min or get-max support", "category": "data_structure", "language": "python"}
+{"prompt": "Implement a Go function to filter given a list of numbers", "category": "function_implementation", "language": "go"}
+{"prompt": "Write Python code to handle exceptions gracefully", "category": "real_world", "language": "python"}
+{"prompt": "Refactor this Python code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Review this JavaScript code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Refactor this Python code to be more maintainable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Implement a trie in Rust with O(1) get-min or get-max support", "category": "data_structure", "language": "rust"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Find and fix the bug in this Python code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should avoid null pointer exceptions", "category": "bug_fix", "language": "python"}
+{"prompt": "Implement edit distance (Levenshtein) using DP in Python with detailed comments", "category": "algorithm", "language": "python"}
+{"prompt": "Design and implement a disjoint set (union-find) in Python supporting range queries and point updates", "category": "data_structure", "language": "python"}
+{"prompt": "Create a Go utility that memoizes expensive computations with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Write a Python function that validates an email address", "category": "function_implementation", "language": "python"}
+{"prompt": "Review this Python code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Implement a hash table in Java with all basic operations", "category": "data_structure", "language": "java"}
+{"prompt": "Explain the time and space complexity of DFS and BFS", "category": "explanation", "language": "unknown"}
+{"prompt": "Find and fix the bug in this Java code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should not go out of bounds", "category": "bug_fix", "language": "java"}
+{"prompt": "Create a Python utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "python"}
+{"prompt": "Design and implement a segment tree in C++ supporting range queries and point updates", "category": "data_structure", "language": "c++"}
+{"prompt": "Find and fix the bug in this Python code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "python"}
+{"prompt": "Refactor this JavaScript code to be more pythonic:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Refactor this Python code to be more pythonic:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Refactor this Java code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "javascript"}
+{"prompt": "Write TypeScript code to solve: Count islands in a grid", "category": "algorithm", "language": "typescript"}
+{"prompt": "Write TypeScript code to solve: Find the median of two sorted arrays", "category": "algorithm", "language": "typescript"}
+{"prompt": "Implement A* pathfinding in JavaScript with detailed comments", "category": "algorithm", "language": "javascript"}
+{"prompt": "Implement a JavaScript function to filter given a stream of log lines", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Implement a heap in C++ with efficient lookup and insertion", "category": "data_structure", "language": "c++"}
+{"prompt": "Write a Go function that generates a URL-friendly slug", "category": "function_implementation", "language": "go"}
+{"prompt": "Design and implement a circular buffer in Python supporting thread-safe operations", "category": "data_structure", "language": "python"}
+{"prompt": "Refactor this Java code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Write JavaScript code to solve: Validate binary search tree", "category": "algorithm", "language": "javascript"}
+{"prompt": "Review this JavaScript code and suggest improvements for security:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Find and fix the bug in this JavaScript code:\nfor (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Refactor this Java code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Review this JavaScript code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Write Python code to make an HTTP GET request and parse JSON", "category": "real_world", "language": "python"}
+{"prompt": "Write Java code to solve: Count islands in a grid", "category": "algorithm", "language": "java"}
+{"prompt": "Design and implement a LRU cache in C++ supporting O(1) eviction and retrieval", "category": "data_structure", "language": "c++"}
+{"prompt": "Review this Java code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Create a TypeScript utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Review this JavaScript code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Explain what this Python code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "python"}
+{"prompt": "Review this Python code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Implement a C++ function to process given an array of objects", "category": "function_implementation", "language": "c++"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Explain what this JavaScript code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "javascript"}
+{"prompt": "Write Java code to parse command-line arguments", "category": "real_world", "language": "java"}
+{"prompt": "Find and fix the bug in this JavaScript code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "javascript"}
+{"prompt": "Refactor this Python code to be more pythonic:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Find and fix the bug in this Java code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should not go out of bounds", "category": "bug_fix", "language": "java"}
+{"prompt": "Refactor this Python code to be more pythonic:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Refactor this JavaScript code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Write a Python function that sorts an array using quicksort", "category": "function_implementation", "language": "python"}
+{"prompt": "Explain what this Python code does and how it works:\nlist(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))", "category": "explanation", "language": "python"}
+{"prompt": "Implement k-way merge using heaps in Rust with detailed comments", "category": "algorithm", "language": "rust"}
+{"prompt": "Create a Java utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "java"}
+{"prompt": "Implement a trie in Rust with iterators with lazy traversal", "category": "data_structure", "language": "rust"}
+{"prompt": "Design and implement a segment tree in C++ supporting range queries and point updates", "category": "data_structure", "language": "c++"}
+{"prompt": "Refactor this Python code to be more pythonic:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Write Python code to solve: Count islands in a grid", "category": "algorithm", "language": "python"}
+{"prompt": "Implement a queue in JavaScript with O(1) get-min or get-max support", "category": "data_structure", "language": "javascript"}
+{"prompt": "Implement union-find with path compression in C++ with detailed comments", "category": "algorithm", "language": "c++"}
+{"prompt": "Implement a Rust function to validate given a stream of log lines", "category": "function_implementation", "language": "rust"}
+{"prompt": "Refactor this JavaScript code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Write JavaScript code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "javascript"}
+{"prompt": "Explain what this Python code does and how it works:\nreduce((acc, x) => acc + x, [1, 2, 3, 4], 0)", "category": "explanation", "language": "python"}
+{"prompt": "Implement topological sort with cycle detection in Go with detailed comments", "category": "algorithm", "language": "go"}
+{"prompt": "Find and fix the bug in this Python code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should avoid null pointer exceptions", "category": "bug_fix", "language": "python"}
+{"prompt": "Implement quick sort in Rust with detailed comments", "category": "algorithm", "language": "rust"}
+{"prompt": "Implement merge sort in Rust with detailed comments", "category": "algorithm", "language": "rust"}
+{"prompt": "Implement Kruskal's minimum spanning tree in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Implement Dijkstra's shortest path in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Review this Java code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Create a JavaScript utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Write JavaScript code to solve: Detect a cycle in a linked list", "category": "algorithm", "language": "javascript"}
+{"prompt": "Refactor this Python code to be more efficient:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Implement a graph in Java with iterators with lazy traversal", "category": "data_structure", "language": "java"}
+{"prompt": "Implement a stack in Java with efficient lookup and insertion", "category": "data_structure", "language": "java"}
+{"prompt": "Write a JavaScript function that flattens a nested list of numbers", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Design and implement a segment tree in Python supporting union and find with path compression", "category": "data_structure", "language": "python"}
+{"prompt": "Explain what this JavaScript code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "javascript"}
+{"prompt": "Explain the time and space complexity of Dijkstra's algorithm", "category": "explanation", "language": "unknown"}
+{"prompt": "Implement a C++ function to aggregate given a string", "category": "function_implementation", "language": "c++"}
+{"prompt": "Find and fix the bug in this Python code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should return correct value for missing elements", "category": "bug_fix", "language": "python"}
+{"prompt": "Refactor this Python code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "python"}
+{"prompt": "Design and implement a priority queue in Python supporting range queries and point updates", "category": "data_structure", "language": "python"}
+{"prompt": "Write JavaScript code to make an HTTP GET request and parse JSON", "category": "real_world", "language": "javascript"}
+{"prompt": "Implement a Java function to aggregate given a string", "category": "function_implementation", "language": "java"}
+{"prompt": "Implement a JavaScript function to validate given a stream of log lines", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Refactor this Java code to be more idiomatic:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Design and implement a segment tree in Java supporting range queries and point updates", "category": "data_structure", "language": "java"}
+{"prompt": "Explain the time and space complexity of Dijkstra's algorithm", "category": "explanation", "language": "unknown"}
+{"prompt": "Design and implement a disjoint set (union-find) in Python supporting thread-safe operations", "category": "data_structure", "language": "python"}
+{"prompt": "Write Python code to handle exceptions gracefully", "category": "real_world", "language": "python"}
+{"prompt": "Explain what this Python code does and how it works:\n[x for x in range(100) if x % 3 == 0 and x % 5 == 0]", "category": "explanation", "language": "python"}
+{"prompt": "Implement a graph in JavaScript with O(1) get-min or get-max support", "category": "data_structure", "language": "javascript"}
+{"prompt": "Design and implement a disjoint set (union-find) in Java supporting range queries and point updates", "category": "data_structure", "language": "java"}
+{"prompt": "Implement a trie in C++ with efficient lookup and insertion", "category": "data_structure", "language": "c++"}
+{"prompt": "Create a Go utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Implement a Python function to summarize given a list of numbers", "category": "function_implementation", "language": "python"}
+{"prompt": "Implement a C++ function to process given a matrix", "category": "function_implementation", "language": "c++"}
+{"prompt": "Write JavaScript code to stream large uploads with retry support", "category": "real_world", "language": "javascript"}
+{"prompt": "Create a C# utility that parses and validates configuration files with proper error handling", "category": "function_implementation", "language": "c#"}
+{"prompt": "Find and fix the bug in this Java code:\nif (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "java"}
+{"prompt": "Design and implement a circular buffer in Rust supporting union and find with path compression", "category": "data_structure", "language": "rust"}
+{"prompt": "Write Java code to solve: Longest increasing subsequence", "category": "algorithm", "language": "java"}
+{"prompt": "Implement a Go function to aggregate given a string", "category": "function_implementation", "language": "go"}
+{"prompt": "Create a Go utility that streams large files without loading into memory with proper error handling", "category": "function_implementation", "language": "go"}
+{"prompt": "Implement union-find with path compression in Python with detailed comments", "category": "algorithm", "language": "python"}
+{"prompt": "Implement a graph in Go with efficient lookup and insertion", "category": "data_structure", "language": "go"}
+{"prompt": "Implement a Java function to aggregate given a string", "category": "function_implementation", "language": "java"}
+{"prompt": "Review this JavaScript code and suggest improvements for performance:\n# Code snippet here", "category": "code_review", "language": "javascript"}
+{"prompt": "Write a JavaScript function that sorts an array using quicksort", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Write JavaScript code to process image uploads and generate thumbnails", "category": "real_world", "language": "javascript"}
+{"prompt": "Implement a binary search tree in Python with all basic operations", "category": "data_structure", "language": "python"}
+{"prompt": "Create a C# utility that generates paginated results from a collection with proper error handling", "category": "function_implementation", "language": "c#"}
+{"prompt": "Design and implement a disjoint set (union-find) in C++ supporting union and find with path compression", "category": "data_structure", "language": "c++"}
+{"prompt": "Implement a Rust function to aggregate given a string", "category": "function_implementation", "language": "rust"}
+{"prompt": "Design and implement a priority queue in Rust supporting bounded capacity with wrap-around semantics", "category": "data_structure", "language": "rust"}
+{"prompt": "Create a TypeScript utility that memoizes expensive computations with proper error handling", "category": "function_implementation", "language": "typescript"}
+{"prompt": "Write JavaScript code to stream large uploads with retry support", "category": "real_world", "language": "javascript"}
+{"prompt": "Find and fix the bug in this Java code:\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)\nThe code should handle n=0 correctly", "category": "bug_fix", "language": "java"}
+{"prompt": "Create a JavaScript utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "javascript"}
+{"prompt": "Write a Rust function that checks if a string is a palindrome", "category": "function_implementation", "language": "rust"}
+{"prompt": "Write TypeScript code to solve: Rotate a matrix 90 degrees", "category": "algorithm", "language": "typescript"}
+{"prompt": "Design and implement a priority queue in Rust supporting range queries and point updates", "category": "data_structure", "language": "rust"}
+{"prompt": "Write JavaScript code to solve: Serialize and deserialize a binary tree", "category": "algorithm", "language": "javascript"}
+{"prompt": "Explain the time and space complexity of quicksort", "category": "explanation", "language": "unknown"}
+{"prompt": "Implement a hash table in Python with efficient lookup and insertion", "category": "data_structure", "language": "python"}
+{"prompt": "Refactor this Java code to be more idiomatic:\n# Code snippet here", "category": "refactoring", "language": "java"}
+{"prompt": "Explain the time and space complexity of topological sort", "category": "explanation", "language": "unknown"}
+{"prompt": "Write Python code to solve: Implement LRU cache", "category": "algorithm", "language": "python"}
+{"prompt": "Design and implement a segment tree in Python supporting union and find with path compression", "category": "data_structure", "language": "python"}
+{"prompt": "Implement breadth-first search (BFS) in Java with detailed comments", "category": "algorithm", "language": "java"}
+{"prompt": "Review this Python code and suggest improvements for readability:\n# Code snippet here", "category": "code_review", "language": "python"}
+{"prompt": "Implement a stack in Python with O(1) get-min or get-max support", "category": "data_structure", "language": "python"}
+{"prompt": "Write JavaScript code to create a REST API endpoint", "category": "real_world", "language": "javascript"}
+{"prompt": "Create a Java utility that retries HTTP requests with exponential backoff with proper error handling", "category": "function_implementation", "language": "java"}
+{"prompt": "Write Python code to create a simple web scraper", "category": "real_world", "language": "python"}
+{"prompt": "Explain the time and space complexity of two-pointer techniques", "category": "explanation", "language": "unknown"}
+{"prompt": "Refactor this JavaScript code to be more readable:\n# Code snippet here", "category": "refactoring", "language": "javascript"}
+{"prompt": "Write Python code to handle exceptions gracefully", "category": "real_world", "language": "python"}
+{"prompt": "Write a Java function that checks if a string is a palindrome", "category": "function_implementation", "language": "java"}
+{"prompt": "Implement a heap in JavaScript with iterators with lazy traversal", "category": "data_structure", "language": "javascript"}
+{"prompt": "Design and implement a priority queue in Java supporting union and find with path compression", "category": "data_structure", "language": "java"}
+{"prompt": "Design and implement a disjoint set (union-find) in Java supporting O(1) eviction and retrieval", "category": "data_structure", "language": "java"}
+{"prompt": "Review this Java code and suggest improvements for best practices:\n# Code snippet here", "category": "code_review", "language": "java"}
+{"prompt": "Implement a C++ function to summarize given a list of numbers", "category": "function_implementation", "language": "c++"}
+{"prompt": "Implement A* pathfinding in Rust with detailed comments", "category": "algorithm", "language": "rust"}

@@ -1,0 +1,13 @@
+java
+```java
+[x for x in range(100) if x % 3 == 0 and x % 5 == 0]
+```
+**Explanation:** This Python-style comprehension collects numbers from 0 to 99 divisible by both 3 and 5 (i.e., multiples of 15). In Java stream form: `IntStream.range(0,100).filter(x -> x % 15 == 0).boxed().toList();`.
+**Complexity:** Time: O(n); Space: O(k) for the resulting list.
+**Example:**
+Input: range 0..30
+Output: [0, 15, 30]
+**Notes:**
+- Using `% 15` is equivalent and simpler.
+- Replace the range to change the search interval.
+- For lazy evaluation in Java, keep it as a stream instead of collecting.

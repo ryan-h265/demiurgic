@@ -1,0 +1,36 @@
+java
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class FastStack<T> {
+    private final List<T> data = new ArrayList<>();
+
+    public void push(T val) {
+        data.add(val);
+    }
+
+    public T pop() {
+        if (data.isEmpty()) throw new IllegalStateException("empty stack");
+        return data.remove(data.size() - 1);
+    }
+
+    public T peek() {
+        if (data.isEmpty()) throw new IllegalStateException("empty stack");
+        return data.get(data.size() - 1);
+    }
+
+    public boolean contains(T val) {
+        return data.contains(val);
+    }
+}
+```
+**Explanation:** ArrayList-backed stack with O(1) push/pop/peek and O(n) lookup via `contains`, giving basic stack operations with optional membership check.
+**Complexity:** Time: O(1) push/pop/peek, O(n) contains; Space: O(n).
+**Example:**
+Input: push 1, push 2, peek -> 2, pop -> 2
+Output: stack now [1]
+**Notes:**
+- Add capacity hints for large workloads to reduce reallocations.
+- Throws on empty peek/pop; adjust to return null if preferred.
+- Not synchronized; wrap if accessed by multiple threads.

@@ -1,0 +1,42 @@
+c++
+```cpp
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <algorithm>
+
+// Normalize keys to lower-case and trim spaces in both keys and string values.
+std::vector<std::unordered_map<std::string, std::string>> normalizeObjects(
+    const std::vector<std::unordered_map<std::string, std::string>>& objects) {
+    auto trim = [](const std::string& s) {
+        size_t i = 0, j = s.size();
+        while (i < j && std::isspace(static_cast<unsigned char>(s[i]))) i++;
+        while (j > i && std::isspace(static_cast<unsigned char>(s[j - 1]))) j--;
+        return s.substr(i, j - i);
+    };
+    auto lower = [](std::string s) {
+        std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) { return std::tolower(c); });
+        return s;
+    };
+
+    std::vector<std::unordered_map<std::string, std::string>> out;
+    out.reserve(objects.size());
+    for (const auto& obj : objects) {
+        std::unordered_map<std::string, std::string> norm;
+        for (const auto& [k, v] : obj) {
+            norm[lower(trim(k))] = trim(v);
+        }
+        out.push_back(std::move(norm));
+    }
+    return out;
+}
+```
+**Explanation:** Iterates over each input map, lowercases and trims keys, trims string values, and builds a normalized copy. Leaves the original data unchanged.
+**Complexity:** Time: O(total_chars) across all keys/values; Space: O(total_chars) for the normalized copies.
+**Example:**
+Input: [{" Name ":" Alice ", "Email":"TEST@EXAMPLE.COM"}]
+Output: [{"name":"Alice", "email":"TEST@EXAMPLE.COM"}]
+**Notes:**
+- Adjust normalization (e.g., lowercase values) to your needs.
+- For non-string values, extend the signature to handle variants.
+- Duplicate keys after normalization will overwrite earlier entries; detect if that matters.

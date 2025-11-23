@@ -1,0 +1,28 @@
+javascript
+```javascript
+/**
+ * Process a stream of log lines into structured objects.
+ */
+function processLogs(lines) {
+  const records = [];
+  for (const line of lines) {
+    if (!line || !line.trim()) continue;
+    const [timestamp, level = 'INFO', ...msgParts] = line.trim().split(/\s+/);
+    records.push({
+      timestamp,
+      level: level.toUpperCase(),
+      message: msgParts.join(' '),
+    });
+  }
+  return records;
+}
+```
+**Explanation:** Iterates log lines, skips blanks, splits into timestamp/level/message tokens, normalizes the level, and aggregates structured records.
+**Complexity:** Time: O(n * m) over lines and average tokens; Space: O(n) for output.
+**Example:**
+Input: ["2024-01-01 info started", "2024-01-01 warn high load"]
+Output: [{timestamp:"2024-01-01", level:"INFO", message:"started"}, {timestamp:"2024-01-01", level:"WARN", message:"high load"}]
+**Notes:**
+- Adjust parsing if timestamps contain spaces; use regex captures for richer formats.
+- Validate levels against an allowlist to filter malformed lines.
+- For streaming, yield results instead of collecting into an array.

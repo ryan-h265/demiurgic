@@ -1,0 +1,26 @@
+rust
+```rust
+/// Return the nth Fibonacci number (0-indexed: fib(0)=0, fib(1)=1).
+pub fn fibonacci(n: u32) -> u64 {
+    if n == 0 {
+        return 0;
+    }
+    let mut a: u64 = 0;
+    let mut b: u64 = 1;
+    for _ in 1..n {
+        let next = a + b;
+        a = b;
+        b = next;
+    }
+    b
+}
+```
+**Explanation:** Handles the n=0 base case, then iteratively advances two accumulators (`a`, `b`) to build the sequence without recursion. After `n-1` updates, `b` holds fib(n).
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: n = 7
+Output: 13
+**Notes:**
+- For very large n, use `num_bigint::BigUint` to avoid overflow.
+- Zero-indexing keeps fib(0)=0, fib(1)=1; adjust if one-based is required.
+- Iterative approach avoids recursion depth and stack overhead.

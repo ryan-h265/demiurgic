@@ -1,0 +1,45 @@
+rust
+```rust
+use std::collections::{HashSet, VecDeque};
+
+pub struct FastQueue<T: Eq + std::hash::Hash + Clone> {
+    data: VecDeque<T>,
+    index: HashSet<T>, // for O(1) membership lookup
+}
+
+impl<T: Eq + std::hash::Hash + Clone> FastQueue<T> {
+    pub fn new() -> Self {
+        Self { data: VecDeque::new(), index: HashSet::new() }
+    }
+
+    pub fn enqueue(&mut self, value: T) {
+        self.index.insert(value.clone());
+        self.data.push_back(value);
+    }
+
+    pub fn dequeue(&mut self) -> Option<T> {
+        let val = self.data.pop_front();
+        if let Some(ref v) = val {
+            self.index.remove(v);
+        }
+        val
+    }
+
+    pub fn contains(&self, value: &T) -> bool {
+        self.index.contains(value)
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.data.is_empty()
+    }
+}
+```
+**Explanation:** Wraps a `VecDeque` for O(1) head/tail operations and a `HashSet` mirror for O(1) membership tests, providing efficient insertion and lookup. Removing from the front also updates the index to keep structures in sync.
+**Complexity:** Time: O(1) average for enqueue, dequeue, and contains; Space: O(n).
+**Example:**
+Input: enqueue 1,2; contains(2); dequeue()
+Output: `contains(2)` -> true, `dequeue()` -> 1
+**Notes:**
+- `contains` checks by value; if duplicates matter, store counts instead of a set.
+- For thread safety, wrap the struct in a Mutex/RwLock.
+- Generics require `Eq + Hash + Clone`; relax cloning by storing references or using interior mutability.

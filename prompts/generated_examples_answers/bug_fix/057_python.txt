@@ -1,0 +1,19 @@
+python
+```python
+def factorial(n: int) -> int:
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+```
+**Explanation:** Adds validation and handles `n = 0` by returning 1 (loop skips). The original recursive snippet lacked the 0 base case and used Python indentation incorrectly for the missing-elements scenario; this iterative version is safe and straightforward.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 0
+Output: 1
+**Notes:**
+- Iterative approach avoids recursion depth issues for large n.
+- For very large results, consider using `math.prod(range(1, n+1))` for brevity; Python ints are unbounded.
+- Negative inputs raise immediately to avoid undefined behavior.

@@ -1,0 +1,21 @@
+javascript
+```javascript
+// Corrected factorial with proper base case and validation
+function factorial(n) {
+  if (!Number.isInteger(n) || n < 0) throw new Error('n must be a non-negative integer');
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+  return result;
+}
+```
+**Explanation:** Adds validation and handles `n = 0` by returning 1. The original recursive snippet lacked a base case for zero and used Python syntax; this JavaScript version iterates safely and returns defined results for all non-negative integers.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: `factorial(0)`
+Output: `1`
+**Notes:**
+- Iterative form avoids recursion depth limits.
+- Throws on negative or non-integer input to prevent incorrect results.
+- For large `n`, consider BigInt to avoid overflow.

@@ -1,0 +1,32 @@
+csharp
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Paginator
+{
+    public record Page<T>(IReadOnlyList<T> Items, int Page, int TotalPages);
+
+    public static Page<T> Paginate<T>(IReadOnlyList<T> items, int page, int pageSize)
+    {
+        if (page <= 0 || pageSize <= 0) throw new ArgumentException("page and pageSize must be positive");
+        int total = items.Count;
+        int totalPages = Math.Max(1, (int)Math.Ceiling(total / (double)pageSize));
+        int current = Math.Min(page, totalPages);
+        int start = (current - 1) * pageSize;
+        int end = Math.Min(start + pageSize, total);
+        var slice = new List<T>();
+        for (int i = start; i < end; i++) slice.Add(items[i]);
+        return new Page<T>(slice, current, totalPages);
+    }
+}
+```
+**Explanation:** Validates inputs, computes total pages, clamps the requested page, slices the input into a new list for that page, and returns pagination metadata.
+**Complexity:** Time: O(k) for copying page items; Space: O(k) for the slice.
+**Example:**
+Input: items [1,2,3,4,5], page=2, pageSize=2
+Output: Page(items=[3,4], page=2, totalPages=3)
+**Notes:**
+- Throws on invalid arguments; adjust to return an empty page if preferred.
+- For very large datasets, paginate at the data source rather than copying in memory.
+- Slice is a copy; modifications don’t affect the original list.

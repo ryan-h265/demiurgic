@@ -1,0 +1,86 @@
+java
+```java
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+
+public class HashTable<K, V> {
+    private static final double LOAD_FACTOR = 0.75;
+    private List<Entry<K, V>>[] buckets;
+    private int size = 0;
+
+    @SuppressWarnings("unchecked")
+    public HashTable(int capacity) {
+        buckets = new List[Math.max(1, capacity)];
+    }
+
+    public V get(K key) {
+        Entry<K, V> e = findEntry(key);
+        return e == null ? null : e.value;
+    }
+
+    public void put(K key, V value) {
+        ensureCapacity();
+        int idx = index(key);
+        if (buckets[idx] == null) buckets[idx] = new LinkedList<>();
+        for (Entry<K, V> e : buckets[idx]) {
+            if (Objects.equals(e.key, key)) { e.value = value; return; }
+        }
+        buckets[idx].add(new Entry<>(key, value));
+        size++;
+    }
+
+    public V remove(K key) {
+        int idx = index(key);
+        List<Entry<K, V>> bucket = buckets[idx];
+        if (bucket == null) return null;
+        for (var it = bucket.iterator(); it.hasNext();) {
+            Entry<K, V> e = it.next();
+            if (Objects.equals(e.key, key)) {
+                it.remove();
+                size--;
+                return e.value;
+            }
+        }
+        return null;
+    }
+
+    private Entry<K, V> findEntry(K key) {
+        List<Entry<K, V>> bucket = buckets[index(key)];
+        if (bucket == null) return null;
+        for (Entry<K, V> e : bucket) if (Objects.equals(e.key, key)) return e;
+        return null;
+    }
+
+    private int index(K key) {
+        return (key == null ? 0 : (key.hashCode() & 0x7fffffff)) % buckets.length;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void ensureCapacity() {
+        if (size >= buckets.length * LOAD_FACTOR) {
+            List<Entry<K, V>>[] old = buckets;
+            buckets = new List[old.length * 2];
+            size = 0;
+            for (List<Entry<K, V>> bucket : old) {
+                if (bucket == null) continue;
+                for (Entry<K, V> e : bucket) put(e.key, e.value);
+            }
+        }
+    }
+
+    private static class Entry<K, V> {
+        final K key; V value;
+        Entry(K k, V v) { key = k; value = v; }
+    }
+}
+```
+**Explanation:** Separate-chaining hash table with dynamic resizing. Supports put/get/remove, rehashing when load factor is exceeded, and handles null keys by mapping them to bucket 0.
+**Complexity:** Time: O(1) average for operations; Space: O(n).
+**Example:**
+Input: put("a",1); get("a")
+Output: 1
+**Notes:**
+- Customize `LOAD_FACTOR` for different memory/performance trade-offs.
+- Not thread-safe; synchronize if used concurrently.
+- For better iteration order, use LinkedHashMap instead.

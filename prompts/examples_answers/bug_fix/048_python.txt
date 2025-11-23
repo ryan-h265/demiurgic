@@ -1,0 +1,20 @@
+python
+```python
+def factorial(n: int) -> int:
+    """Compute n! with proper base cases and validation."""
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+```
+**Explanation:** The buggy recursive version missed a base case for n = 0 and risked deep recursion. This iterative implementation validates non-negative input and multiplies from 2 through n, returning 1 for 0! and 1!.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 5
+Output: 120
+**Notes:**
+- Raises on negative inputs instead of recursing indefinitely.
+- Python's big integers avoid overflow for moderate n, but results grow quickly.
+- For recursion-based solutions, ensure `n <= 1` base case to avoid runaway calls.

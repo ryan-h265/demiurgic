@@ -1,0 +1,44 @@
+java
+```java
+import java.util.*;
+
+public class BreadthFirstSearch {
+    /**
+     * Perform BFS starting from source on an adjacency-list graph.
+     * @param graph adjacency list where graph[u] contains neighbors of u
+     * @param start starting vertex id
+     * @return list of visited vertices in BFS order
+     */
+    public static List<Integer> bfs(List<List<Integer>> graph, int start) {
+        List<Integer> order = new ArrayList<>();
+        if (graph == null || graph.isEmpty()) return order;
+
+        boolean[] visited = new boolean[graph.size()];
+        Queue<Integer> queue = new ArrayDeque<>();
+
+        visited[start] = true;
+        queue.add(start);
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            order.add(node);
+            for (int neighbor : graph.get(node)) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true; // mark before enqueue to avoid duplicates
+                    queue.add(neighbor);
+                }
+            }
+        }
+        return order;
+    }
+}
+```
+**Explanation:** Maintain a queue for the frontier and a visited array to avoid revisits. Start by enqueuing the source, then repeatedly pop from the queue, record the node, and enqueue all unvisited neighbors while marking them visited. This visits nodes in increasing distance from the start.
+**Complexity:** Time: O(V + E); Space: O(V) for the visited array and queue.
+**Example:**
+Input: graph = [[1,2],[0,3],[0,3],[1,2]], start = 0
+Output: [0,1,2,3]
+**Notes:**
+- Works for directed or undirected graphs; neighbors list should reflect directionality.
+- If the start index is invalid, guard appropriately; here graph bounds are assumed valid.
+- To track parent paths, store predecessor array alongside visited.

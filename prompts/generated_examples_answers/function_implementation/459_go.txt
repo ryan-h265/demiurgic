@@ -1,0 +1,55 @@
+go
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+)
+
+// StreamFile reads a file in fixed-size chunks, yielding each chunk to the caller.
+func StreamFile(path string, chunkSize int, handle func([]byte) error) error {
+	f, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	r := bufio.NewReader(f)
+	buf := make([]byte, chunkSize)
+	for {
+		n, err := r.Read(buf)
+		if n > 0 {
+			if e := handle(buf[:n]); e != nil {
+				return e
+			}
+		}
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func main() {
+	handle := func(chunk []byte) error {
+		fmt.Printf("read %d bytes\n", len(chunk))
+		return nil
+	}
+	_ = StreamFile("/path/to/large.bin", 8192, handle)
+}
+```
+**Explanation:** Opens the file, reads it in `chunkSize` blocks via a buffered reader, and invokes a callback for each chunk. This avoids loading the entire file into memory and propagates errors from reading or handling.
+**Complexity:** Time: O(file_size); Space: O(chunk_size).
+**Example:**
+Input: stream a 20KB file with chunkSize=8KB
+Output: handler invoked 3 times (8KB, 8KB, 4KB)
+**Notes:**
+- Choose chunk size based on I/O patterns; larger chunks reduce syscall overhead.
+- Caller can stop early by returning an error from `handle`.
+- Wrap with retries or checksums if robustness is required for network filesystems.

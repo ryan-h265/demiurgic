@@ -1,0 +1,6 @@
+# Flash Attention 2 (optional, provides 2-4x speedup)
+# This requires CUDA and can be tricky to install
+# Only install if you have compatible GPU and CUDA setup
+# Install with: pip install flash-attn --no-build-isolation
+
+flash-attn>=2.0.0

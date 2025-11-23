@@ -1,0 +1,33 @@
+java
+```java
+import java.time.Duration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+public class Scheduler {
+    private final ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
+
+    public void scheduleAtFixedRate(Runnable task, Duration initialDelay, Duration period) {
+        exec.scheduleAtFixedRate(task, initialDelay.toMillis(), period.toMillis(), TimeUnit.MILLISECONDS);
+    }
+
+    public void shutdown() {
+        exec.shutdown();
+    }
+
+    public static void main(String[] args) {
+        Scheduler scheduler = new Scheduler();
+        scheduler.scheduleAtFixedRate(() -> System.out.println("tick"), Duration.ZERO, Duration.ofSeconds(5));
+    }
+}
+```
+**Explanation:** Uses a `ScheduledExecutorService` to run a task on a fixed schedule with an initial delay. Provides a shutdown method for cleanup.
+**Complexity:** Time: O(1) scheduling overhead; Space: O(1) plus thread resources.
+**Example:**
+Input: schedule a task every 5 seconds
+Output: prints "tick" every 5 seconds
+**Notes:**
+- Handle interruptions and task exceptions; by default, exceptions can cancel future runs.
+- Adjust thread pool size based on number of concurrent tasks.
+- Call `shutdown()` on application exit to release threads.

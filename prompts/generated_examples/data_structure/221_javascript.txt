@@ -1,0 +1,6 @@
+Category: data_structure
+Language: javascript
+
+============================================================
+
+Implement a binary search tree in JavaScript with efficient lookup and insertion

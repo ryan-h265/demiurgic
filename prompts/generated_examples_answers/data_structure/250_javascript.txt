@@ -1,0 +1,37 @@
+javascript
+```javascript
+class Queue {
+  constructor() {
+    this.data = [];
+    this.head = 0;
+  }
+  enqueue(x) {
+    this.data.push(x);
+  }
+  dequeue() {
+    if (this.isEmpty()) return undefined;
+    const val = this.data[this.head++];
+    // trim occasionally to avoid unbounded growth
+    if (this.head > 50 && this.head * 2 > this.data.length) {
+      this.data = this.data.slice(this.head);
+      this.head = 0;
+    }
+    return val;
+  }
+  peek() {
+    return this.isEmpty() ? undefined : this.data[this.head];
+  }
+  isEmpty() {
+    return this.head >= this.data.length;
+  }
+}
+```
+**Explanation:** Implements a simple queue using an array with a moving head index to achieve O(1) amortized dequeues. Periodically compacts the array to reclaim space.
+**Complexity:** Time: O(1) amortized for enqueue/dequeue; Space: O(n).
+**Example:**
+Input: enqueue 1,2; dequeue -> 1; peek -> 2
+Output: as shown
+**Notes:**
+- For guaranteed O(1) without slicing, use a ring buffer.
+- Returns undefined on empty operations; adjust to throw if preferred.
+- Not thread-safe; coordinate access if used concurrently.

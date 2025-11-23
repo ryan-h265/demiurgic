@@ -1,0 +1,33 @@
+java
+```java
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+public class PriorityQueueWithUnion {
+    private final PriorityQueue<Integer> pq;
+
+    public PriorityQueueWithUnion() {
+        pq = new PriorityQueue<>(Comparator.naturalOrder());
+    }
+
+    public void insert(int val) { pq.add(val); }
+    public Integer deleteRoot() { return pq.poll(); }
+    public Integer peek() { return pq.peek(); }
+
+    // Union: merge another PQ's elements into this one
+    public void union(PriorityQueueWithUnion other) {
+        while (!other.pq.isEmpty()) {
+            this.pq.add(other.pq.poll());
+        }
+    }
+}
+```
+**Explanation:** Wraps Java's `PriorityQueue` to provide insert, deleteRoot, and peek, plus a `union` method that merges another queue's contents. Uses natural ordering for a min-heap.
+**Complexity:** Time: O(log n) insert/delete; union O(m log(n+m)); Space: O(n+m).
+**Example:**
+Input: insert 3,1; peek()->1
+Output: min-heap behavior
+**Notes:**
+- Union drains the other queue; adjust if you want to preserve it.
+- For thread safety, synchronize methods.
+- Change comparator for max-heap or custom ordering.

@@ -1,0 +1,19 @@
+# Training infrastructure (install when ready to train)
+transformers>=4.35.0
+tokenizers>=0.14.0
+accelerate>=0.24.0
+deepspeed>=0.12.0
+datasets>=2.14.0
+
+# Experiment tracking
+wandb>=0.15.0
+tensorboard>=2.14.0
+
+# Utilities
+tqdm>=4.66.0
+pyyaml>=6.0.0
+einops>=0.7.0
+
+# Development
+black>=23.0.0
+isort>=5.12.0

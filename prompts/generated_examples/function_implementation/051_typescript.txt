@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: typescript
+
+============================================================
+
+Create a TypeScript utility that debounces an async function call with proper error handling

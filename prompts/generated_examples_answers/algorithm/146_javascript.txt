@@ -1,0 +1,58 @@
+javascript
+```javascript
+// Binary tree node
+function TreeNode(val, left = null, right = null) {
+  this.val = val;
+  this.left = left;
+  this.right = right;
+}
+
+// Serialize with BFS, using '#' for nulls
+function serialize(root) {
+  if (!root) return '';
+  const out = [];
+  const queue = [root];
+  while (queue.length) {
+    const node = queue.shift();
+    if (node) {
+      out.push(String(node.val));
+      queue.push(node.left, node.right);
+    } else {
+      out.push('#');
+    }
+  }
+  while (out.length && out[out.length - 1] === '#') out.pop();
+  return out.join(',');
+}
+
+function deserialize(data) {
+  if (!data) return null;
+  const vals = data.split(',');
+  const root = new TreeNode(parseInt(vals[0], 10));
+  const queue = [root];
+  let i = 1;
+  while (queue.length && i < vals.length) {
+    const node = queue.shift();
+    const leftVal = vals[i++];
+    if (leftVal !== '#' && leftVal !== undefined) {
+      node.left = new TreeNode(parseInt(leftVal, 10));
+      queue.push(node.left);
+    }
+    const rightVal = vals[i++];
+    if (rightVal !== '#' && rightVal !== undefined) {
+      node.right = new TreeNode(parseInt(rightVal, 10));
+      queue.push(node.right);
+    }
+  }
+  return root;
+}
+```
+**Explanation:** Serializes with level-order traversal, inserting `#` for nulls and trimming trailing null markers. Deserializes by rebuilding level-order: read values, attach children sequentially, and enqueue non-null nodes.
+**Complexity:** Time: O(n); Space: O(n).
+**Example:**
+Input: root with values [1,2,3,#,#,4]
+Output: serialized "1,2,3,#,#,4"; deserialization restores an equivalent tree
+**Notes:**
+- If node values may include commas or '#', encode/escape them first.
+- Trimming trailing nulls shortens the payload while preserving structure.
+- Switch to pre/postorder formats if you prefer a recursive encoding.

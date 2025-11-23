@@ -1,0 +1,14 @@
+javascript
+```javascript
+// Sums the numbers in the array starting from an initial accumulator of 0
+const sum = [1, 2, 3, 4].reduce((acc, x) => acc + x, 0);
+```
+**Explanation:** `Array.prototype.reduce` walks the array left to right, passing the accumulator and current element to the callback. Starting at 0, it adds each value, so the accumulator evolves as 0 -> 1 -> 3 -> 6 -> 10, producing the total sum.
+**Complexity:** Time: O(n) over the array length; Space: O(1) auxiliary.
+**Example:**
+Input: [1, 2, 3, 4]
+Output: 10
+**Notes:**
+- Without the initial `0`, the first element becomes the initial accumulator.
+- Callback can implement other folds (products, min/max, object aggregation, etc.).
+- For empty arrays, an initial value is required or reduce will throw.

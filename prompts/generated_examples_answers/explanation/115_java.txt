@@ -1,0 +1,13 @@
+java
+```java
+reduce((acc, x) => acc + x, [1, 2, 3, 4], 0)
+```
+**Explanation:** This pseudocode folds the array [1,2,3,4] with an addition callback starting from accumulator 0, producing the sum 10. In Java streams, the equivalent is `Stream.of(1,2,3,4).reduce(0, Integer::sum)`.
+**Complexity:** Time: O(n); Space: O(1) auxiliary.
+**Example:**
+Input: [1,2,3,4]
+Output: 10
+**Notes:**
+- Always supply an identity value (0 here) to define behavior on empty collections.
+- Replace the lambda to compute other reductions (product, min, concatenation).
+- In parallel streams, ensure the accumulator and combiner are associative.

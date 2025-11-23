@@ -1,0 +1,23 @@
+typescript
+```typescript
+export function rotate(matrix: number[][]): void {
+  const n = matrix.length;
+  // transpose
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+    }
+  }
+  // reverse rows
+  for (const row of matrix) row.reverse();
+}
+```
+**Explanation:** Rotates a square matrix 90° clockwise in-place by transposing, then reversing each row.
+**Complexity:** Time: O(n²); Space: O(1) extra.
+**Example:**
+Input: [[1,2],[3,4]]
+Output: [[3,1],[4,2]]
+**Notes:**
+- Requires square matrix; adjust for rectangular cases.
+- For counterclockwise rotation, transpose then reverse columns instead.
+- Ensure matrix is non-jagged to avoid index errors.

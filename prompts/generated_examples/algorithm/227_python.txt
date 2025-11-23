@@ -1,0 +1,6 @@
+Category: algorithm
+Language: python
+
+============================================================
+
+Implement depth-first search (DFS) in Python with detailed comments

@@ -1,0 +1,25 @@
+java
+```java
+import java.util.List;
+import java.util.function.Predicate;
+
+public class ObjectValidator {
+    /** Validate that all objects in the list satisfy the predicate. */
+    public static <T> boolean validateAll(List<T> items, Predicate<T> rule) {
+        if (items == null || rule == null) return false;
+        for (T item : items) {
+            if (item == null || !rule.test(item)) return false;
+        }
+        return true;
+    }
+}
+```
+**Explanation:** Iterates through the array/list of objects and applies a caller-supplied predicate; returns false on nulls or the first violation, true otherwise.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: items of Users, predicate `u -> u.age >= 18`
+Output: true if all users are adults
+**Notes:**
+- Replace predicate with field checks if you want built-in validation.
+- Returns false on null inputs to avoid NullPointerExceptions.
+- Extend to collect error messages instead of a boolean for better UX.

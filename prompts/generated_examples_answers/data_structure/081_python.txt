@@ -1,0 +1,39 @@
+python
+```python
+from collections import deque
+from typing import Generic, TypeVar
+
+T = TypeVar("T")
+
+class CircularBuffer(Generic[T]):
+    def __init__(self, capacity: int):
+        if capacity <= 0:
+            raise ValueError("capacity must be positive")
+        self.capacity = capacity
+        self.data: deque[T] = deque(maxlen=capacity)
+
+    def push(self, item: T) -> None:
+        if len(self.data) == self.capacity:
+            # evict oldest automatically via maxlen
+            self.data.popleft()
+        self.data.append(item)
+
+    def pop(self) -> T:
+        if not self.data:
+            raise IndexError("buffer is empty")
+        return self.data.popleft()
+
+    def peek(self) -> T:
+        if not self.data:
+            raise IndexError("buffer is empty")
+        return self.data[0]
+```
+**Explanation:** Wraps `deque` with a fixed `maxlen` to achieve O(1) eviction of the oldest element when full. `push` evicts automatically, `pop`/`peek` access the head.
+**Complexity:** Time: O(1) per operation; Space: O(capacity).
+**Example:**
+Input: capacity=2; push 1; push 2; push 3; pop()
+Output: `pop()` returns 2 (1 was evicted when pushing 3)
+**Notes:**
+- To avoid eviction, raise on overflow instead of using `maxlen` semantics.
+- Add `__len__` for convenience if integrating with collections.
+- Thread-safety not provided; use locks in concurrent contexts.

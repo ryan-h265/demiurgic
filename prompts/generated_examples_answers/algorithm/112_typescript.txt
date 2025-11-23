@@ -1,0 +1,31 @@
+typescript
+```typescript
+function permutations(s: string): string[] {
+  const chars = s.split("");
+  const result: string[] = [];
+
+  function backtrack(start: number): void {
+    if (start === chars.length) {
+      result.push(chars.join(""));
+      return;
+    }
+    for (let i = start; i < chars.length; i++) {
+      [chars[start], chars[i]] = [chars[i], chars[start]];
+      backtrack(start + 1);
+      [chars[start], chars[i]] = [chars[i], chars[start]]; // undo
+    }
+  }
+
+  backtrack(0);
+  return result;
+}
+```
+**Explanation:** Uses swap-based backtracking: fix each position by swapping in every candidate character, recurse to fill the rest, then swap back to restore state. When the current index reaches the string length, collect a permutation.
+**Complexity:** Time: O(n·n!) due to generating all permutations; Space: O(n) recursion stack (output excluded).
+**Example:**
+Input: "abc"
+Output: ["abc", "acb", "bac", "bca", "cba", "cab"]
+**Notes:**
+- Strings with duplicate characters will produce duplicate permutations; use a set per level to skip repeats.
+- Works for empty string (returns [""]).
+- Swapping in-place avoids extra allocations per recursion level.

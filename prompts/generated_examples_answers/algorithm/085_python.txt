@@ -1,0 +1,31 @@
+python
+```python
+class UnionFind:
+    def __init__(self, n: int):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+
+    def find(self, x: int) -> int:
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, a: int, b: int) -> None:
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return
+        if self.rank[ra] < self.rank[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        if self.rank[ra] == self.rank[rb]:
+            self.rank[ra] += 1
+```
+**Explanation:** Maintains parent/rank arrays; `find` compresses paths recursively, `union` attaches the lower-rank root under the higher-rank root to keep trees shallow.
+**Complexity:** Time: Amortized ~O(α(n)) per op; Space: O(n).
+**Example:**
+Input: uf = UnionFind(3); uf.union(0,1); uf.union(1,2); uf.find(2)
+Output: 0 (or 1) as representative of the merged set
+**Notes:**
+- No dynamic growth; instantiate with known maximum size.
+- Add `connected(a,b)` helper for readability.
+- Validate indices before use in production code.

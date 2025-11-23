@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: c++
+
+============================================================
+
+Write a C++ function that flattens a nested list of numbers

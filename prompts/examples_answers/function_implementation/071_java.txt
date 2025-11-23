@@ -1,0 +1,22 @@
+java
+```java
+import java.util.regex.Pattern;
+
+public class EmailValidator {
+    private static final Pattern EMAIL_PATTERN =
+        Pattern.compile("^[\\w.+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+
+    public static boolean isValid(String email) {
+        return email != null && EMAIL_PATTERN.matcher(email).matches();
+    }
+}
+```
+**Explanation:** Compiles a simple regex that checks for a valid-looking local part, an `@`, a domain, and a top-level domain of at least two letters. `isValid` returns true when the input matches.
+**Complexity:** Time: O(n) for matching; Space: O(1) auxiliary (pattern is precompiled).
+**Example:**
+Input: "user@example.com"
+Output: true
+**Notes:**
+- Regex is intentionally lenient; full RFC compliance requires a more complex pattern.
+- Returns false on null to avoid `NullPointerException`.
+- Trim whitespace before validation if user input may include it.

@@ -1,0 +1,27 @@
+go
+```go
+package main
+
+import (
+	"regexp"
+	"strings"
+)
+
+var nonAlnum = regexp.MustCompile(`[^a-z0-9]+`)
+
+func Slugify(s string) string {
+	s = strings.ToLower(strings.TrimSpace(s))
+	s = nonAlnum.ReplaceAllString(s, "-")
+	s = strings.Trim(s, "-")
+	return s
+}
+```
+**Explanation:** Lowercases the string, replaces non-alphanumeric runs with dashes, and trims leading/trailing dashes to produce a URL-friendly slug.
+**Complexity:** Time: O(n); Space: O(n).
+**Example:**
+Input: "Hello, World!"
+Output: "hello-world"
+**Notes:**
+- Adjust regex to permit additional characters if needed.
+- Collapse multiple separators into a single dash via the regex replacement.
+- Ensure Unicode handling meets your requirements; this example is ASCII-focused.

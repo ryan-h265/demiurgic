@@ -1,0 +1,17 @@
+python
+```python
+def index_of(nums, target):
+    for i, val in enumerate(nums):
+        if val == target:
+            return i
+    return -1
+```
+**Explanation:** Moves the `return -1` outside the loop so the search scans the entire list. Uses Python's enumerate for clarity, returning -1 only if the target is absent.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: nums=[1,2,3], target=4
+Output: -1
+**Notes:**
+- Works for empty lists (immediately returns -1).
+- For frequent lookups, consider building a dictionary of value->index for O(1) average access.
+- If multiple occurrences exist, returns the first index; adjust if last/any is needed.

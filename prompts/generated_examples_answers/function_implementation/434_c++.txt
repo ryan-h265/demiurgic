@@ -1,0 +1,17 @@
+c++
+```cpp
+#include <string>
+
+// Aggregate: count characters and return length of the string.
+int aggregateString(const std::string& s) {
+    return static_cast<int>(s.size());
+}
+```
+**Explanation:** Treats aggregation as computing the length of the input string; returns the number of characters.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: "hello"
+Output: 5
+**Notes:**
+- Adjust aggregation to sum digits, count words, or other metrics as needed.
+- For UTF-8 length in code points, iterate with a decoder instead of `size()`.

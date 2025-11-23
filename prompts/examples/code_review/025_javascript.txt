@@ -1,0 +1,18 @@
+Category: code_review
+Language: javascript
+
+============================================================
+
+Review this JavaScript code and suggest improvements for performance:
+```javascript
+function updateList(items) {
+    const list = document.getElementById('itemList');
+    list.innerHTML = '';
+    for (let i = 0; i < items.length; i++) {
+        const li = document.createElement('li');
+        li.textContent = items[i].name;
+        list.appendChild(li);
+        list.style.display = 'block';
+    }
+}
+```

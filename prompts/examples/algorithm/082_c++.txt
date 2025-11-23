@@ -1,0 +1,6 @@
+Category: algorithm
+Language: c++
+
+============================================================
+
+Implement depth-first search (DFS) in C++ with detailed comments

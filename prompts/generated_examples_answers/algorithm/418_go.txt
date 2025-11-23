@@ -1,0 +1,49 @@
+go
+```go
+package main
+
+import "container/list"
+
+// Topological sort with cycle detection; returns order and ok flag.
+func TopoSort(n int, edges [][2]int) ([]int, bool) {
+    adj := make([][]int, n)
+    indeg := make([]int, n)
+    for _, e := range edges {
+        u, v := e[0], e[1]
+        adj[u] = append(adj[u], v)
+        indeg[v]++
+    }
+    q := list.New()
+    for i, d := range indeg {
+        if d == 0 {
+            q.PushBack(i)
+        }
+    }
+    order := make([]int, 0, n)
+    for q.Len() > 0 {
+        e := q.Front()
+        q.Remove(e)
+        u := e.Value.(int)
+        order = append(order, u)
+        for _, v := range adj[u] {
+            indeg[v]--
+            if indeg[v] == 0 {
+                q.PushBack(v)
+            }
+        }
+    }
+    if len(order) != n {
+        return nil, false
+    }
+    return order, true
+}
+```
+**Explanation:** Kahn’s algorithm: build indegrees, queue zero-indegree nodes, pop/append to order, and decrement neighbors. If not all nodes are processed, a cycle exists.
+**Complexity:** Time: O(V+E); Space: O(V+E).
+**Example:**
+Input: n=3, edges={(0,1),(1,2)}
+Output: order [0,1,2], ok=true
+**Notes:**
+- Validate node indices in production code.
+- Multiple valid orders may exist; queue order determines which is returned.
+- Use DFS variant if recursion depth is manageable.

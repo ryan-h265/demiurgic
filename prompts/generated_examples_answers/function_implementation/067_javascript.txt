@@ -1,0 +1,22 @@
+javascript
+```javascript
+/**
+ * Transform a list of numbers by normalizing (z-score) and returning a new array.
+ */
+function transformNumbers(nums) {
+  if (!Array.isArray(nums) || nums.length === 0) return [];
+  const mean = nums.reduce((s, n) => s + n, 0) / nums.length;
+  const variance = nums.reduce((s, n) => s + (n - mean) ** 2, 0) / nums.length;
+  const std = Math.sqrt(variance) || 1;
+  return nums.map((n) => (n - mean) / std);
+}
+```
+**Explanation:** Computes mean and standard deviation, then maps each number to its z-score, producing a transformed array without mutating the input.
+**Complexity:** Time: O(n); Space: O(n) for output.
+**Example:**
+Input: [1, 2, 3]
+Output: [-1.2247, 0, 1.2247] (approx)
+**Notes:**
+- If variance is zero, std is coerced to 1 to avoid division by zero.
+- Adjust transformation (e.g., scaling, clipping) to your needs.
+- Validate elements are numeric to avoid NaN propagation.

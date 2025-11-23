@@ -1,0 +1,31 @@
+rust
+```rust
+pub struct LogRecord {
+    pub timestamp: String,
+    pub level: String,
+    pub message: String,
+}
+
+pub fn transform_logs(lines: &[String]) -> Vec<LogRecord> {
+    let mut out = Vec::new();
+    for line in lines {
+        let trimmed = line.trim();
+        if trimmed.is_empty() { continue; }
+        let mut parts = trimmed.splitn(3, ' ');
+        let ts = parts.next().unwrap_or("").to_string();
+        let level = parts.next().unwrap_or("INFO").to_uppercase();
+        let message = parts.next().unwrap_or("").to_string();
+        out.push(LogRecord { timestamp: ts, level, message });
+    }
+    out
+}
+```
+**Explanation:** Parses each log line into timestamp, level, and message using `splitn(3, ' ')`, defaulting to INFO when no level is provided. Skips blank lines and returns structured records.
+**Complexity:** Time: O(n * m) over lines and average length; Space: O(n) for the output.
+**Example:**
+Input: ["2024-01-01 info started", "2024-01-01 warn high load"]
+Output: records with normalized uppercase levels and parsed fields
+**Notes:**
+- Adjust splitting if timestamps contain spaces; use regex for richer formats.
+- Consider parsing level into an enum to validate allowed levels.
+- For streaming, yield records via an iterator instead of materializing a Vec.

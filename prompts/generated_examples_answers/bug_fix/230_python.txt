@@ -1,0 +1,19 @@
+python
+```python
+def index_of(nums, target):
+    if nums is None:
+        return -1
+    for i, val in enumerate(nums):
+        if val == target:
+            return i
+    return -1
+```
+**Explanation:** Adds a None check to avoid dereferencing a null-like value, and places the default `-1` return after the loop so all elements are examined. This prevents premature returns and avoids attribute errors on missing input.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: nums=None, target=3
+Output: -1
+**Notes:**
+- Works safely for empty lists (returns -1).
+- For repeated queries, prebuild a map for faster lookups.
+- Adjust to raise on None if silence is undesirable.

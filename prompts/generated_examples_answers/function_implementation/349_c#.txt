@@ -1,0 +1,38 @@
+csharp
+```csharp
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+public static class HttpRetrier
+{
+    public static async Task<string> GetWithBackoffAsync(string url, int maxRetries = 3, int baseDelayMs = 200)
+    {
+        using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+        for (int attempt = 0; attempt <= maxRetries; attempt++)
+        {
+            try
+            {
+                using var resp = await client.GetAsync(url);
+                resp.EnsureSuccessStatusCode();
+                return await resp.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex) when (attempt < maxRetries)
+            {
+                int delay = baseDelayMs * (1 << attempt);
+                await Task.Delay(delay);
+            }
+        }
+        throw new HttpRequestException($"Failed after {maxRetries + 1} attempts");
+    }
+}
+```
+**Explanation:** Attempts an HTTP GET up to `maxRetries + 1` times, doubling the delay after each failure. Returns the response body on success or throws after exhausting retries. Uses `EnsureSuccessStatusCode` to retry on non-2xx responses.
+**Complexity:** Time: O(retries * request_time); Space: O(1) extra.
+**Example:**
+Input: await GetWithBackoffAsync("https://example.com", 2)
+Output: Response body string if successful
+**Notes:**
+- Add jitter to delays to avoid synchronized retries under load.
+- Narrow the catch filter to transient exceptions (e.g., HttpRequestException) as needed.
+- Dispose of HttpClient differently (pool) if making many calls.

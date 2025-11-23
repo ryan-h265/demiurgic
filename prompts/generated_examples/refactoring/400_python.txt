@@ -1,0 +1,7 @@
+Category: refactoring
+Language: python
+
+============================================================
+
+Refactor this Python code to be more pythonic:
+# Code snippet here

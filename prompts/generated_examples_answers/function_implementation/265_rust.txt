@@ -1,0 +1,20 @@
+rust
+```rust
+#[derive(Clone, Debug)]
+pub struct Item {
+    pub value: i32,
+}
+
+pub fn transform(items: &[Item], delta: i32) -> Vec<Item> {
+    items.iter().map(|i| Item { value: i.value + delta }).collect()
+}
+```
+**Explanation:** Returns a new vector where each item's `value` field is incremented by `delta`. Uses iterator mapping to avoid mutating the original slice.
+**Complexity:** Time: O(n); Space: O(n) for the new vector.
+**Example:**
+Input: [{value:1}, {value:2}], delta=5
+Output: [{value:6}, {value:7}]
+**Notes:**
+- Adjust transformation logic to match real needs (e.g., normalization).
+- If in-place is acceptable, iterate mutably and modify directly.
+- Extend the struct fields as necessary for your domain.

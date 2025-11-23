@@ -1,0 +1,35 @@
+python
+```python
+import heapq
+from typing import List, Optional, TypeVar
+
+T = TypeVar("T")
+
+
+class MinHeap:
+    def __init__(self) -> None:
+        self._data: List[T] = []
+
+    def push(self, item: T) -> None:
+        heapq.heappush(self._data, item)
+
+    def pop(self) -> T:
+        if not self._data:
+            raise IndexError("pop from empty heap")
+        return heapq.heappop(self._data)
+
+    def peek(self) -> Optional[T]:
+        return self._data[0] if self._data else None
+
+    def __len__(self) -> int:  # allows len(heap)
+        return len(self._data)
+```
+**Explanation:** Wraps Python's `heapq` to provide push, pop, and peek with O(log n) insertion/removal and O(1) access to the smallest element. Under the hood, `heapq` maintains the binary heap in a list.
+**Complexity:** Time: O(log n) for push/pop, O(1) for peek; Space: O(n).
+**Example:**
+Input: push 3, push 1, push 2, peek -> 1, pop -> 1
+Output: remaining heap [2, 3]
+**Notes:**
+- `heapq` implements a min-heap; invert keys for max-heap behavior.
+- `peek` returns None when empty; `pop` raises an IndexError.
+- To support decrease-key, push a new pair (priority, value) and lazily discard stale entries on pop.

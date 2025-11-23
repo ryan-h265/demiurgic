@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: typescript
+
+============================================================
+
+Write a TypeScript function that evaluates a postfix expression

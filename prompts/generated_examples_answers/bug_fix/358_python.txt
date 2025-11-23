@@ -1,0 +1,17 @@
+python
+```python
+def print_array(arr):
+    if arr is None:
+        return
+    for i in range(len(arr)):
+        print(arr[i])
+```
+**Explanation:** Changes the erroneous `i <= arr.length` pattern to Python’s safe `range(len(arr))`, preventing out-of-bounds access. Guards against `None` input.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [1, 2]
+Output: prints 1 then 2
+**Notes:**
+- For empty arrays, the loop runs zero times without error.
+- Replace `print` with logging or accumulation if needed.
+- In JS, the analogous fix is `for (let i = 0; i < arr.length; i++)`.

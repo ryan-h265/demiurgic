@@ -1,0 +1,20 @@
+python
+```python
+def has_cycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+**Explanation:** Guards null pointers by checking `fast` and `fast.next` before advancing two steps, preventing out-of-bounds when the list is empty (`n=0`) or of length 1. Uses Floyd's algorithm to detect cycles.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: head=None
+Output: False
+**Notes:**
+- Works for all list sizes without throwing.
+- To find cycle entry, apply the standard two-phase approach after detection.
+- Leaves list structure unchanged.

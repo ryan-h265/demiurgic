@@ -1,0 +1,6 @@
+Category: algorithm
+Language: javascript
+
+============================================================
+
+Implement breadth-first search (BFS) in JavaScript with detailed comments

@@ -1,0 +1,63 @@
+python
+```python
+class BSTNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, val):
+        self.root = self._insert(self.root, val)
+
+    def _insert(self, node, val):
+        if node is None:
+            return BSTNode(val)
+        if val < node.val:
+            node.left = self._insert(node.left, val)
+        elif val > node.val:
+            node.right = self._insert(node.right, val)
+        return node
+
+    def search(self, val):
+        node = self.root
+        while node:
+            if node.val == val:
+                return True
+            node = node.left if val < node.val else node.right
+        return False
+
+    def delete(self, val):
+        self.root = self._delete(self.root, val)
+
+    def _delete(self, node, val):
+        if not node:
+            return None
+        if val < node.val:
+            node.left = self._delete(node.left, val)
+        elif val > node.val:
+            node.right = self._delete(node.right, val)
+        else:
+            if not node.left:
+                return node.right
+            if not node.right:
+                return node.left
+            succ = node.right
+            while succ.left:
+                succ = succ.left
+            node.val = succ.val
+            node.right = self._delete(node.right, succ.val)
+        return node
+```
+**Explanation:** Basic BST with insert, search, and delete. Deletion handles 0/1-child cases directly and uses the in-order successor when two children exist.
+**Complexity:** Time: O(h) per op where h is height; Space: O(h) recursion.
+**Example:**
+Input: insert 5,3,7; search 3
+Output: True
+**Notes:**
+- Unbalanced trees degrade to O(n); use a balanced tree for guarantees.
+- Does not store duplicates; change policy as needed.
+- Add traversal methods or balancing if required for your use case.

@@ -1,0 +1,34 @@
+python
+```python
+import heapq
+import threading
+from typing import Any, Tuple
+
+class ThreadSafePriorityQueue:
+    def __init__(self):
+        self._heap: list[Tuple[int, Any]] = []
+        self._lock = threading.Lock()
+
+    def push(self, priority: int, item: Any) -> None:
+        with self._lock:
+            heapq.heappush(self._heap, (priority, item))
+
+    def pop(self) -> Tuple[int, Any] | None:
+        with self._lock:
+            if not self._heap:
+                return None
+            return heapq.heappop(self._heap)
+
+    def peek(self) -> Tuple[int, Any] | None:
+        with self._lock:
+            return self._heap[0] if self._heap else None
+```
+**Explanation:** Wraps a min-heap with a mutex to serialize access. Supports push, pop, and peek operations on prioritized items.
+**Complexity:** Time: O(log n) for push/pop; O(1) for peek; Space: O(n).
+**Example:**
+Input: push(2,'b'); push(1,'a'); pop()
+Output: (1, 'a')
+**Notes:**
+- Tuple ordering uses priority first; ensure priorities are comparable.
+- For blocking semantics, add condition variables to wait for items.
+- Priorities can be inverted to represent max-heap behavior.

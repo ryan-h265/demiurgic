@@ -1,0 +1,42 @@
+# Demiurgic Requirements
+#
+# For quick start (model architecture only):
+#   pip install -r requirements-core.txt
+#
+# For full training setup:
+#   pip install -r requirements-core.txt
+#   pip install -r requirements-training.txt
+#
+# For Flash Attention 2 (optional, 2-4x speedup, requires CUDA):
+#   pip install flash-attn --no-build-isolation
+#
+# Or install everything:
+#   pip install -r requirements.txt
+
+# Core dependencies - Always needed
+torch>=2.0.0
+numpy>=1.24.0
+pytest>=7.4.0
+
+# Training infrastructure - Needed for actual training
+transformers>=4.35.0
+tokenizers>=0.14.0
+accelerate>=0.24.0
+datasets>=2.14.0
+tqdm>=4.66.0
+pyyaml>=6.0.0
+einops>=0.7.0
+
+# Experiment tracking
+wandb>=0.15.0
+tensorboard>=2.14.0
+
+# Development
+black>=23.0.0
+isort>=5.12.0
+
+# Optional: DeepSpeed (for multi-GPU training)
+# deepspeed>=0.12.0
+
+# Optional: Flash Attention 2 (requires CUDA, install separately)
+# flash-attn>=2.0.0

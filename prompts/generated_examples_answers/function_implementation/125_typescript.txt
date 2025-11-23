@@ -1,0 +1,28 @@
+typescript
+```typescript
+// Memoize a pure function with error handling for non-hashable arguments
+export function memoize<T extends (...args: any[]) => any>(fn: T) {
+  const cache = new Map<string, ReturnType<T>>();
+  return (...args: Parameters<T>): ReturnType<T> => {
+    let key: string;
+    try {
+      key = JSON.stringify(args);
+    } catch (err) {
+      throw new Error('Arguments must be serializable for memoization');
+    }
+    if (cache.has(key)) return cache.get(key)!;
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  };
+}
+```
+**Explanation:** Builds a string key from the argument list, caches results in a Map, and returns cached values on repeat calls. Throws when arguments cannot be serialized, keeping behavior explicit.
+**Complexity:** Time: O(1) average cache access plus cost of `fn`; Space: O(m) for m cached entries.
+**Example:**
+Input: `const fib = memoize((n:number)=> n<2?n:fib(n-1)+fib(n-2)); fib(10);`
+Output: 55
+**Notes:**
+- JSON serialization is simple but limited; use a better hash for complex structures.
+- Cache can grow unbounded; add eviction if needed.
+- Works best for pure, deterministic functions.

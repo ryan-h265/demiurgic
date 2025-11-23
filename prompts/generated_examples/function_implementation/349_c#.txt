@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: c#
+
+============================================================
+
+Create a C# utility that retries HTTP requests with exponential backoff with proper error handling

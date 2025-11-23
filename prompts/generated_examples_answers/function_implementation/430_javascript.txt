@@ -1,0 +1,23 @@
+javascript
+```javascript
+function flattenNested(list) {
+  const result = [];
+  (function dfs(node) {
+    if (Array.isArray(node)) {
+      for (const item of node) dfs(item);
+    } else {
+      result.push(Number(node));
+    }
+  })(list);
+  return result;
+}
+```
+**Explanation:** Depth-first recursion walks nested arrays; numbers (or coercible values) are pushed to the result. Arrays are expanded in order.
+**Complexity:** Time: O(n) elements; Space: O(n) for output plus recursion depth.
+**Example:**
+Input: [1, [2, [3]]]
+Output: [1, 2, 3]
+**Notes:**
+- Replace recursion with a stack for very deep nesting.
+- Remove `Number()` coercion if non-numeric leaves should be preserved.
+- Maintains original order of elements.

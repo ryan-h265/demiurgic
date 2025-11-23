@@ -1,0 +1,20 @@
+Category: code_review
+Language: python
+
+============================================================
+
+Review this Python code and suggest improvements for best practices:
+```python
+class UserManager:
+    def __init__(self):
+        self.users = []
+
+    def add_user(self, name, email):
+        self.users.append({'name': name, 'email': email})
+
+    def get_user(self, index):
+        return self.users[index]
+
+    def delete_user(self, index):
+        del self.users[index]
+```

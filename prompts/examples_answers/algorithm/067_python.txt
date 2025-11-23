@@ -1,0 +1,30 @@
+python
+```python
+from typing import Optional
+
+
+class ListNode:
+    def __init__(self, val: int, next: Optional["ListNode"] = None):
+        self.val = val
+        self.next = next
+
+
+def has_cycle(head: Optional[ListNode]) -> bool:
+    """Detect a cycle using Floyd's tortoise and hare algorithm."""
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+**Explanation:** Advance two pointers at different speeds; if the fast pointer laps the slow pointer, a cycle exists. If the fast pointer reaches the end, the list terminates without a cycle.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> 4 -> (points back to 2)
+Output: True
+**Notes:**
+- Works for empty list (`head=None`) and single-node lists.
+- To find the cycle start, reset one pointer to head after detection and step both one at a time.
+- Avoids modifying the list or storing visited nodes.

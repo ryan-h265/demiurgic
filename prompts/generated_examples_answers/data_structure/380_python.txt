@@ -1,0 +1,40 @@
+python
+```python
+import threading
+
+class ThreadSafeCircularBuffer:
+    def __init__(self, capacity: int):
+        if capacity <= 0:
+            raise ValueError("capacity must be positive")
+        self.data = [None] * capacity
+        self.head = 0  # next write
+        self.size = 0
+        self.lock = threading.Lock()
+
+    def push(self, item):
+        with self.lock:
+            self.data[(self.head + self.size) % len(self.data)] = item
+            if self.size == len(self.data):
+                self.head = (self.head + 1) % len(self.data)  # overwrite oldest
+            else:
+                self.size += 1
+
+    def pop(self):
+        with self.lock:
+            if self.size == 0:
+                raise IndexError("buffer empty")
+            idx = self.head
+            val = self.data[idx]
+            self.head = (self.head + 1) % len(self.data)
+            self.size -= 1
+            return val
+```
+**Explanation:** Implements a ring buffer with mutex protection. Push overwrites the oldest when full; pop removes the oldest element. Head/size track logical order with wrap-around via modulo arithmetic.
+**Complexity:** Time: O(1) per push/pop; Space: O(capacity).
+**Example:**
+Input: capacity=2; push 1; push 2; push 3 (evicts 1); pop() -> 2
+Output: 2
+**Notes:**
+- Change policy to raise on overflow instead of overwrite if desired.
+- Add peek/len helpers for convenience.
+- Locking is coarse but simple; refine if higher concurrency is needed.

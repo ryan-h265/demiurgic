@@ -1,0 +1,23 @@
+rust
+```rust
+pub fn validate_logs(lines: &[String]) -> Result<(), String> {
+    for (idx, line) in lines.iter().enumerate() {
+        if line.trim().is_empty() {
+            return Err(format!("Line {} is empty", idx));
+        }
+        if !line.contains(' ') {
+            return Err(format!("Line {} missing separators", idx));
+        }
+    }
+    Ok(())
+}
+```
+**Explanation:** Performs simple validation over a stream of log lines: rejects empty/whitespace lines and those lacking at least one space (expecting at least timestamp and message). Returns a descriptive error on the first failure.
+**Complexity:** Time: O(n * m) over lines and lengths; Space: O(1).
+**Example:**
+Input: ["2024-01-01 INFO started"]
+Output: Ok(())
+**Notes:**
+- Extend checks for timestamp format, level allowlist, etc.
+- Return a collection of all errors if you prefer aggregated reporting.
+- Accept an iterator instead of slice if logs are streamed.

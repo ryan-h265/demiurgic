@@ -1,0 +1,31 @@
+python
+```python
+from collections import defaultdict
+from typing import Hashable, Iterable
+
+class Graph:
+    def __init__(self) -> None:
+        self.adj: dict[Hashable, set[Hashable]] = defaultdict(set)
+
+    def insert(self, u: Hashable, v: Hashable, bidirectional: bool = False) -> None:
+        self.adj[u].add(v)
+        if bidirectional:
+            self.adj[v].add(u)
+
+    def delete(self, u: Hashable, v: Hashable, bidirectional: bool = False) -> None:
+        self.adj[u].discard(v)
+        if bidirectional:
+            self.adj[v].discard(u)
+
+    def search(self, u: Hashable, v: Hashable) -> bool:
+        return v in self.adj.get(u, ())
+```
+**Explanation:** Stores adjacency as sets for O(1) average insertion, deletion, and membership checks. Supports optional bidirectional edges for undirected graphs.
+**Complexity:** Time: O(1) average for insert/delete/search; Space: O(V + E).
+**Example:**
+Input: insert('A','B', True); search('B','A')
+Output: True
+**Notes:**
+- Sets prevent duplicate edges; switch to lists if multiplicity matters.
+- Add node deletion by removing from adjacency and others’ neighbor sets if required.
+- For weighted graphs, map neighbors to weights instead of using a set.

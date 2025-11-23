@@ -1,0 +1,13 @@
+plaintext
+```text
+Quicksort partitions the array around a pivot so smaller elements move left and larger move right, then recursively sorts the subarrays.
+```
+**Explanation:** Each partition step reorders elements in-place, typically choosing a pivot and sweeping once with swaps. Average performance relies on balanced partitions; poor pivots can degrade to quadratic time.
+**Complexity:** Time: O(n log n) average, O(n²) worst case; Space: O(log n) for recursion stack (in-place partitioning).
+**Example:**
+Input: [3, 1, 4, 1]
+Output: [1, 1, 3, 4]
+**Notes:**
+- Randomize or median-of-three pivot selection to avoid worst cases.
+- Tail-call optimize or switch to insertion sort on tiny partitions for speed.
+- Quicksort is unstable in its classic in-place form; use variants if stability is required.

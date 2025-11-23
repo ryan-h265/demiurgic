@@ -1,0 +1,42 @@
+java
+```java
+public class UnionFind {
+    private final int[] parent;
+    private final int[] rank;
+
+    public UnionFind(int size) {
+        if (size <= 0) throw new IllegalArgumentException("size must be positive");
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]); // path compression
+        }
+        return parent[x];
+    }
+
+    public void union(int a, int b) {
+        int ra = find(a), rb = find(b);
+        if (ra == rb) return;
+        if (rank[ra] < rank[rb]) {
+            int tmp = ra; ra = rb; rb = tmp;
+        }
+        parent[rb] = ra;
+        if (rank[ra] == rank[rb]) rank[ra]++;
+    }
+}
+```
+**Explanation:** Standard disjoint set with path compression and union by rank. Capacity is fixed at construction (bounded); indices outside `[0, size)` are invalid, matching the bounded requirement.
+**Complexity:** Time: Amortized ~O(α(n)) per operation; Space: O(n) for parent/rank arrays.
+**Example:**
+Input: size=5; union(0,1); union(3,4); find(1)
+Output: root of set containing 1 (either 0 or 1 depending on unions)
+**Notes:**
+- Validate indices before access in production code.
+- Rank heuristic keeps trees shallow; path compression flattens on finds.
+- Resize is not supported; construct with the known maximum set size.

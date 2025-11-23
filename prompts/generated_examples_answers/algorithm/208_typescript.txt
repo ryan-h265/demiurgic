@@ -1,0 +1,35 @@
+typescript
+```typescript
+export function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {
+  const dict = new Set(wordList);
+  if (!dict.has(endWord)) return 0;
+  const queue: [string, number][] = [[beginWord, 1]];
+  const visited = new Set<string>([beginWord]);
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+  while (queue.length) {
+    const [word, dist] = queue.shift()!;
+    if (word === endWord) return dist;
+    for (let i = 0; i < word.length; i++) {
+      for (const ch of alphabet) {
+        if (ch === word[i]) continue;
+        const next = word.slice(0, i) + ch + word.slice(i + 1);
+        if (dict.has(next) && !visited.has(next)) {
+          visited.add(next);
+          queue.push([next, dist + 1]);
+        }
+      }
+    }
+  }
+  return 0;
+}
+```
+**Explanation:** BFS explores one-letter transformations present in the dictionary. The first time `endWord` is dequeued gives the shortest transformation length. Visited tracking prevents cycles.
+**Complexity:** Time: O(N * L * 26) where N is dictionary size and L word length; Space: O(N) for sets and queue.
+**Example:**
+Input: begin="hit", end="cog", list=["hot","dot","dog","lot","log","cog"]
+Output: 5
+**Notes:**
+- Returns 0 if `endWord` not in the dictionary or unreachable.
+- For large dictionaries, bidirectional BFS halves the search depth.
+- Assumes all words have equal length.

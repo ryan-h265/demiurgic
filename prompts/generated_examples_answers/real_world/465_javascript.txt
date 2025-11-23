@@ -1,0 +1,20 @@
+javascript
+```javascript
+import sharp from 'sharp';
+import fs from 'fs/promises';
+
+export async function processImage(inputPath, outputPath, width = 200, height = 200) {
+  const buffer = await fs.readFile(inputPath);
+  const processed = await sharp(buffer).resize(width, height).toFormat('jpeg').toBuffer();
+  await fs.writeFile(outputPath, processed);
+}
+```
+**Explanation:** Reads an image, uses `sharp` to resize it to the given dimensions, converts to JPEG, and writes the thumbnail to the output path.
+**Complexity:** Time: O(image_size) for processing; Space: O(image_size) for buffers.
+**Example:**
+Input: processImage('in.png', 'thumb.jpg', 100, 100)
+Output: Writes a 100x100 JPEG thumbnail
+**Notes:**
+- Install sharp: `npm install sharp`.
+- Adjust format/compression options as needed.
+- Handle errors (I/O, decoding) at the call site with try/catch.

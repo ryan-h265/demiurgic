@@ -1,0 +1,7 @@
+Category: code_review
+Language: javascript
+
+============================================================
+
+Review this JavaScript code and suggest improvements for best practices:
+# Code snippet here

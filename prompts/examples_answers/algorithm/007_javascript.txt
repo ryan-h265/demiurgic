@@ -1,0 +1,52 @@
+javascript
+```javascript
+/**
+ * Find the median of two sorted arrays using binary search on the smaller array.
+ * Time: O(log(min(m, n)))
+ */
+function findMedianSortedArrays(nums1, nums2) {
+  // Ensure nums1 is the smaller array to minimize search space
+  if (nums1.length > nums2.length) return findMedianSortedArrays(nums2, nums1);
+
+  const m = nums1.length;
+  const n = nums2.length;
+  let low = 0;
+  let high = m;
+
+  while (low <= high) {
+    const partitionA = Math.floor((low + high) / 2);
+    const partitionB = Math.floor((m + n + 1) / 2) - partitionA;
+
+    const maxLeftA = partitionA === 0 ? -Infinity : nums1[partitionA - 1];
+    const minRightA = partitionA === m ? Infinity : nums1[partitionA];
+    const maxLeftB = partitionB === 0 ? -Infinity : nums2[partitionB - 1];
+    const minRightB = partitionB === n ? Infinity : nums2[partitionB];
+
+    // Correct partition if left parts contain only smaller elements
+    if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+      if ((m + n) % 2 === 0) {
+        return (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2;
+      }
+      return Math.max(maxLeftA, maxLeftB);
+    }
+
+    // Move search window
+    if (maxLeftA > minRightB) {
+      high = partitionA - 1;
+    } else {
+      low = partitionA + 1;
+    }
+  }
+
+  throw new Error('Input arrays are not sorted');
+}
+```
+**Explanation:** Use binary search on the smaller array to find a partition where all elements on the left of both arrays are less than or equal to all elements on the right. Compute partition indices so that left and right halves have equal size (or differ by one). When the partition is valid, derive the median from border elements depending on total parity.
+**Complexity:** Time: O(log(min(m, n))); Space: O(1).
+**Example:**
+Input: nums1 = [1, 3], nums2 = [2]
+Output: 2
+**Notes:**
+- Throws when arrays are not sorted because the partition conditions will never be satisfied.
+- Handles empty arrays because sentinels ±Infinity guard boundaries.
+- Works for even and odd combined lengths without extra passes.

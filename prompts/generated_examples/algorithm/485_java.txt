@@ -1,0 +1,6 @@
+Category: algorithm
+Language: java
+
+============================================================
+
+Implement breadth-first search (BFS) in Java with detailed comments

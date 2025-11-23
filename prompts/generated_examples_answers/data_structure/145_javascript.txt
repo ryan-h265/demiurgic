@@ -1,0 +1,35 @@
+javascript
+```javascript
+class Graph {
+  constructor() {
+    this.adj = new Map();
+  }
+  addVertex(v) {
+    if (!this.adj.has(v)) this.adj.set(v, new Set());
+  }
+  addEdge(u, v, bidirectional = false) {
+    this.addVertex(u); this.addVertex(v);
+    this.adj.get(u).add(v);
+    if (bidirectional) this.adj.get(v).add(u);
+  }
+  removeEdge(u, v, bidirectional = false) {
+    this.adj.get(u)?.delete(v);
+    if (bidirectional) this.adj.get(v)?.delete(u);
+  }
+  neighbors(u) {
+    return Array.from(this.adj.get(u) ?? []);
+  }
+  hasEdge(u, v) {
+    return this.adj.get(u)?.has(v) ?? false;
+  }
+}
+```
+**Explanation:** Maintains adjacency as a `Map` of `Set`s for O(1) average insert/delete/lookup of edges. Supports bidirectional edge creation/removal and neighbor listing.
+**Complexity:** Time: O(1) average per edge update; Space: O(V + E).
+**Example:**
+Input: addEdge('A','B',true); neighbors('A')
+Output: ['B']
+**Notes:**
+- Sets prevent duplicate edges; use arrays if multiplicity matters.
+- Add vertex/edge deletion cleanup as needed for your use case.
+- For weighted graphs, store objects `{v, w}` instead of bare vertices.

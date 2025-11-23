@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: c++
+
+============================================================
+
+Write a C++ function that finds the longest common substring

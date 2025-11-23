@@ -1,0 +1,27 @@
+java
+```java
+import java.util.List;
+import java.util.function.ToDoubleFunction;
+
+public class Aggregator {
+    /**
+     * Aggregate a list of objects by summing a numeric property extracted by getter.
+     */
+    public static <T> double sumBy(List<T> items, ToDoubleFunction<T> getter) {
+        double total = 0.0;
+        for (T item : items) {
+            total += getter.applyAsDouble(item);
+        }
+        return total;
+    }
+}
+```
+**Explanation:** Accepts a list of objects and a lambda that extracts a numeric field. Iterates once, summing the extracted values into a running total. Using a functional getter keeps the method reusable for different object shapes.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: items = [{price:10},{price:15}], getter = item -> item.price
+Output: 25.0
+**Notes:**
+- For integer-safe sums, swap to `ToLongFunction` and `long` accumulator.
+- Validate `items` for null before iterating in production code.
+- Extend to compute averages or grouped totals by collecting into a map.

@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: python
+
+============================================================
+
+Write a Python function that checks if a string is a palindrome

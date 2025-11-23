@@ -1,0 +1,23 @@
+csharp
+```csharp
+using System;
+using System.Collections.Concurrent;
+
+public static class Memoizer
+{
+    public static Func<T, TResult> Memoize<T, TResult>(Func<T, TResult> func)
+    {
+        var cache = new ConcurrentDictionary<T, TResult>();
+        return arg => cache.GetOrAdd(arg, func);
+    }
+}
+```
+**Explanation:** Wraps a unary function with a thread-safe `ConcurrentDictionary` cache. On each call, returns the cached result or computes and stores it if missing.
+**Complexity:** Time: O(1) average cache access plus `func` cost on misses; Space: O(m) for m cached entries.
+**Example:**
+Input: `var fibMemo = Memoizer.Memoize<int,int>(n => n < 2 ? n : fibMemo(n-1) + fibMemo(n-2)); fibMemo(10);`
+Output: 55
+**Notes:**
+- Cache growth is unbounded; add eviction if necessary.
+- For multi-arg functions, wrap arguments in a tuple-like struct as the key.
+- Ensure `T` has correct hashing/equality semantics for dictionary use.

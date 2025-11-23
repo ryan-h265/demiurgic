@@ -1,0 +1,33 @@
+javascript
+```javascript
+// Two-pointer solution to the trapping rain water problem
+function trap(height) {
+  let left = 0;
+  let right = height.length - 1;
+  let leftMax = 0;
+  let rightMax = 0;
+  let water = 0;
+
+  while (left < right) {
+    if (height[left] < height[right]) {
+      leftMax = Math.max(leftMax, height[left]);
+      water += leftMax - height[left];
+      left += 1;
+    } else {
+      rightMax = Math.max(rightMax, height[right]);
+      water += rightMax - height[right];
+      right -= 1;
+    }
+  }
+  return water;
+}
+```
+**Explanation:** Move pointers inward while tracking the maximum bar seen from each side. The smaller side dictates the water level at that position because a taller bound exists on the opposite side. Accumulate the difference between that bound and the current bar height.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [4,2,0,3,2,5]
+Output: 9
+**Notes:**
+- Returns 0 for arrays with fewer than 3 bars.
+- Assumes non-negative heights; negative values would break the water interpretation.
+- For large arrays, this still uses constant extra space versus precomputing prefix/suffix maxima.

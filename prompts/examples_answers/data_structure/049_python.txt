@@ -1,0 +1,42 @@
+python
+```python
+from collections import deque
+from typing import Deque, Generic, Iterable, Optional, TypeVar
+
+T = TypeVar("T")
+
+
+class Queue(Generic[T]):
+    def __init__(self, items: Optional[Iterable[T]] = None) -> None:
+        self._data: Deque[T] = deque(items or [])
+
+    def enqueue(self, item: T) -> None:
+        self._data.append(item)
+
+    def dequeue(self) -> T:
+        if not self._data:
+            raise IndexError("dequeue from empty queue")
+        return self._data.popleft()
+
+    def peek(self) -> Optional[T]:
+        return self._data[0] if self._data else None
+
+    def search(self, item: T) -> int:
+        """Return zero-based index of item, or -1 if not found."""
+        for idx, val in enumerate(self._data):
+            if val == item:
+                return idx
+        return -1
+
+    def __len__(self) -> int:
+        return len(self._data)
+```
+**Explanation:** Wraps a `deque` for O(1) enqueue at the tail and dequeue at the head. Provides peek for front inspection and a linear search to find an item's index. The constructor optionally seeds the queue with initial items.
+**Complexity:** Time: O(1) for enqueue/dequeue/peek, O(n) for search; Space: O(n).
+**Example:**
+Input: enqueue 1, enqueue 2, dequeue -> 1, search(2) -> 0
+Output: queue contains [2]
+**Notes:**
+- Raises on dequeue of empty queue to signal misuse; adjust to return None if preferred.
+- Equality in `search` relies on `==`; customize for identity checks if needed.
+- Deque preserves order; for max/min retrieval, pair with a monotonic queue.

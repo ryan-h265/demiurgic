@@ -1,0 +1,35 @@
+c++
+```cpp
+#include <vector>
+#include <numeric>
+
+class UnionFind {
+public:
+    explicit UnionFind(int n) : parent_(n), rank_(n, 0) {
+        std::iota(parent_.begin(), parent_.end(), 0);
+    }
+    int find(int x) {
+        if (parent_[x] != x) parent_[x] = find(parent_[x]);
+        return parent_[x];
+    }
+    void unite(int a, int b) {
+        a = find(a); b = find(b);
+        if (a == b) return;
+        if (rank_[a] < rank_[b]) std::swap(a, b);
+        parent_[b] = a;
+        if (rank_[a] == rank_[b]) rank_[a]++;
+    }
+private:
+    std::vector<int> parent_;
+    std::vector<int> rank_;
+};
+```
+**Explanation:** Standard disjoint set with path compression in `find` and union by rank to keep trees shallow, enabling near-constant-time connectivity checks.
+**Complexity:** Time: Amortized ~O(α(n)) per op; Space: O(n).
+**Example:**
+Input: unite(0,1); unite(1,2); find(2)
+Output: representative of set containing 0,1,2
+**Notes:**
+- No dynamic resizing; create with known capacity.
+- Add a `connected(a,b)` helper for clarity.
+- Not thread-safe; add synchronization for concurrent use.

@@ -1,0 +1,23 @@
+go
+```go
+package main
+
+import "strconv"
+
+// DecimalToBinary converts a non-negative integer to its binary string.
+func DecimalToBinary(n int) (string, error) {
+	if n < 0 {
+		return "", fmt.Errorf("n must be non-negative")
+	}
+	return strconv.FormatInt(int64(n), 2), nil
+}
+```
+**Explanation:** Validates non-negative input and uses `strconv.FormatInt` with base 2 to produce the binary representation.
+**Complexity:** Time: O(log n); Space: O(log n) for the output string.
+**Example:**
+Input: 10
+Output: "1010"
+**Notes:**
+- For padding, wrap result with `fmt.Sprintf` or `strings.Repeat` + concatenation.
+- For very large integers, switch to big.Int and call `.Text(2)`.
+- Returns an error for negative input to avoid surprising results.

@@ -1,0 +1,20 @@
+javascript
+```javascript
+/** Validate that each log line has at least a timestamp and level token. */
+function validateLogStream(lines) {
+  return lines.every((line) => {
+    if (!line || !line.trim()) return false;
+    const parts = line.trim().split(/\s+/, 3);
+    return parts.length >= 2;
+  });
+}
+```
+**Explanation:** Checks that every line is non-empty and splits into at least two tokens (timestamp and level). Returns true only if all lines meet the minimum structure.
+**Complexity:** Time: O(n * m) over lines and tokenization; Space: O(1) extra (excluding input).
+**Example:**
+Input: ["2024-01-01 INFO started", "2024-01-01 WARN high load"]
+Output: true
+**Notes:**
+- Tighten validation by regex for timestamp/level formats.
+- Adjust required token count if messages can be empty.
+- Short-circuits on the first failing line.

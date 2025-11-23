@@ -1,0 +1,39 @@
+java
+```java
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
+
+public class Uploader {
+    private static final HttpClient CLIENT = HttpClient.newHttpClient();
+
+    public static HttpResponse<String> uploadWithRetry(String url, String filePath, int maxRetries) throws IOException, InterruptedException {
+        int attempt = 0;
+        while (true) {
+            try (FileInputStream fis = new FileInputStream(filePath)) {
+                HttpRequest req = HttpRequest.newBuilder(URI.create(url))
+                        .POST(BodyPublishers.ofInputStream(() -> fis))
+                        .header("Content-Type", "application/octet-stream")
+                        .build();
+                return CLIENT.send(req, HttpResponse.BodyHandlers.ofString());
+            } catch (IOException e) {
+                if (++attempt > maxRetries) throw e;
+                Thread.sleep((long) Math.min(1000 * Math.pow(2, attempt), 8000));
+            }
+        }
+    }
+}
+```
+**Explanation:** Opens the file as a stream, posts it via `HttpClient`, and retries with exponential backoff on I/O failures up to `maxRetries`. Each attempt reopens the stream to start fresh.
+**Complexity:** Time: O(file_size) per attempt; Space: O(1) extra.
+**Example:**
+Input: uploadWithRetry("https://example.com/upload", "data.bin", 3)
+Output: HTTP response or thrown after retries
+**Notes:**
+- Add specific retryable status checks (e.g., 5xx) if desired; this example retries only on IO exceptions.
+- For very large files, consider multipart uploads or resumable protocols.
+- Tune backoff and maximum sleep to your reliability requirements.

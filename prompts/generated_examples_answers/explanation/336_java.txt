@@ -1,0 +1,13 @@
+java
+```java
+list(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))
+```
+**Explanation:** This pseudocode filters the numbers 0..9 to keep even values, then maps each to its square, finally materializing the results in a list. In Java terms, it mirrors `IntStream.range(0,10).filter(x -> x % 2 == 0).map(x -> x * x).boxed().toList()`.
+**Complexity:** Time: O(n) over the input range; Space: O(n) for the resulting list.
+**Example:**
+Input: numbers 0..9
+Output: [0, 4, 16, 36, 64]
+**Notes:**
+- Order matters: filtering first avoids unnecessary squaring.
+- Replace with streams or loops in real Java code; the given syntax is Pythonic.
+- For lazy evaluation, keep as a stream rather than collecting immediately.

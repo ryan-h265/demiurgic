@@ -1,0 +1,24 @@
+go
+```go
+package main
+
+import (
+	"regexp"
+)
+
+var emailRegex = regexp.MustCompile(`^[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
+
+// IsValidEmail returns true if the string matches a basic email pattern.
+func IsValidEmail(email string) bool {
+	return emailRegex.MatchString(email)
+}
+```
+**Explanation:** Compiles a regular expression that checks for a local part of word characters/dots/plus/hyphen, an `@`, a domain, and a TLD of length >= 2. `MatchString` runs the regex against the input.
+**Complexity:** Time: O(n) relative to the input length for regex evaluation; Space: O(1) excluding the compiled pattern.
+**Example:**
+Input: "user@example.com"
+Output: true
+**Notes:**
+- Regex is simplified and won't catch all invalid emails per RFC 5322 but works for common cases.
+- Compile the regex once (as above) to avoid repeated compilation costs.
+- Trim surrounding whitespace before validating if user input may contain it.

@@ -1,0 +1,26 @@
+python
+```python
+from typing import Iterable, Union, List
+
+Nested = Union[int, Iterable['Nested']]
+
+def flatten(nested: Nested) -> List[int]:
+    out: List[int] = []
+    def dfs(item: Nested) -> None:
+        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
+            for val in item:
+                dfs(val)
+        else:
+            out.append(int(item))
+    dfs(nested)
+    return out
+```
+**Explanation:** Recursively traverses arbitrarily nested iterables, skipping string/bytes as atomic, and appends leaf elements to an output list, converting to int for uniformity.
+**Complexity:** Time: O(n) elements; Space: O(n) for output plus recursion depth.
+**Example:**
+Input: [1, [2, [3, 4]], 5]
+Output: [1, 2, 3, 4, 5]
+**Notes:**
+- For very deep nesting, switch to an explicit stack to avoid recursion depth errors.
+- Remove `int()` cast if non-integer leaves should be preserved.
+- Treat strings differently if you want to iterate characters instead of keeping whole string.

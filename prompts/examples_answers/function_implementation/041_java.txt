@@ -1,0 +1,33 @@
+java
+```java
+import java.util.List;
+import java.util.function.Predicate;
+
+public class NumberValidator {
+    /**
+     * Validate that every number in the list satisfies the predicate (non-negative by default).
+     */
+    public static boolean validate(List<Integer> numbers, Predicate<Integer> rule) {
+        if (numbers == null) return false;
+        for (Integer n : numbers) {
+            if (n == null || !rule.test(n)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean validateNonNegative(List<Integer> numbers) {
+        return validate(numbers, n -> n >= 0);
+    }
+}
+```
+**Explanation:** Iterate through the list and test each element against a provided predicate; the helper `validateNonNegative` checks that all entries are zero or greater. Null lists or null elements fail validation.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: numbers = [3, 5, 0]
+Output: true
+**Notes:**
+- Swap the predicate to enforce range limits or parity checks.
+- Returns false on null input to avoid `NullPointerException`.
+- For primitive efficiency, consider using `IntPredicate` and `IntStream`.

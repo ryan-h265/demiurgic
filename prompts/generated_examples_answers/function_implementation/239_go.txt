@@ -1,0 +1,30 @@
+go
+```go
+package main
+
+import "strings"
+
+type Obj map[string]string
+
+// NormalizeObjects lowercases keys and trims values.
+func NormalizeObjects(items []Obj) []Obj {
+	out := make([]Obj, 0, len(items))
+	for _, o := range items {
+		norm := make(Obj)
+		for k, v := range o {
+			norm[strings.ToLower(strings.TrimSpace(k))] = strings.TrimSpace(v)
+		}
+		out = append(out, norm)
+	}
+	return out
+}
+```
+**Explanation:** Iterates over a slice of map-like objects, producing new maps with lowercase, trimmed keys and trimmed values. Leaves original data unchanged.
+**Complexity:** Time: O(total entries); Space: O(total entries) for the normalized copy.
+**Example:**
+Input: [{" Name ": " Alice "}]
+Output: [{"name": "Alice"}]
+**Notes:**
+- Adjust normalization (e.g., value lowercasing) to suit your schema.
+- Use struct types for better compile-time checks instead of maps.
+- Handle nil maps by skipping or initializing before use.

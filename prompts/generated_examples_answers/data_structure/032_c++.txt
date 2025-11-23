@@ -1,0 +1,46 @@
+c++
+```cpp
+#include <vector>
+#include <queue>
+#include <stdexcept>
+
+// Capacity-limited min-heap priority queue; evicts lowest-priority when full by throwing
+class BoundedPriorityQueue {
+public:
+    explicit BoundedPriorityQueue(size_t capacity) : cap_(capacity) {
+        if (capacity == 0) throw std::invalid_argument("capacity must be > 0");
+    }
+
+    void push(int value) {
+        if (pq_.size() == cap_) {
+            throw std::overflow_error("priority queue is full");
+        }
+        pq_.push(value);
+    }
+
+    int pop() {
+        if (pq_.empty()) throw std::underflow_error("priority queue is empty");
+        int top = pq_.top();
+        pq_.pop();
+        return top;
+    }
+
+    bool empty() const { return pq_.empty(); }
+    size_t size() const { return pq_.size(); }
+
+private:
+    // min-heap
+    struct MinComp { bool operator()(int a, int b) const { return a > b; } };
+    std::priority_queue<int, std::vector<int>, MinComp> pq_;
+    size_t cap_;
+};
+```
+**Explanation:** Wraps `std::priority_queue` configured as a min-heap with a fixed capacity. `push` inserts until capacity is reached, then throws; `pop` removes the smallest element. This keeps wrap-around semantics by bounding size without silent overwrites.
+**Complexity:** Time: O(log n) push/pop; Space: O(capacity).
+**Example:**
+Input: capacity=2; push 5; push 3; pop()
+Output: returns 3 (smallest)
+**Notes:**
+- Swap to drop an element instead of throwing if you prefer overwriting/eviction behavior.
+- Template the value/compare types for general use.
+- Ensure callers handle overflow/underflow exceptions gracefully.

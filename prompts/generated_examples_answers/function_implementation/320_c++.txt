@@ -1,0 +1,29 @@
+c++
+```cpp
+#include <string>
+#include <vector>
+
+struct LogStats {
+    size_t lines;
+    size_t errors;
+};
+
+// Summarize a stream of log lines: count total lines and those containing "ERROR".
+LogStats summarizeLogs(const std::vector<std::string>& lines) {
+    LogStats stats{0, 0};
+    for (const auto& line : lines) {
+        stats.lines++;
+        if (line.find("ERROR") != std::string::npos) stats.errors++;
+    }
+    return stats;
+}
+```
+**Explanation:** Walks log lines once, counting total lines and those containing the substring "ERROR", returning the counts in a struct.
+**Complexity:** Time: O(total_chars); Space: O(1).
+**Example:**
+Input: ["INFO started", "ERROR failed"]
+Output: {lines:2, errors:1}
+**Notes:**
+- Adjust matching (case-insensitive, regex) to your log format.
+- Extend stats with warnings, timestamps, etc., as needed.
+- Accept iterators/streams instead of a vector for large inputs.

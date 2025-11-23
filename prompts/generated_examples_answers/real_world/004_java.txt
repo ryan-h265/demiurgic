@@ -1,0 +1,42 @@
+java
+```java
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class HttpJsonFetcher {
+    private static final HttpClient CLIENT = HttpClient.newHttpClient();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static JsonNode getJson(String url) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder(URI.create(url))
+                .GET()
+                .header("Accept", "application/json")
+                .build();
+
+        HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() / 100 != 2) {
+            throw new IOException("HTTP error: " + response.statusCode());
+        }
+        return MAPPER.readTree(response.body());
+    }
+
+    public static void main(String[] args) throws Exception {
+        JsonNode json = getJson("https://api.github.com");
+        System.out.println(json.get("current_user_url"));
+    }
+}
+```
+**Explanation:** Builds an `HttpClient` request, sends it, checks for a 2xx status, and parses the response body into a Jackson `JsonNode` for easy JSON traversal.
+**Complexity:** Time: O(response_size); Space: O(response_size) to hold the body/parsed tree.
+**Example:**
+Input: URL `https://api.github.com`
+Output: Parsed JSON node containing fields like `current_user_url`.
+**Notes:**
+- Requires Jackson (`com.fasterxml.jackson.core:jackson-databind`) on the classpath.
+- Add timeouts/auth headers as needed; handle redirects per policy.
+- For large payloads, stream via `BodyHandlers.ofInputStream()` and incremental parsing.

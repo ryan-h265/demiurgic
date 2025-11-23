@@ -1,0 +1,21 @@
+python
+```python
+import requests
+from bs4 import BeautifulSoup
+
+
+def scrape_titles(url: str) -> list[str]:
+    resp = requests.get(url, timeout=10)
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, "html.parser")
+    return [a.get_text(strip=True) for a in soup.find_all("a")]
+```
+**Explanation:** Fetches a page, parses HTML with BeautifulSoup, and extracts anchor text into a list. Raises for HTTP errors and uses a 10s timeout.
+**Complexity:** Time: O(page_size); Space: O(page_size) for parsed DOM plus output list.
+**Example:**
+Input: scrape_titles("https://example.com")
+Output: ["More information..."]
+**Notes:**
+- Install dependencies: `pip install requests beautifulsoup4`.
+- Respect robots.txt and site terms when scraping.
+- Adjust selectors to target specific elements (e.g., headlines).

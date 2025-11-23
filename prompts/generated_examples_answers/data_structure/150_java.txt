@@ -1,0 +1,50 @@
+java
+```java
+class BST {
+    static class Node {
+        int val; Node left, right;
+        Node(int v) { val = v; }
+    }
+    private Node root;
+
+    public void insert(int val) { root = insert(root, val); }
+    private Node insert(Node node, int val) {
+        if (node == null) return new Node(val);
+        if (val < node.val) node.left = insert(node.left, val);
+        else if (val > node.val) node.right = insert(node.right, val);
+        return node;
+    }
+
+    public boolean search(int val) { return search(root, val); }
+    private boolean search(Node node, int val) {
+        if (node == null) return false;
+        if (node.val == val) return true;
+        return val < node.val ? search(node.left, val) : search(node.right, val);
+    }
+
+    public void delete(int val) { root = delete(root, val); }
+    private Node delete(Node node, int val) {
+        if (node == null) return null;
+        if (val < node.val) node.left = delete(node.left, val);
+        else if (val > node.val) node.right = delete(node.right, val);
+        else {
+            if (node.left == null) return node.right;
+            if (node.right == null) return node.left;
+            Node succ = node.right;
+            while (succ.left != null) succ = succ.left;
+            node.val = succ.val;
+            node.right = delete(node.right, succ.val);
+        }
+        return node;
+    }
+}
+```
+**Explanation:** Basic BST with insert, search, and delete. Deletion replaces a node with its in-order successor when it has two children; otherwise bypasses the single child or null.
+**Complexity:** Time: O(h) where h is tree height; Space: O(h) recursion stack.
+**Example:**
+Input: insert 5,3,7; search 3
+Output: true
+**Notes:**
+- Unbalanced trees can degrade to O(n); use AVL/Red-Black for guaranteed balance.
+- Does not store duplicates; adjust policy as needed.
+- Add iterative traversals or balancing if performance is critical.

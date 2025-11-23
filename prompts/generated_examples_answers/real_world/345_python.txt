@@ -1,0 +1,26 @@
+python
+```python
+import re
+from typing import Tuple, Optional, Pattern
+
+def validate_input(value: str, *, min_len: int = 1, max_len: int = 100, pattern: Optional[Pattern[str]] = None) -> Tuple[bool, str]:
+    if not isinstance(value, str):
+        return False, "must be a string"
+    trimmed = value.strip()
+    if len(trimmed) < min_len:
+        return False, f"min length {min_len}"
+    if len(trimmed) > max_len:
+        return False, f"max length {max_len}"
+    if pattern and not pattern.fullmatch(trimmed):
+        return False, "pattern mismatch"
+    return True, trimmed
+```
+**Explanation:** Trims whitespace, enforces length bounds, optionally checks a regex, and returns a boolean plus either the cleaned value or an error message.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: validate_input(" user@example.com ", pattern=re.compile(r"^[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"))
+Output: (True, "user@example.com")
+**Notes:**
+- Swap `fullmatch` for `search` if you want substring matches.
+- Adjust defaults per field requirements.
+- For multiple validations, compose error messages rather than returning early.

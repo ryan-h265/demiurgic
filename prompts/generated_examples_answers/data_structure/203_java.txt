@@ -1,0 +1,38 @@
+java
+```java
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+public class ConcurrentMinPQ<T> {
+    private final PriorityQueue<T> pq;
+
+    public ConcurrentMinPQ(Comparator<T> comp) {
+        this.pq = new PriorityQueue<>(comp);
+    }
+
+    public synchronized void offer(T item) {
+        pq.offer(item);
+    }
+
+    public synchronized T poll() {
+        return pq.poll();
+    }
+
+    public synchronized T peek() {
+        return pq.peek();
+    }
+
+    public synchronized int size() {
+        return pq.size();
+    }
+}
+```
+**Explanation:** Wraps `PriorityQueue` with synchronized methods to provide coarse-grained thread safety. Supports offer, poll, peek, and size operations using the provided comparator for ordering.
+**Complexity:** Time: O(log n) for offer/poll, O(1) for peek/size; Space: O(n).
+**Example:**
+Input: offer(3), offer(1), poll()
+Output: returns 1
+**Notes:**
+- Coarse synchronization is simple but blocks concurrent access; consider `PriorityBlockingQueue` for more scalable concurrency.
+- Provide a comparator or ensure T is `Comparable` if using default constructor.
+- Add timeout/condition-based waits for blocking semantics if needed.

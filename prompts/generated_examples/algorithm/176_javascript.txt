@@ -1,0 +1,6 @@
+Category: algorithm
+Language: javascript
+
+============================================================
+
+Implement backtracking for N-queens in JavaScript with detailed comments

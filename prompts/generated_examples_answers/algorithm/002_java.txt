@@ -1,0 +1,40 @@
+java
+```java
+import java.util.*;
+
+public class DepthFirstSearch {
+    /**
+     * Perform DFS on an adjacency-list graph starting at "start".
+     * Returns vertices in visitation order.
+     */
+    public static List<Integer> dfs(List<List<Integer>> graph, int start) {
+        List<Integer> order = new ArrayList<>();
+        boolean[] visited = new boolean[graph.size()];
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        stack.push(start);
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+            if (visited[node]) continue; // skip if already processed
+            visited[node] = true;
+            order.add(node);
+            // Push neighbors in reverse so earlier neighbors are visited first
+            List<Integer> neighbors = graph.get(node);
+            for (int i = neighbors.size() - 1; i >= 0; i--) {
+                int nei = neighbors.get(i);
+                if (!visited[nei]) stack.push(nei);
+            }
+        }
+        return order;
+    }
+}
+```
+**Explanation:** Uses an explicit stack to traverse depth-first from the start node. Mark nodes visited when popped to avoid duplicates, append to the result list, and push unvisited neighbors (reversed to preserve adjacency order). Works for directed or undirected graphs represented as adjacency lists.
+**Complexity:** Time: O(V + E); Space: O(V) for visited and stack.
+**Example:**
+Input: graph = [[1,2],[3],[3],[]], start = 0
+Output: [0,2,3,1] (one valid DFS order)
+**Notes:**
+- Swap to a recursive helper if call-stack depth is safe.
+- For deterministic order, sort adjacency lists before traversal.
+- Detect cycles by checking `visited` before processing neighbors.

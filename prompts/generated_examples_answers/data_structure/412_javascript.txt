@@ -1,0 +1,35 @@
+javascript
+```javascript
+// Monotonic queue supporting O(1) retrieval of min
+class MinQueue {
+  constructor() {
+    this.q = [];
+    this.mono = [];
+  }
+  enqueue(x) {
+    this.q.push(x);
+    while (this.mono.length && this.mono[this.mono.length - 1] > x) {
+      this.mono.pop();
+    }
+    this.mono.push(x);
+  }
+  dequeue() {
+    if (!this.q.length) return undefined;
+    const val = this.q.shift();
+    if (val === this.mono[0]) this.mono.shift();
+    return val;
+  }
+  getMin() {
+    return this.mono.length ? this.mono[0] : undefined;
+  }
+}
+```
+**Explanation:** Maintains the main queue and a secondary deque (`mono`) that stores candidates in nondecreasing order. Enqueue removes larger tail elements; dequeue pops from `mono` if it matches the removed head, keeping `getMin` O(1).
+**Complexity:** Time: Amortized O(1) per op; Space: O(n).
+**Example:**
+Input: enqueue 3,1,2; getMin()->1; dequeue()->3; getMin()->1
+Output: min values as shown
+**Notes:**
+- For max support, invert comparisons.
+- Uses shift for simplicity; replace with head index for stricter O(1).
+- Not thread-safe; coordinate access if shared.

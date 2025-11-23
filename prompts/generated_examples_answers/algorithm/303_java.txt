@@ -1,0 +1,30 @@
+java
+```java
+public class TrappingRainWater {
+    public static int trap(int[] height) {
+        int left = 0, right = height.length - 1;
+        int leftMax = 0, rightMax = 0, water = 0;
+        while (left < right) {
+            if (height[left] < height[right]) {
+                leftMax = Math.max(leftMax, height[left]);
+                water += leftMax - height[left];
+                left++;
+            } else {
+                rightMax = Math.max(rightMax, height[right]);
+                water += rightMax - height[right];
+                right--;
+            }
+        }
+        return water;
+    }
+}
+```
+**Explanation:** Two-pointer technique: move the shorter side inward, tracking maximum heights seen from each side. Water at a position is bounded by the smaller side’s max minus current height; accumulate as pointers converge.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+**Notes:**
+- Assumes non-negative heights.
+- Returns 0 for arrays shorter than 3.
+- For debugging, compare with precomputed prefix/suffix maxima arrays.

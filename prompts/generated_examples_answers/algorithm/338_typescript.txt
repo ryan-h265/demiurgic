@@ -1,0 +1,24 @@
+typescript
+```typescript
+export function lengthOfLIS(nums: number[]): number {
+  const tails: number[] = [];
+  for (const x of nums) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (tails[mid] < x) lo = mid + 1; else hi = mid;
+    }
+    tails[lo] = x;
+  }
+  return tails.length;
+}
+```
+**Explanation:** Maintains minimal tail values for increasing subsequences of each length. Binary searches the insertion point for each number; extending tails grows the LIS length, replacing a tail keeps subsequences optimal.
+**Complexity:** Time: O(n log n); Space: O(n).
+**Example:**
+Input: [10,9,2,5,3,7,101,18]
+Output: 4
+**Notes:**
+- Change `<` to `<=` for non-decreasing sequences.
+- To recover the subsequence, track predecessors and tail indices.
+- Handles empty input (returns 0).

@@ -1,0 +1,21 @@
+rust
+```rust
+#[derive(Clone, Debug)]
+pub struct Item {
+    pub value: i32,
+    pub active: bool,
+}
+
+pub fn filter_active(items: &[Item]) -> Vec<Item> {
+    items.iter().cloned().filter(|i| i.active).collect()
+}
+```
+**Explanation:** Defines a simple `Item` struct and returns a new vector containing only elements where `active` is true, cloning to avoid borrowing issues.
+**Complexity:** Time: O(n); Space: O(n) for the filtered vector.
+**Example:**
+Input: [{value:1, active:true}, {value:2, active:false}]
+Output: [{value:1, active:true}]
+**Notes:**
+- Adjust predicate to match real filtering criteria (e.g., thresholds).
+- If ownership isn’t needed, collect references instead of cloning.
+- For large data, consider streaming with iterators to avoid intermediate storage.

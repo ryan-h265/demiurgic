@@ -1,0 +1,18 @@
+javascript
+```javascript
+// Fix: stop at i < arr.length so we never access out of bounds
+function printSafe(arr = []) {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+```
+**Explanation:** The buggy loop used `<= arr.length`, which produced an extra iteration with `undefined`. Using `< arr.length` keeps indices within bounds, and the default parameter covers missing or empty inputs.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: arr = ['x', 'y']
+Output: logs 'x' then 'y'
+**Notes:**
+- Works fine when `arr` is empty; loop runs zero times.
+- If `arr` may be null/undefined, keep the default or add guards.
+- For asynchronous logging, replace `console.log` accordingly.

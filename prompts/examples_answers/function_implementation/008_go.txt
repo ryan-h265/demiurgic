@@ -1,0 +1,32 @@
+go
+```go
+package main
+
+// ListNode represents a singly-linked list node.
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// Reverse reverses a singly-linked list in-place and returns the new head.
+func Reverse(head *ListNode) *ListNode {
+	var prev *ListNode
+	curr := head
+	for curr != nil {
+		next := curr.Next // store next
+		curr.Next = prev  // reverse pointer
+		prev = curr       // move prev forward
+		curr = next       // advance
+	}
+	return prev
+}
+```
+**Explanation:** Iterate through the list, rewiring each node's `Next` pointer to the previous node. Track `prev` as the new head under construction. After the loop, `prev` points to the reversed list's head.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> nil
+Output: 3 -> 2 -> 1 -> nil
+**Notes:**
+- Works for empty and single-node lists (returns the original head).
+- For immutable lists, construct new nodes instead of rewiring.
+- Use recursion carefully; iterative approach avoids stack growth.

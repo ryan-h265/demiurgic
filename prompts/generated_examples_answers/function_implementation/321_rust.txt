@@ -1,0 +1,22 @@
+rust
+```rust
+pub fn gcd(mut a: i64, mut b: i64) -> i64 {
+    if a < 0 { a = -a; }
+    if b < 0 { b = -b; }
+    while b != 0 {
+        let tmp = b;
+        b = a % b;
+        a = tmp;
+    }
+    a
+}
+```
+**Explanation:** Euclidean algorithm with absolute values to handle negatives. Iteratively replaces (a, b) with (b, a % b) until b becomes zero; the remaining a is the GCD.
+**Complexity:** Time: O(log min(a, b)); Space: O(1).
+**Example:**
+Input: gcd(54, 24)
+Output: 6
+**Notes:**
+- If both inputs are zero, returns zero; define alternate behavior if needed.
+- Use `u64` if negatives are impossible.
+- Extend to compute LCM via `(a / gcd(a,b)) * b` with overflow checks.

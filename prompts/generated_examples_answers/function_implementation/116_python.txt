@@ -1,0 +1,17 @@
+python
+```python
+from collections import Counter
+
+def aggregate_string(s: str) -> dict[str, int]:
+    """Count character frequencies in the string."""
+    return dict(Counter(s))
+```
+**Explanation:** Uses `Counter` to tally occurrences of each character, returning a plain dict mapping characters to counts.
+**Complexity:** Time: O(n); Space: O(k) for k distinct characters.
+**Example:**
+Input: "banana"
+Output: {'b': 1, 'a': 3, 'n': 2}
+**Notes:**
+- Normalize case or strip whitespace before counting if desired.
+- For word-level aggregation, split on whitespace instead of iterating characters.
+- Counter supports addition/subtraction if merging multiple strings.

@@ -1,0 +1,35 @@
+python
+```python
+from functools import wraps
+from typing import Callable, TypeVar, Dict, Tuple, Any
+
+T = TypeVar('T')
+
+
+def memoize(func: Callable[..., T]) -> Callable[..., T]:
+    cache: Dict[Tuple[Any, ...], T] = {}
+
+    @wraps(func)
+    def wrapper(*args: Any) -> T:
+        if args in cache:
+            return cache[args]
+        result = func(*args)
+        cache[args] = result
+        return result
+
+    return wrapper
+```
+**Explanation:** Decorator storing results in a dictionary keyed by the argument tuple. Returns cached values on repeated calls to avoid recomputation.
+**Complexity:** Time: O(1) average cache access plus the cost of `func` on misses; Space: O(m) for m cached entries.
+**Example:**
+Input: 
+```python
+@memoize
+def fib(n):
+    return n if n < 2 else fib(n-1) + fib(n-2)
+```
+Output: fib(10) -> 55 with far fewer recursive calls
+**Notes:**
+- Arguments must be hashable; for unhashable args, serialize or convert to tuples.
+- Cache grows unbounded; add eviction if necessary.
+- For thread safety, wrap cache access with a lock.

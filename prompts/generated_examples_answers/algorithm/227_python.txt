@@ -1,0 +1,26 @@
+python
+```python
+def dfs(graph, start):
+    visited = [False] * len(graph)
+    stack = [start]
+    order = []
+    while stack:
+        node = stack.pop()
+        if visited[node]:
+            continue
+        visited[node] = True
+        order.append(node)
+        for nei in reversed(graph[node]):
+            if not visited[nei]:
+                stack.append(nei)
+    return order
+```
+**Explanation:** Iterative depth-first search using a stack. Pops a node, skips if already seen, marks visited, records order, and pushes unvisited neighbors (reversed to respect adjacency order).
+**Complexity:** Time: O(V + E); Space: O(V) for visited/stack.
+**Example:**
+Input: graph=[[1,2],[3],[3],[]], start=0
+Output: [0,2,3,1] (one valid DFS order)
+**Notes:**
+- Add bounds checking for invalid start indices.
+- For recursive style, ensure recursion depth is safe for large graphs.
+- Works for directed/undirected graphs depending on adjacency lists.

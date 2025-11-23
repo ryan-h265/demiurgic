@@ -1,0 +1,15 @@
+Category: refactoring
+Language: java
+
+============================================================
+
+Refactor this Java code to be more efficient:
+```java
+public String concatenateStrings(List<String> strings) {
+    String result = "";
+    for (String str : strings) {
+        result = result + str + ", ";
+    }
+    return result.substring(0, result.length() - 2);
+}
+```

@@ -1,0 +1,61 @@
+javascript
+```javascript
+function aStar(grid, start, goal) {
+  const rows = grid.length, cols = grid[0].length;
+  const inBounds = (r, c) => r >= 0 && c >= 0 && r < rows && c < cols;
+  const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+  const h = (r, c) => Math.abs(r - goal[0]) + Math.abs(c - goal[1]);
+
+  const open = new MinHeap();
+  const gScore = Array.from({ length: rows }, () => Array(cols).fill(Infinity));
+  gScore[start[0]][start[1]] = 0;
+  open.push({ r: start[0], c: start[1], f: h(start[0], start[1]) });
+
+  while (!open.isEmpty()) {
+    const { r, c } = open.pop();
+    if (r === goal[0] && c === goal[1]) return true;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (!inBounds(nr, nc) || grid[nr][nc] === 1) continue;
+      const tentative = gScore[r][c] + 1;
+      if (tentative < gScore[nr][nc]) {
+        gScore[nr][nc] = tentative;
+        open.push({ r: nr, c: nc, f: tentative + h(nr, nc) });
+      }
+    }
+  }
+  return false;
+}
+
+class MinHeap {
+  constructor() { this.data = []; }
+  isEmpty() { return this.data.length === 0; }
+  push(x) { this.data.push(x); this._up(this.data.length - 1); }
+  pop() {
+    if (!this.data.length) return null;
+    const root = this.data[0];
+    const last = this.data.pop();
+    if (this.data.length && last) { this.data[0] = last; this._down(0); }
+    return root;
+  }
+  _up(i) { while (i>0) { const p=(i-1)>>1; if (this.data[p].f <= this.data[i].f) break; [this.data[p],this.data[i]]=[this.data[i],this.data[p]]; i=p; } }
+  _down(i) {
+    const n=this.data.length;
+    while (true) {
+      let s=i; const l=2*i+1, r=2*i+2;
+      if (l<n && this.data[l].f < this.data[s].f) s=l;
+      if (r<n && this.data[r].f < this.data[s].f) s=r;
+      if (s===i) break; [this.data[i],this.data[s]]=[this.data[s],this.data[i]]; i=s;
+    }
+  }
+}
+```
+**Explanation:** A* on a grid using Manhattan heuristic, skipping walls (cells=1). `gScore` holds best-known path cost; the heap orders nodes by f = g + h. Returns true when the goal is popped.
+**Complexity:** Time: O(E log V); Space: O(V) for scores and heap.
+**Example:**
+Input: grid of 0/1, start [0,0], goal [1,1]
+Output: true if reachable
+**Notes:**
+- For actual path reconstruction, store parents.
+- Adjust heuristic and movement for diagonals or weighted grids.
+- Validate start/goal walkability before running.

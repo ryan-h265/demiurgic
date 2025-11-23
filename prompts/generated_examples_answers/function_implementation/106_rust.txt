@@ -1,0 +1,27 @@
+rust
+```rust
+pub struct Summary {
+    pub length: usize,
+    pub words: usize,
+    pub lowercase: String,
+}
+
+pub fn summarize(text: &str) -> Summary {
+    let trimmed = text.trim();
+    let words = if trimmed.is_empty() { 0 } else { trimmed.split_whitespace().count() };
+    Summary {
+        length: trimmed.chars().count(),
+        words,
+        lowercase: trimmed.to_lowercase(),
+    }
+}
+```
+**Explanation:** Trims the input, counts characters and whitespace-delimited words, and produces a lowercase copy packaged in a `Summary` struct.
+**Complexity:** Time: O(n); Space: O(n) for the lowercase string.
+**Example:**
+Input: " Hello Rust "
+Output: Summary { length: 10, words: 2, lowercase: "hello rust" }
+**Notes:**
+- Use `trim_matches` to customize which characters are trimmed.
+- `chars().count()` counts Unicode scalar values; for bytes, use `len()`.
+- Extend with additional stats like frequency counts if needed.

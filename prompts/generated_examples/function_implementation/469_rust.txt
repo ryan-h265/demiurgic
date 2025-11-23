@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: rust
+
+============================================================
+
+Implement a Rust function to aggregate given a string

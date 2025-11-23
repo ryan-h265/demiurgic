@@ -1,0 +1,35 @@
+javascript
+```javascript
+function evalPostfix(tokens) {
+  if (!tokens.length) throw new Error('empty expression');
+  const stack = [];
+  for (const t of tokens) {
+    if (['+', '-', '*', '/'].includes(t)) {
+      const b = stack.pop();
+      const a = stack.pop();
+      if (a === undefined || b === undefined) throw new Error('invalid expression');
+      switch (t) {
+        case '+': stack.push(a + b); break;
+        case '-': stack.push(a - b); break;
+        case '*': stack.push(a * b); break;
+        case '/': stack.push(Math.trunc(a / b)); break;
+      }
+    } else {
+      const num = Number(t);
+      if (Number.isNaN(num)) throw new Error('non-numeric token');
+      stack.push(num);
+    }
+  }
+  if (stack.length !== 1) throw new Error('invalid expression');
+  return stack[0];
+}
+```
+**Explanation:** Processes tokens left-to-right; numbers are pushed, operators pop two operands, apply the op, and push the result. After all tokens, exactly one value should remain as the result.
+**Complexity:** Time: O(n); Space: O(n) for the stack.
+**Example:**
+Input: ['2','1','+','3','*']
+Output: 9
+**Notes:**
+- Division uses truncation toward zero; replace with floating division if needed.
+- Throws on malformed expressions or non-numeric operands.
+- Extend with additional operators by adding cases.

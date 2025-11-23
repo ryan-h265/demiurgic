@@ -1,0 +1,6 @@
+Category: algorithm
+Language: javascript
+
+============================================================
+
+Implement union-find with path compression in JavaScript with detailed comments

@@ -1,0 +1,34 @@
+python
+```python
+from typing import List
+
+
+def string_permutations(s: str) -> List[str]:
+    """Return all permutations of the input string using backtracking."""
+    chars = list(s)
+    result: List[str] = []
+
+    def backtrack(start: int) -> None:
+        # When we've placed every character, record the permutation
+        if start == len(chars):
+            result.append("".join(chars))
+            return
+        for i in range(start, len(chars)):
+            # Choose: place chars[i] at the current position
+            chars[start], chars[i] = chars[i], chars[start]
+            backtrack(start + 1)
+            # Undo choice for the next iteration
+            chars[start], chars[i] = chars[i], chars[start]
+
+    backtrack(0)
+    return result
+```
+**Explanation:** Use backtracking to swap each character into the current position and recursively permute the remainder. When the current index reaches the end, join the characters and record one permutation. Swapping in-place keeps memory usage low and avoids extra string allocations on each recursion level.
+**Complexity:** Time: O(n·n!) because there are n! permutations and each requires O(n) to join; Space: O(n) for the recursion stack and character array (output excluded).
+**Example:**
+Input: "abc"
+Output: ["abc", "acb", "bac", "bca", "cba", "cab"]
+**Notes:**
+- Handles repeated characters but will emit duplicate permutations; add a used-set per level to skip duplicates if needed.
+- Works for empty string (returns [""]).
+- Avoids creating new lists on each recursion by swapping in-place.

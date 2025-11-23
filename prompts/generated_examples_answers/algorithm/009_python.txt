@@ -1,0 +1,58 @@
+python
+```python
+from collections import deque
+from typing import Optional
+
+
+class TreeNode:
+    def __init__(self, val: int, left: Optional['TreeNode'] = None, right: Optional['TreeNode'] = None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def serialize(root: Optional[TreeNode]) -> str:
+    if not root:
+        return ""
+    out = []
+    q = deque([root])
+    while q:
+        node = q.popleft()
+        if node:
+            out.append(str(node.val))
+            q.append(node.left)
+            q.append(node.right)
+        else:
+            out.append("#")
+    # trim trailing nulls
+    while out and out[-1] == "#":
+        out.pop()
+    return ",".join(out)
+
+
+def deserialize(data: str) -> Optional[TreeNode]:
+    if not data:
+        return None
+    vals = data.split(',')
+    root = TreeNode(int(vals[0]))
+    q = deque([root])
+    i = 1
+    while q and i < len(vals):
+        node = q.popleft()
+        if vals[i] != "#":
+            node.left = TreeNode(int(vals[i])); q.append(node.left)
+        i += 1
+        if i < len(vals) and vals[i] != "#":
+            node.right = TreeNode(int(vals[i])); q.append(node.right)
+        i += 1
+    return root
+```
+**Explanation:** Level-order serialize using `#` placeholders for nulls; trailing nulls are trimmed for brevity. Deserialize by rebuilding the tree level-order: read values, attach children sequentially, and enqueue non-null nodes for further expansion.
+**Complexity:** Time: O(n) for n nodes; Space: O(n) for output string and queues.
+**Example:**
+Input: root representing [1,2,3,#,#,4]
+Output: serialized string "1,2,3,#,#,4"; deserializing returns an equivalent tree.
+**Notes:**
+- Works for arbitrary integer values; extend parsing for other types as needed.
+- Trimming trailing nulls shortens the string but preserves structure.
+- Replace `#`/`,` if those characters may appear in values (or encode safely).

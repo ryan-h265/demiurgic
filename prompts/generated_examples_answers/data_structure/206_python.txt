@@ -1,0 +1,46 @@
+python
+```python
+import threading
+from typing import List
+
+class ThreadSafeSegmentTree:
+    def __init__(self, nums: List[int]):
+        self.n = len(nums)
+        self.tree = [0] * (2 * self.n)
+        self.lock = threading.Lock()
+        self.tree[self.n:] = nums[:]
+        for i in range(self.n - 1, 0, -1):
+            self.tree[i] = self.tree[2 * i] + self.tree[2 * i + 1]
+
+    def update(self, idx: int, val: int) -> None:
+        with self.lock:
+            i = idx + self.n
+            self.tree[i] = val
+            i //= 2
+            while i:
+                self.tree[i] = self.tree[2 * i] + self.tree[2 * i + 1]
+                i //= 2
+
+    def query(self, l: int, r: int) -> int:
+        with self.lock:
+            l += self.n; r += self.n
+            res = 0
+            while l <= r:
+                if l & 1:
+                    res += self.tree[l]
+                    l += 1
+                if not (r & 1):
+                    res += self.tree[r]
+                    r -= 1
+                l //= 2; r //= 2
+            return res
+```
+**Explanation:** Builds an iterative segment tree for range sums and protects updates/queries with a mutex for thread safety. Point updates bubble changes upward; queries walk two pointers inward to aggregate contributions.
+**Complexity:** Time: O(log n) per update/query; Space: O(n).
+**Example:**
+Input: nums=[1,3,5], query(0,2)
+Output: 9
+**Notes:**
+- Adjust the merge operation for min/max as needed.
+- Lock granularity is coarse; finer-grained locks can improve concurrency at extra complexity.
+- Ensure indices are within bounds before calling update/query.

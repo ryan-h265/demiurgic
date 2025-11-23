@@ -1,0 +1,6 @@
+Category: data_structure
+Language: go
+
+============================================================
+
+Implement a stack in Go with iterators with lazy traversal

@@ -1,0 +1,18 @@
+java
+```java
+public class StringAggregator {
+    public static int length(String s) {
+        if (s == null) throw new IllegalArgumentException("null string");
+        return s.length();
+    }
+}
+```
+**Explanation:** Aggregates a string by returning its length, with a null check for safety.
+**Complexity:** Time: O(1) for length; Space: O(1).
+**Example:**
+Input: "hello"
+Output: 5
+**Notes:**
+- Replace aggregation logic (e.g., count words, digits) as needed.
+- Throwing on null avoids ambiguous results; adjust to return 0 if preferred.
+- For Unicode grapheme counts, use BreakIterator instead of `length()`.

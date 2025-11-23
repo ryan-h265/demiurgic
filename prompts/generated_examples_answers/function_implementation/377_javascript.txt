@@ -1,0 +1,20 @@
+javascript
+```javascript
+function filterLogs(lines, predicate = () => true) {
+  const out = [];
+  for (const line of lines) {
+    if (!line || !line.trim()) continue;
+    if (predicate(line)) out.push(line);
+  }
+  return out;
+}
+```
+**Explanation:** Iterates stream lines, skips blanks, applies a predicate, and collects those that pass into a new array.
+**Complexity:** Time: O(n); Space: O(n) for filtered lines.
+**Example:**
+Input: lines=["INFO ok", "ERROR boom"], predicate=line=>line.startsWith("ERROR")
+Output: ["ERROR boom"]
+**Notes:**
+- Replace predicate with structured parsing for richer filtering.
+- For streaming without full materialization, yield via a generator instead of building an array.
+- Trim or normalize lines as needed before testing.

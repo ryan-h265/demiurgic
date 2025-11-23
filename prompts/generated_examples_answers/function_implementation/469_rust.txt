@@ -1,0 +1,15 @@
+rust
+```rust
+pub fn aggregate_string(s: &str) -> usize {
+    s.chars().count()
+}
+```
+**Explanation:** Aggregates a string by returning its character count (Unicode scalar values).
+**Complexity:** Time: O(n) over characters; Space: O(1).
+**Example:**
+Input: "hello"
+Output: 5
+**Notes:**
+- Use `s.len()` for byte length instead.
+- Adjust to aggregate differently (e.g., count words or digits) as needed.
+- Counting grapheme clusters requires a more advanced iterator (e.g., unicode-segmentation crate).

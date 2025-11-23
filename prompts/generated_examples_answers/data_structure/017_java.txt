@@ -1,0 +1,77 @@
+java
+```java
+import java.util.Arrays;
+
+public class ArrayHeap {
+    private int[] heap;
+    private int size = 0;
+
+    public ArrayHeap(int capacity) {
+        heap = new int[Math.max(1, capacity)];
+    }
+
+    public void insert(int val) {
+        ensureCapacity();
+        heap[size] = val;
+        bubbleUp(size);
+        size++;
+    }
+
+    public int deleteRoot() {
+        if (size == 0) throw new IllegalStateException("heap is empty");
+        int root = heap[0];
+        heap[0] = heap[size - 1];
+        size--;
+        bubbleDown(0);
+        return root;
+    }
+
+    public int find(int target) {
+        for (int i = 0; i < size; i++) {
+            if (heap[i] == target) return i; // return index if found
+        }
+        return -1;
+    }
+
+    private void bubbleUp(int idx) {
+        while (idx > 0) {
+            int parent = (idx - 1) / 2;
+            if (heap[parent] <= heap[idx]) break;
+            swap(parent, idx);
+            idx = parent;
+        }
+    }
+
+    private void bubbleDown(int idx) {
+        while (true) {
+            int left = 2 * idx + 1;
+            int right = 2 * idx + 2;
+            int smallest = idx;
+            if (left < size && heap[left] < heap[smallest]) smallest = left;
+            if (right < size && heap[right] < heap[smallest]) smallest = right;
+            if (smallest == idx) break;
+            swap(idx, smallest);
+            idx = smallest;
+        }
+    }
+
+    private void ensureCapacity() {
+        if (size == heap.length) heap = Arrays.copyOf(heap, heap.length * 2);
+    }
+
+    private void swap(int i, int j) {
+        int tmp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = tmp;
+    }
+}
+```
+**Explanation:** Implements a min-heap with array storage. `insert` places the new value at the end then restores heap order via `bubbleUp`; `deleteRoot` removes the smallest element, replaces it with the last element, and `bubbleDown`s to reheapify. `find` scans linearly to locate a target value.
+**Complexity:** Time: insert/deleteRoot O(log n); find O(n); Space: O(n).
+**Example:**
+Input: insert 5, insert 2, insert 8, deleteRoot
+Output: deleteRoot returns 2, heap now contains [5, 8]
+**Notes:**
+- Dynamically resizes when capacity is reached.
+- For max-heap, flip comparisons.
+- `find` is linear; to support key lookup in O(log n), maintain an index map.

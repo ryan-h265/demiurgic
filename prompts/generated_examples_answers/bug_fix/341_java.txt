@@ -1,0 +1,21 @@
+java
+```java
+public class SafeSearch {
+    public static int indexOf(int[] nums, int target) {
+        if (nums == null) return -1;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) return i;
+        }
+        return -1;
+    }
+}
+```
+**Explanation:** Fixes the premature `return -1` inside the loop and iterates with `i < nums.length` to stay in bounds. Returns -1 only after scanning the entire array.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [1,2,3], target=3
+Output: 2
+**Notes:**
+- Handles null input by returning -1; adjust to throw if preferred.
+- For repeated lookups, consider a map for faster access.
+- Works safely for empty arrays.

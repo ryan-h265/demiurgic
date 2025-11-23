@@ -1,0 +1,46 @@
+c++
+```cpp
+#include <deque>
+#include <stdexcept>
+#include <algorithm>
+
+template <typename T>
+class Queue {
+public:
+    void enqueue(const T &value) {
+        data_.push_back(value);
+    }
+
+    T dequeue() {
+        if (data_.empty()) throw std::out_of_range("dequeue from empty queue");
+        T front = data_.front();
+        data_.pop_front();
+        return front;
+    }
+
+    const T &peek() const {
+        if (data_.empty()) throw std::out_of_range("peek from empty queue");
+        return data_.front();
+    }
+
+    int search(const T &value) const {
+        auto it = std::find(data_.begin(), data_.end(), value);
+        return it == data_.end() ? -1 : static_cast<int>(std::distance(data_.begin(), it));
+    }
+
+    bool empty() const { return data_.empty(); }
+    std::size_t size() const { return data_.size(); }
+
+private:
+    std::deque<T> data_;
+};
+```
+**Explanation:** Uses `std::deque` for O(1) insertion at the back and removal from the front. Provides peek to inspect the front element and a linear search to find an element's index. Exceptions signal misuse on empty operations.
+**Complexity:** Time: O(1) for enqueue/dequeue/peek, O(n) for search; Space: O(n).
+**Example:**
+Input: enqueue 10, enqueue 20, peek -> 10, dequeue -> 10
+Output: queue now holds [20]
+**Notes:**
+- Throws `std::out_of_range` on invalid operations; catch as needed.
+- To support move-only types, add overloads taking rvalue references.
+- For thread safety, wrap operations with mutexes.

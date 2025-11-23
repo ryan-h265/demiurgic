@@ -1,0 +1,32 @@
+java
+```java
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class WebScraper {
+    // Fetch a page and extract all anchor hrefs
+    public static List<String> scrapeLinks(String url) throws IOException {
+        Document doc = Jsoup.connect(url).get();
+        Elements anchors = doc.select("a[href]");
+        List<String> links = new ArrayList<>();
+        for (Element a : anchors) {
+            links.add(a.attr("abs:href"));
+        }
+        return links;
+    }
+}
+```
+**Explanation:** Uses Jsoup to download and parse HTML. Selects all anchor tags with href attributes, extracts absolute URLs, and returns them as a list.
+**Complexity:** Time: O(page_size + links); Space: O(page_size) for DOM representation plus O(k) for collected links.
+**Example:**
+Input: scrapeLinks("https://example.com")
+Output: ["https://www.iana.org/domains/example"]
+**Notes:**
+- Requires Jsoup dependency (e.g., Maven: `org.jsoup:jsoup`).
+- Respect robots.txt and site terms when scraping; add user-agent and rate limiting as appropriate.
+- Wrap in try/catch to handle network/parse failures gracefully.

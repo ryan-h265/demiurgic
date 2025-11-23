@@ -1,0 +1,31 @@
+go
+```go
+package main
+
+import (
+	"fmt"
+	"regexp"
+	"strings"
+)
+
+// Normalize trims, lowercases, and collapses internal whitespace.
+func Normalize(input string) string {
+	s := strings.TrimSpace(input)
+	s = strings.ToLower(s)
+	space := regexp.MustCompile(`\s+`)
+	return space.ReplaceAllString(s, " ")
+}
+
+func main() {
+	fmt.Println(Normalize("  Hello\tWorld  ")) // "hello world"
+}
+```
+**Explanation:** Trims leading/trailing whitespace, lowercases the string, and collapses consecutive whitespace to single spaces using a regex.
+**Complexity:** Time: O(n); Space: O(n) for the normalized copy.
+**Example:**
+Input: "  Hello\nWORLD  "
+Output: "hello world"
+**Notes:**
+- Adjust to remove punctuation or accents if needed.
+- For ASCII-only performance, replace regex with manual scanning.
+- If preserving case is desired, skip the `ToLower` step.

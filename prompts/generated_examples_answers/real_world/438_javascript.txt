@@ -1,0 +1,19 @@
+javascript
+```javascript
+import fetch from 'node-fetch';
+
+export async function fetchJson(url) {
+  const resp = await fetch(url, { timeout: 10000 });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  return resp.json();
+}
+```
+**Explanation:** Performs an HTTP GET with a 10s timeout, checks for a 2xx response, and parses the body as JSON, returning the decoded object.
+**Complexity:** Time: O(response_size); Space: O(response_size).
+**Example:**
+Input: `await fetchJson('https://api.github.com')`
+Output: Parsed JSON payload
+**Notes:**
+- Install dependency: `npm install node-fetch`.
+- Wrap calls in try/catch for retries or error handling.
+- For large payloads, consider streaming/parsing incrementally.

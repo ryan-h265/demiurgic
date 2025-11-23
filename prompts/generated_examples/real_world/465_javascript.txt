@@ -1,0 +1,6 @@
+Category: real_world
+Language: javascript
+
+============================================================
+
+Write JavaScript code to process image uploads and generate thumbnails

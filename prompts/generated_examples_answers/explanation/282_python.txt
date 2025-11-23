@@ -1,0 +1,13 @@
+python
+```python
+list(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))
+```
+**Explanation:** Filters numbers 0 through 9 to keep even values, then maps each to its square, finally materializing the results in a list. The result is the squares of even numbers in the range.
+**Complexity:** Time: O(n) over the range; Space: O(n) for the output list.
+**Example:**
+Input: range(10)
+Output: [0, 4, 16, 36, 64]
+**Notes:**
+- Equivalent list comprehension: `[x*x for x in range(10) if x % 2 == 0]`.
+- For lazy evaluation, keep as a map/filter pipeline without wrapping in list.
+- Replace the lambda bodies to perform different filtering/mapping tasks.

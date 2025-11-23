@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: go
+
+============================================================
+
+Create a Go utility that memoizes expensive computations with proper error handling

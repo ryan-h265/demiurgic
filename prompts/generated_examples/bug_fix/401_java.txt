@@ -1,0 +1,11 @@
+Category: bug_fix
+Language: java
+
+============================================================
+
+Find and fix the bug in this Java code:
+if (head.next == null) return false;
+while (head) {
+    head = head.next.next;
+}
+The code should not go out of bounds

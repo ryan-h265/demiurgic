@@ -1,0 +1,52 @@
+c++
+```cpp
+#include <vector>
+
+class MinHeap {
+public:
+    void push(int x) {
+        data_.push_back(x);
+        siftUp(data_.size() - 1);
+    }
+    int pop() {
+        int root = data_.front();
+        data_.front() = data_.back();
+        data_.pop_back();
+        if (!data_.empty()) siftDown(0);
+        return root;
+    }
+    int peek() const { return data_.front(); }
+    bool empty() const { return data_.empty(); }
+
+private:
+    std::vector<int> data_;
+    void siftUp(size_t i) {
+        while (i > 0) {
+            size_t p = (i - 1) / 2;
+            if (data_[p] <= data_[i]) break;
+            std::swap(data_[p], data_[i]);
+            i = p;
+        }
+    }
+    void siftDown(size_t i) {
+        size_t n = data_.size();
+        while (true) {
+            size_t l = 2 * i + 1, r = 2 * i + 2, smallest = i;
+            if (l < n && data_[l] < data_[smallest]) smallest = l;
+            if (r < n && data_[r] < data_[smallest]) smallest = r;
+            if (smallest == i) break;
+            std::swap(data_[i], data_[smallest]);
+            i = smallest;
+        }
+    }
+};
+```
+**Explanation:** Binary min-heap with push/pop/peek operations. Sift-up restores heap after insertion; sift-down fixes the heap after removal.
+**Complexity:** Time: O(log n) push/pop; O(1) peek; Space: O(n).
+**Example:**
+Input: push 3,1,2 then pop()
+Output: 1
+**Notes:**
+- For custom ordering, parameterize the comparator.
+- Add bounds checks if popping from an empty heap is possible.
+- Use std::priority_queue for a built-in alternative.

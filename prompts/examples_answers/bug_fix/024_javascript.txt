@@ -1,0 +1,18 @@
+javascript
+```javascript
+// Fix: use i < arr.length and handle empty arrays gracefully
+function printArray(arr = []) {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+```
+**Explanation:** The original loop ran to `i <= arr.length`, causing an undefined access on the last iteration. This version iterates while `i < arr.length` and defaults to an empty array when none is provided, making n = 0 safe.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: arr = [1, 2]
+Output: logs 1 then 2
+**Notes:**
+- Works for empty arrays without errors.
+- For large arrays, consider chunked logging to avoid console flooding.
+- If arr can be null/undefined, the default parameter prevents errors.

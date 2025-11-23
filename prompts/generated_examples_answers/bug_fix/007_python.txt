@@ -1,0 +1,17 @@
+python
+```python
+def print_array(arr):
+    if arr is None:
+        return
+    for i in range(len(arr)):
+        print(arr[i])
+```
+**Explanation:** The original loop used `i <= arr.length`, which iterated one element too far. Here we iterate with Python's `range(len(arr))`, which stops at the last valid index, preventing out-of-bounds access.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: `[1, 2, 3]`
+Output: prints `1\n2\n3`
+**Notes:**
+- Safely returns if `arr` is `None` or empty; loop naturally does nothing for empty arrays.
+- For large arrays, consider chunked output or logging instead of printing.
+- In JavaScript, the equivalent fix is `for (let i = 0; i < arr.length; i++)`.

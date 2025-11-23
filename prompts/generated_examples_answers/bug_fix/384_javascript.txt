@@ -1,0 +1,16 @@
+javascript
+```javascript
+function printArray(arr = []) {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+```
+**Explanation:** Fixes the off-by-one error by iterating with `i < arr.length` and defaults to an empty array so n=0 is safe. Prevents accessing `arr[arr.length]` (undefined).
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [1, 2]
+Output: logs 1 then 2
+**Notes:**
+- Add null checks if the array argument may be non-array.
+- For large arrays, consider batching output to avoid console flooding.

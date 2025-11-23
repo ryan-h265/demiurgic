@@ -1,0 +1,6 @@
+# Core dependencies - needed for model architecture
+torch>=2.0.0
+numpy>=1.24.0
+
+# Optional but recommended for testing
+pytest>=7.4.0

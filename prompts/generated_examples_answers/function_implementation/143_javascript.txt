@@ -1,0 +1,21 @@
+javascript
+```javascript
+import fs from 'fs';
+import { pipeline } from 'stream/promises';
+
+// Stream a file to a writable destination without loading it all into memory
+export async function streamFile(srcPath, destPath) {
+  const src = fs.createReadStream(srcPath);
+  const dest = fs.createWriteStream(destPath);
+  await pipeline(src, dest);
+}
+```
+**Explanation:** Uses Node's `pipeline` to pipe a readable stream to a writable stream with built-in backpressure and error propagation, preventing full file buffering.
+**Complexity:** Time: O(file_size); Space: O(chunk_size) buffered by the streams.
+**Example:**
+Input: streamFile('big.bin', 'copy.bin')
+Output: Copies data from source to destination
+**Notes:**
+- Handle errors with try/catch around `streamFile` calls.
+- Tune `highWaterMark` on the streams for performance needs.
+- Use `fs.createReadStream` with `start`/`end` for ranged streaming if needed.

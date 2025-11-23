@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: go
+
+============================================================
+
+Write a Go function that computes the greatest common divisor (GCD)

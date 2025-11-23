@@ -1,0 +1,11 @@
+Category: bug_fix
+Language: javascript
+
+============================================================
+
+Find and fix the bug in this JavaScript code:
+for i in range(len(nums)):
+    if nums[i] == target:
+        return i
+    return -1
+The code should handle n=0 correctly

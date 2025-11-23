@@ -1,0 +1,28 @@
+javascript
+```javascript
+import fetch from 'node-fetch';
+import fs from 'fs';
+
+export async function uploadWithRetry(url, filePath, maxRetries = 3) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const stream = fs.createReadStream(filePath);
+      const resp = await fetch(url, { method: 'POST', body: stream });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      return await resp.text();
+    } catch (err) {
+      if (attempt === maxRetries) throw err;
+      await new Promise(res => setTimeout(res, 200 * 2 ** attempt));
+    }
+  }
+}
+```
+**Explanation:** Streams a file to an HTTP endpoint with exponential backoff on failure. Retries a limited number of times, returning the response text on success or rethrowing after exhaustion.
+**Complexity:** Time: O(retries * upload_time); Space: O(chunk_size) buffered by streams.
+**Example:**
+Input: `await uploadWithRetry('https://example.com/upload', 'video.mp4')`
+Output: server response body
+**Notes:**
+- Install `node-fetch`; ensure file path is valid.
+- Add content-type headers if required by the server.
+- For large uploads, consider resumable protocols; this does full retries.

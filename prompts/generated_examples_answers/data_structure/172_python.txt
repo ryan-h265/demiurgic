@@ -1,0 +1,31 @@
+python
+```python
+class CircularSegmentBuffer:
+    """Ring buffer that overwrites oldest entries when full."""
+    def __init__(self, capacity: int):
+        if capacity <= 0:
+            raise ValueError("capacity must be positive")
+        self.data = [None] * capacity
+        self.head = 0  # next write
+        self.size = 0
+
+    def push(self, value):
+        self.data[self.head] = value
+        self.head = (self.head + 1) % len(self.data)
+        self.size = min(self.size + 1, len(self.data))
+
+    def get(self, idx: int):
+        if idx < 0 or idx >= self.size:
+            raise IndexError("index out of range")
+        start = (self.head - self.size) % len(self.data)
+        return self.data[(start + idx) % len(self.data)]
+```
+**Explanation:** Fixed-size ring buffer that wraps writes via modulo arithmetic. `push` overwrites the oldest entry when full. `get` accesses logical indices relative to the oldest element currently stored.
+**Complexity:** Time: O(1) for push/get; Space: O(capacity).
+**Example:**
+Input: capacity=3; push A,B,C,D; get(0)
+Output: returns B (A overwritten by D)
+**Notes:**
+- If overwriting is undesirable, raise instead when size == capacity.
+- Add methods to iterate in logical order or to pop oldest/newest.
+- Thread-safety not included; guard with locks if accessed concurrently.

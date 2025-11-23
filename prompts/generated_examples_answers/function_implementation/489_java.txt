@@ -1,0 +1,34 @@
+java
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class HttpRetrier {
+    private final HttpClient client = HttpClient.newHttpClient();
+
+    public HttpResponse<String> getWithBackoff(String url, int maxRetries) throws Exception {
+        int attempt = 0;
+        while (true) {
+            try {
+                HttpRequest req = HttpRequest.newBuilder(URI.create(url)).GET().build();
+                return client.send(req, HttpResponse.BodyHandlers.ofString());
+            } catch (Exception ex) {
+                if (++attempt > maxRetries) throw ex;
+                long delay = Math.min(1000L * (1L << (attempt - 1)), 8000L);
+                Thread.sleep(delay);
+            }
+        }
+    }
+}
+```
+**Explanation:** Wraps an HTTP GET in a retry loop with exponential backoff. On failure, waits (capped) before retrying, up to `maxRetries`, then rethrows the last exception.
+**Complexity:** Time: O(retries * request_time); Space: O(1).
+**Example:**
+Input: new HttpRetrier().getWithBackoff("https://example.com", 3)
+Output: HTTP response body (or exception after retries)
+**Notes:**
+- Add jitter to avoid synchronized retries under load.
+- Restrict retryable exceptions/status codes per your policy.
+- Consider async `sendAsync` if you need non-blocking behavior.

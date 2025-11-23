@@ -1,0 +1,40 @@
+rust
+```rust
+use std::cmp::Reverse;
+use std::collections::BinaryHeap;
+use std::sync::{Arc, Mutex};
+
+pub struct ThreadSafePriorityQueue<T: Ord> {
+    heap: Arc<Mutex<BinaryHeap<Reverse<T>>>>, // min-heap via Reverse
+}
+
+impl<T: Ord> ThreadSafePriorityQueue<T> {
+    pub fn new() -> Self {
+        Self { heap: Arc::new(Mutex::new(BinaryHeap::new())) }
+    }
+
+    pub fn push(&self, value: T) {
+        let mut h = self.heap.lock().unwrap();
+        h.push(Reverse(value));
+    }
+
+    pub fn pop(&self) -> Option<T> {
+        let mut h = self.heap.lock().unwrap();
+        h.pop().map(|r| r.0)
+    }
+
+    pub fn peek(&self) -> Option<T> where T: Clone {
+        let h = self.heap.lock().unwrap();
+        h.peek().map(|r| r.0.clone())
+    }
+}
+```
+**Explanation:** Wraps a `BinaryHeap` in `Arc<Mutex<...>>` to synchronize concurrent access. `Reverse` turns the default max-heap into a min-heap. Each method locks briefly to perform push/pop/peek safely across threads.
+**Complexity:** Time: O(log n) for push/pop, O(1) for peek; Space: O(n).
+**Example:**
+Input: push 3, push 1, peek -> 1, pop -> 1
+Output: min-heap behavior in a thread-safe wrapper
+**Notes:**
+- `Arc` lets you clone the queue handle and share across threads.
+- Beware of holding locks while doing long work; keep critical sections small.
+- Remove `Reverse` if you prefer max-heap semantics.

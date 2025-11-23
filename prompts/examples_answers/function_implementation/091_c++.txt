@@ -1,0 +1,23 @@
+c++
+```cpp
+#include <vector>
+#include <functional>
+
+template <typename T>
+long long aggregate(const std::vector<T> &items, const std::function<long long(const T &)> &getter) {
+    long long total = 0;
+    for (const auto &item : items) {
+        total += getter(item);
+    }
+    return total;
+}
+```
+**Explanation:** Accepts a vector of objects and a getter that extracts a numeric value. Iterates once, summing the extracted numbers into a running total.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: items = [{count:2},{count:5}], getter = [](const auto &i){ return i.count; }
+Output: 7
+**Notes:**
+- Use templates/lambdas to inline the getter and avoid `std::function` overhead when performance critical.
+- For floating-point aggregation, change accumulator type accordingly.
+- Validate input size or handle overflow as needed for large totals.

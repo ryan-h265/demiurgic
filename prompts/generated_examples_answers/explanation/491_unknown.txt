@@ -1,0 +1,13 @@
+plaintext
+```text
+Two-pointer techniques move one or two indices through a collection to exploit order or structure, often reducing nested loops to linear scans.
+```
+**Explanation:** By starting pointers at the same end (slow/fast) or opposite ends (lo/hi), you can shrink or expand a window, skip work, or detect conditions (e.g., sums, palindromes, cycle detection). Movement rules encode the problem logic, avoiding reprocessing elements.
+**Complexity:** Time: Typically O(n); Space: O(1) extra.
+**Example:**
+Input: nums = [-2, -1, 0, 3, 5], target = 4 (two-sum on sorted array)
+Output: pointers at 1 and 4 yield -1 + 5 = 4
+**Notes:**
+- Works best on sorted or structured data; otherwise, sorting may be needed first.
+- Watch for infinite loops—ensure pointers move each iteration.
+- For sliding windows, maintain counts/invariants as pointers move.

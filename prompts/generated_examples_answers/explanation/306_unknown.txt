@@ -1,0 +1,13 @@
+plaintext
+```text
+Dijkstra's algorithm relaxes edges in order of current shortest distance using a priority queue, expanding outward from the source.
+```
+**Explanation:** Initialize all distances to infinity except the source (0). Pop the closest node from the min-heap, skip if stale, relax its outgoing edges, and push improved distances back onto the heap. Distances never increase, so the first time a node is finalized its shortest path is known.
+**Complexity:** Time: O((V + E) log V) with a binary heap; Space: O(V) for distance and heap entries.
+**Example:**
+Input: graph with edges A-B:2, B-C:1, A-C:5; source A
+Output: dist(A)=0, dist(B)=2, dist(C)=3
+**Notes:**
+- Requires non-negative edge weights; fails on negative edges.
+- Use a Fibonacci heap for O(E + V log V) theoretically, though constants are higher.
+- Track predecessors to reconstruct shortest paths, not just distances.

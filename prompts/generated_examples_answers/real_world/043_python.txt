@@ -1,0 +1,41 @@
+python
+```python
+import argparse
+import sys
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Demo CLI with subcommands")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    greet = sub.add_parser("greet", help="Greet a user")
+    greet.add_argument("name", help="Name to greet")
+
+    add = sub.add_parser("add", help="Add two integers")
+    add.add_argument("a", type=int)
+    add.add_argument("b", type=int)
+
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    if args.command == "greet":
+        print(f"Hello, {args.name}!")
+    elif args.command == "add":
+        print(args.a + args.b)
+    return 0
+
+
+if __name__ == "__main__":  # pragma: no cover
+    sys.exit(main())
+```
+**Explanation:** Uses `argparse` to define two subcommands: `greet` (prints a greeting) and `add` (adds two integers). `main` parses arguments and dispatches to the requested subcommand.
+**Complexity:** Time: O(1) for parsing small CLIs; Space: O(1).
+**Example:**
+Input: `python tool.py add 2 3`
+Output: `5`
+**Notes:**
+- Extend with more subcommands by adding to the parser.
+- `required=True` forces a subcommand; remove for default behavior.
+- Return non-zero exit codes on errors to integrate with scripts.

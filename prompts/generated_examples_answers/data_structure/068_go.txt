@@ -1,0 +1,42 @@
+go
+```go
+package main
+
+// Stack with lazy iterator using a channel
+// Push/Pop are O(1); Iter returns a channel that streams elements top-down.
+type Stack[T any] struct {
+	data []T
+}
+
+func (s *Stack[T]) Push(v T) { s.data = append(s.data, v) }
+
+func (s *Stack[T]) Pop() (T, bool) {
+	var zero T
+	if len(s.data) == 0 {
+		return zero, false
+	}
+	v := s.data[len(s.data)-1]
+	s.data = s.data[:len(s.data)-1]
+	return v, true
+}
+
+func (s *Stack[T]) Iter() <-chan T {
+	ch := make(chan T)
+	go func() {
+		for i := len(s.data) - 1; i >= 0; i-- {
+			ch <- s.data[i]
+		}
+		close(ch)
+	}()
+	return ch
+}
+```
+**Explanation:** Stores elements in a slice. `Push`/`Pop` mutate the slice. `Iter` spawns a goroutine that lazily streams elements via a channel without materializing a copy.
+**Complexity:** Time: O(1) push/pop; Iter streaming O(n); Space: O(n) for stored items plus channel buffer (0 here).
+**Example:**
+Input: push 1,2,3; iterate -> 3,2,1
+Output: values streamed in LIFO order
+**Notes:**
+- Close the channel after iteration; goroutine exits once done.
+- Add bounds checks or errors as preferred instead of booleans.
+- For concurrent producers/consumers, guard with a mutex.

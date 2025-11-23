@@ -1,0 +1,25 @@
+java
+```java
+import java.util.List;
+
+public class ArrayPrinter {
+    // Fix: iterate with i < size, guard against null/empty arrays
+    public static void print(List<?> list) {
+        if (list == null || list.isEmpty()) {
+            return; // nothing to print, handles n = 0 case
+        }
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+    }
+}
+```
+**Explanation:** The buggy loop used `<= length`, causing an out-of-bounds access, and did not handle empty inputs. This Java version checks for null or empty lists and iterates with `i < size` to remain within bounds.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: list = ["a", "b", "c"]
+Output: prints a\nb\nc
+**Notes:**
+- Replace `List<?>` with a concrete type if needed.
+- For arrays, adjust signature to accept `T[]` but keep the `< length` condition.
+- Early return keeps behavior safe for n = 0.

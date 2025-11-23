@@ -1,0 +1,37 @@
+java
+```java
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class ConcurrentLRU<K, V> {
+    private final int capacity;
+    private final Map<K, V> map;
+
+    public ConcurrentLRU(int capacity) {
+        this.capacity = capacity;
+        this.map = new LinkedHashMap<>(capacity, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+                return size() > ConcurrentLRU.this.capacity;
+            }
+        };
+    }
+
+    public synchronized V get(K key) {
+        return map.getOrDefault(key, null);
+    }
+
+    public synchronized void put(K key, V value) {
+        map.put(key, value);
+    }
+}
+```
+**Explanation:** Uses a synchronized wrapper around an access-ordered `LinkedHashMap` with overridden `removeEldestEntry` to evict the least recently used entry once capacity is exceeded.
+**Complexity:** Time: O(1) average for get/put; Space: O(capacity).
+**Example:**
+Input: cap=2; put(1,"a"); put(2,"b"); get(1); put(3,"c")
+Output: key 2 is evicted; map holds keys 1 and 3
+**Notes:**
+- Coarse-grained synchronization is simple; for higher throughput use `ConcurrentLinkedHashMap`-style structures.
+- Returns null on miss; adjust to throw or return Optional.
+- Ensure capacity > 0; otherwise eviction policy misbehaves.

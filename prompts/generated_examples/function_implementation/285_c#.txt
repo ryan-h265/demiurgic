@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: c#
+
+============================================================
+
+Create a C# utility that memoizes expensive computations with proper error handling

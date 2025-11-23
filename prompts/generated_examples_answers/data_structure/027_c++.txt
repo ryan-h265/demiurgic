@@ -1,0 +1,46 @@
+c++
+```cpp
+#include <vector>
+#include <stdexcept>
+
+// Fixed-capacity circular buffer with wrap-around semantics
+class CircularBuffer {
+public:
+    explicit CircularBuffer(size_t capacity)
+        : buf_(capacity), head_(0), tail_(0), size_(0) {
+        if (capacity == 0) throw std::invalid_argument("capacity must be > 0");
+    }
+
+    void push(int value) {
+        if (size_ == buf_.size()) throw std::overflow_error("buffer full");
+        buf_[tail_] = value;
+        tail_ = (tail_ + 1) % buf_.size();
+        ++size_;
+    }
+
+    int pop() {
+        if (size_ == 0) throw std::underflow_error("buffer empty");
+        int val = buf_[head_];
+        head_ = (head_ + 1) % buf_.size();
+        --size_;
+        return val;
+    }
+
+    bool empty() const { return size_ == 0; }
+    bool full() const { return size_ == buf_.size(); }
+    size_t size() const { return size_; }
+
+private:
+    std::vector<int> buf_;
+    size_t head_, tail_, size_;
+};
+```
+**Explanation:** Maintains head/tail indices modulo capacity to achieve wrap-around storage. `push` writes at tail and advances; `pop` reads at head and advances; size tracks occupancy to distinguish full vs empty.
+**Complexity:** Time: O(1) for push/pop; Space: O(capacity).
+**Example:**
+Input: capacity=3; push 1,2,3; pop() -> 1; push 4
+Output: buffer now holds [2,3,4] in logical order
+**Notes:**
+- Throws on overflow/underflow; adjust to overwrite oldest on push if desired.
+- Template the value type for generality beyond `int`.
+- Not thread-safe; add locking for concurrent use.

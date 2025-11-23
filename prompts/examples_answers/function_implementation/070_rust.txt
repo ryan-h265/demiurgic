@@ -1,0 +1,20 @@
+rust
+```rust
+pub fn is_palindrome(s: &str) -> bool {
+    let cleaned: String = s
+        .chars()
+        .filter(|c| c.is_alphanumeric())
+        .flat_map(|c| c.to_lowercase())
+        .collect();
+    cleaned.chars().eq(cleaned.chars().rev())
+}
+```
+**Explanation:** Normalize the string by keeping only alphanumeric characters and lowercasing them, then compare the iterator to its reverse. Equality implies the string reads the same forwards and backwards.
+**Complexity:** Time: O(n); Space: O(n) for the cleaned copy.
+**Example:**
+Input: "RaceCar!"
+Output: true
+**Notes:**
+- Remove filtering if punctuation/case sensitivity matters.
+- For large inputs, you can avoid allocating `cleaned` by comparing characters from both ends directly.
+- Unicode-aware: `to_lowercase` handles multi-char conversions, so `flat_map` is used.

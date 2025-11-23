@@ -1,0 +1,13 @@
+javascript
+```javascript
+[x for x in range(100) if x % 3 == 0 and x % 5 == 0]
+```
+**Explanation:** In Python-like syntax, this builds a list of numbers from 0 to 99 divisible by both 3 and 5 (multiples of 15). JavaScript equivalent: `Array.from({length:100}, (_,i)=>i).filter(x => x % 15 === 0)`.
+**Complexity:** Time: O(n); Space: O(k) for the resulting list.
+**Example:**
+Input: range 0..20
+Output: [0, 15]
+**Notes:**
+- Replace `range(100)` with desired bounds.
+- Filtering by `% 15` is simpler than two modulo checks.
+- For lazy evaluation, use a generator in Python or a stream in JS.

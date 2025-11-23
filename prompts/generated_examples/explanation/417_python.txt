@@ -1,0 +1,7 @@
+Category: explanation
+Language: python
+
+============================================================
+
+Explain what this Python code does and how it works:
+reduce((acc, x) => acc + x, [1, 2, 3, 4], 0)

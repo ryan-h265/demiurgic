@@ -1,0 +1,54 @@
+javascript
+```javascript
+class MinHeap {
+  constructor() {
+    this.data = [];
+  }
+  push(x) {
+    this.data.push(x);
+    this._up(this.data.length - 1);
+  }
+  pop() {
+    if (!this.data.length) return undefined;
+    const root = this.data[0];
+    const last = this.data.pop();
+    if (this.data.length && last !== undefined) {
+      this.data[0] = last;
+      this._down(0);
+    }
+    return root;
+  }
+  peek() {
+    return this.data[0]; // O(1) get-min
+  }
+  _up(i) {
+    while (i > 0) {
+      const p = (i - 1) >> 1;
+      if (this.data[p] <= this.data[i]) break;
+      [this.data[p], this.data[i]] = [this.data[i], this.data[p]];
+      i = p;
+    }
+  }
+  _down(i) {
+    const n = this.data.length;
+    while (true) {
+      let smallest = i;
+      const l = 2 * i + 1, r = 2 * i + 2;
+      if (l < n && this.data[l] < this.data[smallest]) smallest = l;
+      if (r < n && this.data[r] < this.data[smallest]) smallest = r;
+      if (smallest === i) break;
+      [this.data[i], this.data[smallest]] = [this.data[smallest], this.data[i]];
+      i = smallest;
+    }
+  }
+}
+```
+**Explanation:** Implements a binary min-heap with O(1) `peek()` to retrieve the minimum. Insertion and removal restore heap order via sift-up/sift-down.
+**Complexity:** Time: O(log n) push/pop; Space: O(n).
+**Example:**
+Input: push 3, push 1, peek -> 1, pop -> 1
+Output: correct min operations
+**Notes:**
+- For max-heap, invert comparisons.
+- No capacity bound; add if you need O(1) eviction semantics.
+- Ensure comparisons suit your element type; wrap objects with priorities if needed.

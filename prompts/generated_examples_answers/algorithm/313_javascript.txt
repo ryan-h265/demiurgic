@@ -1,0 +1,21 @@
+javascript
+```javascript
+// Validate a binary search tree using bounds
+function isValidBST(root) {
+  function helper(node, low, high) {
+    if (!node) return true;
+    if ((low !== null && node.val <= low) || (high !== null && node.val >= high)) return false;
+    return helper(node.left, low, node.val) && helper(node.right, node.val, high);
+  }
+  return helper(root, null, null);
+}
+```
+**Explanation:** Recursively enforces BST constraints by carrying lower/upper bounds to children. Each node must be greater than all values in its left ancestors (low) and less than all in its right ancestors (high).
+**Complexity:** Time: O(n); Space: O(h) recursion, h=height.
+**Example:**
+Input: root of [2,1,3]
+Output: true
+**Notes:**
+- Handles duplicates by requiring strict inequalities; relax if duplicates allowed on one side.
+- Use iterative stack if recursion depth may overflow.
+- Ensure node structure has `val`, `left`, `right` fields.

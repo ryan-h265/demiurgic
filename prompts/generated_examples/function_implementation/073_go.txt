@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: go
+
+============================================================
+
+Implement a Go function to transform given an array of objects

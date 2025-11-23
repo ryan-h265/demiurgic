@@ -1,0 +1,55 @@
+java
+```java
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ConcurrentUnionFind {
+    private final int[] parent;
+    private final int[] rank;
+    private final ReentrantLock lock = new ReentrantLock();
+
+    public ConcurrentUnionFind(int size) {
+        parent = new int[size];
+        rank = new int[size];
+        for (int i = 0; i < size; i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        lock.lock();
+        try {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void union(int a, int b) {
+        lock.lock();
+        try {
+            int ra = find(a);
+            int rb = find(b);
+            if (ra == rb) return;
+            if (rank[ra] < rank[rb]) {
+                int tmp = ra; ra = rb; rb = tmp;
+            }
+            parent[rb] = ra;
+            if (rank[ra] == rank[rb]) rank[ra]++;
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+```
+**Explanation:** Wraps union-find operations with a `ReentrantLock` to serialize mutations, keeping path compression and union-by-rank heuristics. This provides thread safety for concurrent callers at the cost of coarse locking.
+**Complexity:** Time: Amortized ~O(α(n)) per op; Space: O(n).
+**Example:**
+Input: size=4; union(0,1); union(2,3); find(3)
+Output: representative of set containing 3 (2 or 3 depending on unions)
+**Notes:**
+- Coarse-grained locking is simple but blocks concurrent ops; for higher concurrency, use disjoint-set forests with finer-grained locks or disjoint-set union by atomic CAS.
+- Validate indices in production code.
+- Path compression occurs under lock to maintain consistency.

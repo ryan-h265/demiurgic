@@ -1,0 +1,17 @@
+Category: refactoring
+Language: python
+
+============================================================
+
+Refactor this Python code to be more idiomatic:
+```python
+def merge_dicts(dict1, dict2):
+    result = {}
+    for key in dict1.keys():
+        result[key] = dict1[key]
+    for key in dict2.keys():
+        result[key] = dict2[key]
+    return result
+
+combined = merge_dicts({'a': 1, 'b': 2}, {'c': 3, 'd': 4})
+```

@@ -1,0 +1,11 @@
+Category: bug_fix
+Language: python
+
+============================================================
+
+Find and fix the bug in this Python code:
+for i in range(len(nums)):
+    if nums[i] == target:
+        return i
+    return -1
+The code should return correct value for missing elements

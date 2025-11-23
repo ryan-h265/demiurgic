@@ -1,0 +1,6 @@
+Category: data_structure
+Language: java
+
+============================================================
+
+Design and implement a segment tree in Java supporting range queries and point updates

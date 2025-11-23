@@ -1,0 +1,38 @@
+javascript
+```javascript
+import fs from 'fs';
+import readline from 'readline';
+
+// Read a CSV file of numeric values (one row) and compute min/avg/max
+export async function csvStats(path) {
+  const stream = fs.createReadStream(path);
+  const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
+  let min = Infinity, max = -Infinity, sum = 0, count = 0;
+
+  for await (const line of rl) {
+    const values = line.split(',').map(Number);
+    for (const v of values) {
+      if (Number.isNaN(v)) continue;
+      min = Math.min(min, v);
+      max = Math.max(max, v);
+      sum += v;
+      count++;
+    }
+  }
+  return {
+    min,
+    max,
+    average: count ? sum / count : 0,
+    count,
+  };
+}
+```
+**Explanation:** Streams the CSV file line by line to avoid loading it all at once, parses comma-separated numbers, and updates running min/max/sum/count, returning aggregate statistics.
+**Complexity:** Time: O(n) over values; Space: O(1) extra.
+**Example:**
+Input: file containing `1,2,3\n4,5`
+Output: {min:1, max:5, average:3, count:5}
+**Notes:**
+- Assumes simple numeric CSV; use a parser like `csv-parse` for quoted fields.
+- Skip NaN values; handle errors for malformed rows as needed.
+- For very large files, tune stream highWaterMark for performance.

@@ -1,0 +1,28 @@
+python
+```python
+import re
+from typing import Optional, Pattern, Tuple
+
+
+def validate_input(value: str, *, min_len: int = 1, max_len: int = 100, pattern: Optional[Pattern[str]] = None) -> Tuple[bool, str]:
+    """Validate a user input string with length bounds and optional regex pattern."""
+    if not isinstance(value, str):
+        return False, "Input must be a string"
+    cleaned = value.strip()
+    if len(cleaned) < min_len:
+        return False, f"Minimum length is {min_len}"
+    if len(cleaned) > max_len:
+        return False, f"Maximum length is {max_len}"
+    if pattern and not pattern.fullmatch(cleaned):
+        return False, "Input does not match required format"
+    return True, cleaned
+```
+**Explanation:** Trim whitespace, enforce minimum/maximum length, and optionally require the string to match a regex. Returns a tuple indicating validity and either the cleaned value or an error message.
+**Complexity:** Time: O(n) for length and regex checks; Space: O(1) auxiliary.
+**Example:**
+Input: value=" user@example.com ", pattern=r"^[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+Output: (True, "user@example.com")
+**Notes:**
+- Swap `pattern.fullmatch` for `search` if the pattern should match a substring.
+- Adjust `min_len`/`max_len` per field requirements.
+- Combine with additional domain-specific validations (blocked words, profanity filters) as needed.

@@ -1,0 +1,32 @@
+java
+```java
+import java.sql.*;
+
+public class DbQueryExample {
+    public static void main(String[] args) throws Exception {
+        String url = "jdbc:postgresql://localhost:5432/mydb";
+        String user = "user";
+        String pass = "password";
+        String sql = "SELECT id, name FROM users WHERE active = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setBoolean(1, true);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    System.out.printf("%d %s%n", rs.getInt("id"), rs.getString("name"));
+                }
+            }
+        }
+    }
+}
+```
+**Explanation:** Opens a JDBC connection, prepares a parameterized query, executes it, and iterates the `ResultSet`. Resources are closed automatically via try-with-resources.
+**Complexity:** Time: O(n) over returned rows; Space: O(1) aside from driver buffers.
+**Example:**
+Input: active users in DB
+Output: Printed rows like `1 Alice`
+**Notes:**
+- Ensure the JDBC driver is on the classpath (e.g., PostgreSQL driver).
+- Use connection pools (HikariCP) and externalized credentials in production.
+- Always parameterize queries to avoid SQL injection.

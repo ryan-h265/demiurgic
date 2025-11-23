@@ -1,0 +1,24 @@
+javascript
+```javascript
+/**
+ * Aggregate an array of objects by summing a numeric field for each key.
+ * Example: [{category:'a', value:2}, {category:'a', value:3}] -> {a:5}
+ */
+function aggregateByKey(items, keyField, valueField) {
+  return items.reduce((acc, item) => {
+    const key = item[keyField];
+    const val = Number(item[valueField] || 0);
+    acc[key] = (acc[key] || 0) + val;
+    return acc;
+  }, {});
+}
+```
+**Explanation:** Use `reduce` to walk the array once, extracting a grouping key and numeric value from each object. Accumulate totals in a plain object keyed by the grouping field.
+**Complexity:** Time: O(n); Space: O(k) where k is the number of unique keys.
+**Example:**
+Input: items = [{type:'fruit', count:2}, {type:'fruit', count:1}, {type:'veg', count:5}], keyField = 'type', valueField = 'count'
+Output: { fruit: 3, veg: 5 }
+**Notes:**
+- Coerces values with `Number`; handle NaN cases as needed.
+- Works with any key/value property names; pass different field strings to reuse.
+- For nested keys, provide a custom extractor rather than direct indexing.

@@ -1,0 +1,41 @@
+rust
+```rust
+pub struct CircularBuffer<T> {
+    data: Vec<Option<T>>,
+    head: usize,
+    size: usize,
+}
+
+impl<T> CircularBuffer<T> {
+    pub fn new(capacity: usize) -> Self {
+        Self { data: vec![None; capacity], head: 0, size: 0 }
+    }
+
+    pub fn push(&mut self, value: T) {
+        let idx = (self.head + self.size) % self.data.len();
+        self.data[idx] = Some(value);
+        if self.size == self.data.len() {
+            self.head = (self.head + 1) % self.data.len(); // overwrite oldest
+        } else {
+            self.size += 1;
+        }
+    }
+
+    pub fn pop(&mut self) -> Option<T> {
+        if self.size == 0 { return None; }
+        let idx = self.head;
+        self.head = (self.head + 1) % self.data.len();
+        self.size -= 1;
+        self.data[idx].take()
+    }
+}
+```
+**Explanation:** Fixed-size ring buffer using a Vec of Options. `push` overwrites the oldest when full (advancing head); `pop` removes the oldest element. Head/size track logical order with wrap-around indexing.
+**Complexity:** Time: O(1) per op; Space: O(capacity).
+**Example:**
+Input: capacity=2; push 1; push 2; push 3 (evicts 1); pop() -> 2
+Output: 2
+**Notes:**
+- If overwriting is undesirable, return an error when full instead of advancing head.
+- Add peek/len as needed for convenience.
+- Not thread-safe; wrap in Mutex for concurrent access.

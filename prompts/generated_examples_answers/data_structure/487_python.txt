@@ -1,0 +1,35 @@
+python
+```python
+class MinStack:
+    def __init__(self):
+        self.stack = []
+        self.min_stack = []
+
+    def push(self, x: int) -> None:
+        self.stack.append(x)
+        if not self.min_stack or x <= self.min_stack[-1]:
+            self.min_stack.append(x)
+
+    def pop(self) -> int:
+        if not self.stack:
+            raise IndexError("pop from empty stack")
+        val = self.stack.pop()
+        if val == self.min_stack[-1]:
+            self.min_stack.pop()
+        return val
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def get_min(self) -> int:
+        return self.min_stack[-1]
+```
+**Explanation:** Maintains a primary stack and an auxiliary min_stack to track the current minimum. On push, also push to min_stack when the new value is <= current min; on pop, pop from min_stack when the popped value equals the min.
+**Complexity:** Time: O(1) per operation; Space: O(n).
+**Example:**
+Input: push 3, push 1, get_min()->1, pop()->1, get_min()->3
+Output: mins as shown
+**Notes:**
+- Add emptiness checks before top/get_min if needed.
+- For max support, maintain a max_stack similarly.
+- Works for duplicate minima by using <= on push and equality on pop.

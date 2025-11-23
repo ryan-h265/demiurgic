@@ -1,0 +1,6 @@
+Category: real_world
+Language: java
+
+============================================================
+
+Write Java code to make an HTTP GET request and parse JSON

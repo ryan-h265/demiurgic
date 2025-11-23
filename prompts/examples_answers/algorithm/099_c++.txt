@@ -1,0 +1,29 @@
+c++
+```cpp
+#include <vector>
+#include <limits>
+
+// Return minimum number of coins needed to make up the amount; -1 if impossible
+int coinChange(const std::vector<int> &coins, int amount) {
+    const int INF = std::numeric_limits<int>::max() / 2; // avoid overflow
+    std::vector<int> dp(amount + 1, INF);
+    dp[0] = 0;
+
+    for (int coin : coins) {
+        for (int a = coin; a <= amount; ++a) {
+            dp[a] = std::min(dp[a], dp[a - coin] + 1);
+        }
+    }
+
+    return dp[amount] == INF ? -1 : dp[amount];
+}
+```
+**Explanation:** Use bottom-up DP where `dp[a]` holds the minimum coins to form amount `a`. Initialize to INF except `dp[0]=0`. For each coin, update reachable amounts by considering using that coin once more (`dp[a - coin] + 1`). The final value indicates the minimum coins or impossibility.
+**Complexity:** Time: O(amount * number_of_coins); Space: O(amount).
+**Example:**
+Input: coins = [1, 2, 5], amount = 11
+Output: 3 (11 = 5 + 5 + 1)
+**Notes:**
+- Works with unlimited copies of each coin; for 0/1 knapsack variant, iterate amounts downward.
+- Returns -1 when no combination hits the exact amount.
+- To recover which coins were used, maintain a parent array recording the last coin chosen.

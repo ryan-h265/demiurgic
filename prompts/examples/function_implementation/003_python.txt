@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: python
+
+============================================================
+
+Implement a Python function to aggregate given a dictionary

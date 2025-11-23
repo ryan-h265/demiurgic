@@ -1,0 +1,29 @@
+javascript
+```javascript
+function dfs(graph, start) {
+  const visited = new Array(graph.length).fill(false);
+  const stack = [start];
+  const order = [];
+  while (stack.length) {
+    const node = stack.pop();
+    if (visited[node]) continue;
+    visited[node] = true;
+    order.push(node);
+    const neighbors = graph[node];
+    for (let i = neighbors.length - 1; i >= 0; i--) {
+      const nei = neighbors[i];
+      if (!visited[nei]) stack.push(nei);
+    }
+  }
+  return order;
+}
+```
+**Explanation:** Iterative DFS using a stack; marks nodes as visited when popped, records visitation order, and pushes unvisited neighbors (reversed to honor adjacency order) onto the stack.
+**Complexity:** Time: O(V + E); Space: O(V).
+**Example:**
+Input: graph = [[1,2],[3],[3],[]], start = 0
+Output: [0,2,3,1] (one valid DFS order)
+**Notes:**
+- Replace with recursion if depth is small and stack overflow isn’t a concern.
+- Add bounds checks for `start` in production code.
+- Works for directed/undirected graphs depending on adjacency construction.

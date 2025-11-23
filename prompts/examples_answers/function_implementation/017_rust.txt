@@ -1,0 +1,26 @@
+rust
+```rust
+/// Return the nth Fibonacci number (0-indexed: fib(0)=0, fib(1)=1).
+pub fn fibonacci(n: u32) -> u64 {
+    if n == 0 {
+        return 0;
+    }
+    let mut a: u64 = 0;
+    let mut b: u64 = 1;
+    for _ in 1..n {
+        let next = a + b;
+        a = b;
+        b = next;
+    }
+    b
+}
+```
+**Explanation:** Handle the base case n = 0 separately, then iteratively update two accumulators `a` and `b` to walk the sequence without recursion. Each loop iteration computes the next value and shifts the window.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: n = 6
+Output: 8
+**Notes:**
+- Uses `u64`; large n can overflow. Switch to `num_bigint::BigUint` for arbitrary precision.
+- Zero-indexing keeps fib(0)=0, fib(1)=1; adjust indexing if one-based is desired.
+- Iterative approach avoids recursion depth limits.

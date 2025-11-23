@@ -1,0 +1,22 @@
+python
+```python
+def factorial(n: int) -> int:
+    """Compute n! handling n = 0 safely."""
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    if n == 0:
+        return 1
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+```
+**Explanation:** Adds the missing base case for n = 0 (0! = 1) and validates input. Iterative multiplication avoids recursion depth and ensures no out-of-bounds behavior.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 3
+Output: 6
+**Notes:**
+- For very large n, the result grows quickly; consider using math.prod on a range for brevity.
+- Negative inputs raise a clear error instead of recursing infinitely.
+- For memoization, cache computed values if calling repeatedly.

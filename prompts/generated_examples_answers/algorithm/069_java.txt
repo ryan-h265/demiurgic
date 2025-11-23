@@ -1,0 +1,48 @@
+java
+```java
+import java.util.*;
+
+public class KruskalMST {
+    static class Edge {
+        int u, v, w;
+        Edge(int u, int v, int w) { this.u = u; this.v = v; this.w = w; }
+    }
+
+    static class DSU {
+        int[] p, r;
+        DSU(int n) { p = new int[n]; r = new int[n]; for (int i = 0; i < n; i++) p[i] = i; }
+        int find(int x) { return p[x] == x ? x : (p[x] = find(p[x])); }
+        boolean union(int a, int b) {
+            a = find(a); b = find(b);
+            if (a == b) return false;
+            if (r[a] < r[b]) { int t=a; a=b; b=t; }
+            p[b] = a;
+            if (r[a] == r[b]) r[a]++;
+            return true;
+        }
+    }
+
+    public static int mstWeight(int n, List<Edge> edges) {
+        edges.sort(Comparator.comparingInt(e -> e.w));
+        DSU dsu = new DSU(n);
+        int total = 0, used = 0;
+        for (Edge e : edges) {
+            if (dsu.union(e.u, e.v)) {
+                total += e.w;
+                if (++used == n - 1) break;
+            }
+        }
+        if (used != n - 1) throw new IllegalStateException("Graph not connected");
+        return total;
+    }
+}
+```
+**Explanation:** Sort edges by weight and greedily add them if their endpoints are in different components, using a DSU with path compression and union by rank to track components. Accumulate weights until n-1 edges are chosen for a connected MST.
+**Complexity:** Time: O(E log E); Space: O(V) for DSU.
+**Example:**
+Input: n=3, edges [(0,1,1),(1,2,2),(0,2,3)]
+Output: MST weight = 3
+**Notes:**
+- Throws if the graph is disconnected (fewer than n-1 edges accepted).
+- Extend Edge to hold metadata if you need to return the edge set, not just weight.
+- Works for undirected graphs; ensure edges are bidirectional in the input.

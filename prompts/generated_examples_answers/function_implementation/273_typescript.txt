@@ -1,0 +1,35 @@
+typescript
+```typescript
+import * as fs from 'fs';
+
+type Config = {
+  port: number;
+  env: 'dev' | 'prod';
+};
+
+export function loadConfig(path: string): Config {
+  const raw = fs.readFileSync(path, 'utf-8');
+  let parsed: any;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    throw new Error(`Invalid JSON: ${err}`);
+  }
+  if (typeof parsed.port !== 'number' || !Number.isInteger(parsed.port)) {
+    throw new Error('port must be an integer');
+  }
+  if (!['dev', 'prod'].includes(parsed.env)) {
+    throw new Error('env must be "dev" or "prod"');
+  }
+  return { port: parsed.port, env: parsed.env } as Config;
+}
+```
+**Explanation:** Reads a JSON config file, parses it, and validates required fields (`port` integer, `env` enum). Throws descriptive errors when validation fails.
+**Complexity:** Time: O(n) to read/parse; Space: O(n) for the JSON string/object.
+**Example:**
+Input: file with `{"port":8080,"env":"dev"}`
+Output: { port: 8080, env: 'dev' }
+**Notes:**
+- Extend schema with more fields and stricter checks as needed.
+- Wrap in try/catch at the call site to surface errors to users.
+- For large configs, stream parse or use a schema validator (e.g., zod, yup).

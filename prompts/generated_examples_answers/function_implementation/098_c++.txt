@@ -1,0 +1,35 @@
+c++
+```cpp
+#include <variant>
+#include <vector>
+
+using Nested = std::variant<int, std::vector<std::variant<int, std::vector<std::variant<int, std::vector<std::variant<int, std::vector<std::variant<int, std::vector<std::variant<int, std::vector<std::variant<int,std::vector<int>>>>>>>>>>>>; // simplified below in code usage
+// For clarity, we'll use a recursive helper on a generic nested structure represented as std::vector of std::variant<int, nested>.
+
+using Node = std::variant<int, std::vector<Node>>;
+
+void flatten(const Node& node, std::vector<int>& out) {
+    if (std::holds_alternative<int>(node)) {
+        out.push_back(std::get<int>(node));
+    } else {
+        for (const auto& child : std::get<std::vector<Node>>(node)) {
+            flatten(child, out);
+        }
+    }
+}
+
+std::vector<int> flattenNested(const Node& root) {
+    std::vector<int> result;
+    flatten(root, result);
+    return result;
+}
+```
+**Explanation:** Represents a nested list as `Node = variant<int, vector<Node>>`. The recursive helper walks the structure: if it's an int, append to output; if it's a list, recurse on each element. Collects results in a flat vector.
+**Complexity:** Time: O(n) elements; Space: O(n) for output plus recursion depth.
+**Example:**
+Input: Node { std::vector<Node>{ 1, std::vector<Node>{2,3} } }
+Output: [1,2,3]
+**Notes:**
+- Adjust representation to your actual nested type; for production, define a proper nested list class rather than deep variant aliases.
+- Use an explicit stack if recursion depth might overflow.
+- Preserve order; duplicates are kept as-is.

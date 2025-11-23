@@ -1,0 +1,33 @@
+typescript
+```typescript
+export function findMedianSortedArrays(a: number[], b: number[]): number {
+  if (a.length > b.length) return findMedianSortedArrays(b, a);
+  const m = a.length, n = b.length;
+  let lo = 0, hi = m;
+  while (lo <= hi) {
+    const i = (lo + hi) >> 1;
+    const j = ((m + n + 1) >> 1) - i;
+    const maxLeftA = i === 0 ? -Infinity : a[i - 1];
+    const minRightA = i === m ? Infinity : a[i];
+    const maxLeftB = j === 0 ? -Infinity : b[j - 1];
+    const minRightB = j === n ? Infinity : b[j];
+    if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+      if ((m + n) % 2 === 0) {
+        return (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2;
+      }
+      return Math.max(maxLeftA, maxLeftB);
+    }
+    if (maxLeftA > minRightB) hi = i - 1; else lo = i + 1;
+  }
+  throw new Error('Input arrays not sorted');
+}
+```
+**Explanation:** Binary searches the smaller array for a partition where left parts are <= right parts across both arrays. Computes the median from border elements depending on total parity.
+**Complexity:** Time: O(log(min(m,n))); Space: O(1).
+**Example:**
+Input: [1,3], [2]
+Output: 2
+**Notes:**
+- Handles empty arrays via sentinels +/-Infinity.
+- Throws if inputs are unsorted.
+- Works for even/odd combined lengths without extra passes.

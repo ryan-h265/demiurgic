@@ -1,0 +1,27 @@
+javascript
+```javascript
+// Rotate an n x n matrix 90 degrees clockwise in-place
+function rotate(matrix) {
+  const n = matrix.length;
+  // transpose
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+    }
+  }
+  // reverse each row
+  for (const row of matrix) {
+    row.reverse();
+  }
+  return matrix;
+}
+```
+**Explanation:** Transpose swaps matrix[i][j] with matrix[j][i], then reversing each row yields a 90° clockwise rotation without extra space.
+**Complexity:** Time: O(n²); Space: O(1) extra.
+**Example:**
+Input: [[1,2],[3,4]]
+Output: [[3,1],[4,2]]
+**Notes:**
+- Requires a square matrix; pad or adjust for rectangular shapes.
+- For counterclockwise, transpose then reverse columns instead.
+- Validate non-empty input to avoid undefined behavior on jagged arrays.

@@ -1,0 +1,23 @@
+python
+```python
+from typing import Dict, Iterable, Union
+
+Number = Union[int, float]
+
+
+def aggregate_dict(data: Dict[str, Iterable[Number]]) -> Dict[str, Number]:
+    """Sum iterable numeric values for each key in the dictionary."""
+    totals: Dict[str, Number] = {}
+    for key, values in data.items():
+        totals[key] = sum(values)
+    return totals
+```
+**Explanation:** Iterate over each key and sum its iterable of numeric values, storing the totals in a new dictionary. This aggregates scattered measurements (e.g., per-day counts) into a single number per key.
+**Complexity:** Time: O(total_items) across all iterables; Space: O(k) for k keys in the output.
+**Example:**
+Input: {"apples": [1, 2, 3], "oranges": [2, 2]}
+Output: {"apples": 6, "oranges": 4}
+**Notes:**
+- Expects each value to be iterable; wrap scalars in a list before calling if needed.
+- Extend to other aggregates (avg/min/max) by swapping out `sum` or tracking counts.
+- Non-numeric items will raise a TypeError; validate inputs when necessary.

@@ -1,0 +1,28 @@
+python
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def run_task():
+    try:
+        result = risky_operation()
+        logger.info("Success: %s", result)
+        return result
+    except Exception as exc:  # catch specific exceptions in real code
+        logger.exception("Task failed")
+        # optionally retry or re-raise
+        raise
+    finally:
+        logger.debug("Cleanup done")
+```
+**Explanation:** Wraps work in try/except/finally, logging successes, failures, and cleanup. Exceptions are logged with stack traces and re-raised to propagate failure.
+**Complexity:** Time/Space overhead: O(1) around the wrapped call.
+**Example:**
+Input: call `run_task()` when `risky_operation` raises ValueError
+Output: Logs stack trace via logger and re-raises the error
+**Notes:**
+- Replace broad `Exception` with specific ones to avoid masking bugs.
+- Use retries/backoff around transient failures if appropriate.
+- Configure logging handlers/levels elsewhere (e.g., basicConfig).

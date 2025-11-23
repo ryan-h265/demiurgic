@@ -1,0 +1,20 @@
+javascript
+```javascript
+/**
+ * Transform the values of an object with a callback, keeping the same keys.
+ */
+function transformObject(obj, mapper) {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [key, mapper(value, key)])
+  );
+}
+```
+**Explanation:** Convert the object to key-value pairs, map each value through the callback (receiving value and key), and rebuild a new object via `fromEntries`, preserving keys.
+**Complexity:** Time: O(k) for k entries; Space: O(k) for the new object.
+**Example:**
+Input: obj = { a: 1, b: 2 }, mapper = v => v * 10
+Output: { a: 10, b: 20 }
+**Notes:**
+- Does not mutate the original object; adjust if in-place updates are acceptable.
+- Mapper can use the key for context (e.g., rename or conditionally transform).
+- For nested dictionaries, call recursively or use deep-walk utilities.

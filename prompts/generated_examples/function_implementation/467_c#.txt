@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: c#
+
+============================================================
+
+Create a C# utility that generates paginated results from a collection with proper error handling

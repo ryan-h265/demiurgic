@@ -1,0 +1,38 @@
+python
+```python
+from collections import defaultdict
+
+
+class Graph:
+    def __init__(self):
+        self.adj = defaultdict(list)
+        self.min_edge = None
+        self.max_edge = None
+
+    def add_edge(self, u, v, w=0, bidirectional=False):
+        self.adj[u].append((v, w))
+        if bidirectional:
+            self.adj[v].append((u, w))
+        if self.min_edge is None or w < self.min_edge[2]:
+            self.min_edge = (u, v, w)
+        if self.max_edge is None or w > self.max_edge[2]:
+            self.max_edge = (u, v, w)
+
+    def neighbors(self, u):
+        return list(self.adj.get(u, ()))
+
+    def get_min_edge(self):
+        return self.min_edge
+
+    def get_max_edge(self):
+        return self.max_edge
+```
+**Explanation:** Adjacency list graph with O(1) access to the current minimum and maximum edge weights by tracking them on insertion. Supports optional bidirectional edges and neighbor lookup.
+**Complexity:** Time: O(1) to add edges/lookup neighbors; Space: O(V + E).
+**Example:**
+Input: add_edge('A','B',5); add_edge('B','C',2)
+Output: get_min_edge() -> ('B','C',2), get_max_edge() -> ('A','B',5)
+**Notes:**
+- For dynamic edge deletions, recompute min/max or maintain heaps.
+- For unweighted graphs, ignore weight and min/max tracking.
+- Add node/edge removal as needed.

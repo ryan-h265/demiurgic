@@ -1,0 +1,6 @@
+Category: algorithm
+Language: java
+
+============================================================
+
+Implement depth-first search (DFS) in Java with detailed comments

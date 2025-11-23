@@ -1,0 +1,31 @@
+python
+```python
+from collections import defaultdict
+from typing import Hashable, Any
+
+class Graph:
+    def __init__(self) -> None:
+        self.adj: dict[Hashable, set[Hashable]] = defaultdict(set)
+
+    def add_edge(self, u: Hashable, v: Hashable, bidirectional: bool = False) -> None:
+        self.adj[u].add(v)
+        if bidirectional:
+            self.adj[v].add(u)
+
+    def remove_edge(self, u: Hashable, v: Hashable, bidirectional: bool = False) -> None:
+        self.adj[u].discard(v)
+        if bidirectional:
+            self.adj[v].discard(u)
+
+    def neighbors(self, u: Hashable) -> set[Hashable]:
+        return set(self.adj.get(u, ()))
+```
+**Explanation:** Uses a dict of sets for O(1) average insertion and neighbor lookup. Supports optional bidirectional edges and safe deletion.
+**Complexity:** Time: O(1) avg for insert/delete/lookup; Space: O(V + E).
+**Example:**
+Input: add_edge('A','B', True); neighbors('A')
+Output: {'B'}
+**Notes:**
+- Sets deduplicate edges; switch to lists if duplicates matter.
+- Add node deletion to purge a vertex and its incident edges if needed.
+- For weighted graphs, store a dict of neighbor->weight instead of a set.

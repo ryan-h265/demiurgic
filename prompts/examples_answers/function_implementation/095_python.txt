@@ -1,0 +1,18 @@
+python
+```python
+from typing import Callable, Iterable, List
+
+
+def filter_numbers(nums: Iterable[int], predicate: Callable[[int], bool] = lambda x: x % 2 == 0) -> List[int]:
+    """Return numbers satisfying the predicate (even by default)."""
+    return [n for n in nums if predicate(n)]
+```
+**Explanation:** Iterate through the input and keep values that satisfy the predicate. By default it retains even numbers, but any boolean-valued function can be supplied.
+**Complexity:** Time: O(n); Space: O(n) for the filtered list.
+**Example:**
+Input: nums = [1, 2, 3, 4, 5], predicate = lambda x: x > 3
+Output: [4, 5]
+**Notes:**
+- For streaming behavior, yield instead of building a list (use a generator).
+- Predicate defaults to even check; override for other criteria.
+- Works with any iterable, not just lists.

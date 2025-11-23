@@ -1,0 +1,22 @@
+go
+```go
+package main
+
+import "regexp"
+
+var emailRx = regexp.MustCompile(`^[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$`)
+
+// IsValidEmail returns true when the string matches a simple email pattern.
+func IsValidEmail(email string) bool {
+	return emailRx.MatchString(email)
+}
+```
+**Explanation:** Precompiles a regex that matches common email forms (local@domain.tld) and checks the input string against it.
+**Complexity:** Time: O(n) for regex match; Space: O(1) auxiliary.
+**Example:**
+Input: "user@example.com"
+Output: true
+**Notes:**
+- Regex is intentionally simple, not RFC-complete.
+- Trim surrounding whitespace before validation if inputs may contain it.
+- Reuse the compiled regex to avoid recompilation overhead.

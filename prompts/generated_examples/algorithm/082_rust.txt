@@ -1,0 +1,6 @@
+Category: algorithm
+Language: rust
+
+============================================================
+
+Implement depth-first search (DFS) in Rust with detailed comments

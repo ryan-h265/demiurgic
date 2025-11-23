@@ -1,0 +1,37 @@
+javascript
+```javascript
+/**
+ * Breadth-first search on an adjacency list graph starting from source.
+ * Returns the visitation order.
+ */
+function bfs(graph, start) {
+  const order = [];
+  if (!graph || graph.length === 0) return order;
+
+  const visited = new Array(graph.length).fill(false);
+  const queue = [];
+  visited[start] = true;
+  queue.push(start);
+
+  while (queue.length) {
+    const node = queue.shift();
+    order.push(node);
+    for (const neighbor of graph[node]) {
+      if (!visited[neighbor]) {
+        visited[neighbor] = true; // mark before enqueue to avoid duplicates
+        queue.push(neighbor);
+      }
+    }
+  }
+  return order;
+}
+```
+**Explanation:** Maintain a queue of frontier nodes. Start with the source, pop nodes in FIFO order, record them, and enqueue all unvisited neighbors while marking them visited immediately. This visits nodes in layers from the start node.
+**Complexity:** Time: O(V + E); Space: O(V) for `visited` and queue.
+**Example:**
+Input: graph = [[1,2],[0,3],[0,3],[1,2]], start = 0
+Output: [0,1,2,3]
+**Notes:**
+- Works for directed graphs as long as adjacency lists reflect direction.
+- Returns empty list for invalid start indices; add bounds checks as needed.
+- To retrieve shortest paths, store parent pointers alongside visited marks.

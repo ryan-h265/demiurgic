@@ -1,0 +1,20 @@
+java
+```java
+public class SafeLoop {
+    public static void print(int[] arr) {
+        if (arr == null) return;
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+    }
+}
+```
+**Explanation:** Changes the erroneous `i <= arr.length` loop to `i < arr.length` and guards null input, preventing out-of-bounds access.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [10, 20]
+Output: prints 10 then 20
+**Notes:**
+- Works for empty arrays (loop not entered).
+- Replace printing with logging or accumulation as needed.
+- Add try/catch if downstream output operations may fail.

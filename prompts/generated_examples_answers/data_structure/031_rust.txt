@@ -1,0 +1,52 @@
+rust
+```rust
+use std::collections::VecDeque;
+
+/// Monotonic queue supporting O(1) push/pop front and O(1) access to min.
+pub struct MinQueue {
+    data: VecDeque<i32>,
+    mono: VecDeque<i32>,
+}
+
+impl MinQueue {
+    pub fn new() -> Self {
+        Self { data: VecDeque::new(), mono: VecDeque::new() }
+    }
+
+    pub fn push(&mut self, x: i32) {
+        self.data.push_back(x);
+        while let Some(&back) = self.mono.back() {
+            if back <= x { break; }
+            self.mono.pop_back();
+        }
+        self.mono.push_back(x);
+    }
+
+    pub fn pop(&mut self) -> Option<i32> {
+        let val = self.data.pop_front();
+        if let Some(v) = val {
+            if self.mono.front() == Some(&v) {
+                self.mono.pop_front();
+            }
+        }
+        val
+    }
+
+    pub fn min(&self) -> Option<i32> {
+        self.mono.front().cloned()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.data.is_empty()
+    }
+}
+```
+**Explanation:** Maintains the main queue plus a secondary deque (`mono`) that stores candidates in nondecreasing order. On push, it drops larger tail elements before appending the new value; on pop, it removes from `mono` if the popped value was the current minimum. This keeps `min()` in O(1).
+**Complexity:** Time: Amortized O(1) per push/pop; Space: O(n).
+**Example:**
+Input: push 3, push 1, push 2, min() -> 1, pop() -> 3, min() -> 1
+Output: mins tracked as described
+**Notes:**
+- Use `max` variant by reversing comparisons.
+- Generic over ordered types with `T: Ord + Copy` if needed.
+- Not thread-safe; wrap in `Mutex` for concurrent use.

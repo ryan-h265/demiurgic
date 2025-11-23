@@ -1,0 +1,6 @@
+Category: algorithm
+Language: c++
+
+============================================================
+
+Implement dynamic programming for coin change in C++ with detailed comments

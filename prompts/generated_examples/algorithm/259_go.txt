@@ -1,0 +1,6 @@
+Category: algorithm
+Language: go
+
+============================================================
+
+Implement A* pathfinding in Go with detailed comments

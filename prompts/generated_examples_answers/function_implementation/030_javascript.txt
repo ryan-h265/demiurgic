@@ -1,0 +1,26 @@
+javascript
+```javascript
+/**
+ * Aggregate a numeric matrix by summing each row and returning the grand total.
+ */
+function aggregateMatrix(matrix) {
+  let total = 0;
+  for (const row of matrix) {
+    for (const val of row) {
+      const num = Number(val);
+      if (Number.isNaN(num)) throw new Error('Non-numeric value in matrix');
+      total += num;
+    }
+  }
+  return total;
+}
+```
+**Explanation:** Iterates through every row and element, coerces to numbers, and accumulates a running sum. Throws if any value is non-numeric to keep results predictable.
+**Complexity:** Time: O(r * c); Space: O(1) extra.
+**Example:**
+Input: [[1, 2], [3, 4]]
+Output: 10
+**Notes:**
+- Adapt to return row/column sums by collecting into arrays instead of a single total.
+- For sparse matrices, iterate only non-zero entries to reduce work.
+- Validate rectangular shape if downstream code assumes consistent column counts.

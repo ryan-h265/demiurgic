@@ -1,0 +1,6 @@
+Category: algorithm
+Language: javascript
+
+============================================================
+
+Implement A* pathfinding in JavaScript with detailed comments

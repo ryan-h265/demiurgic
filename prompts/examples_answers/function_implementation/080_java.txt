@@ -1,0 +1,43 @@
+java
+```java
+public class QuickSort {
+    public static void quicksort(int[] arr) {
+        sort(arr, 0, arr.length - 1);
+    }
+
+    private static void sort(int[] arr, int low, int high) {
+        if (low >= high) return;
+        int pivotIndex = partition(arr, low, high);
+        sort(arr, low, pivotIndex - 1);
+        sort(arr, pivotIndex + 1, high);
+    }
+
+    private static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low;
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                swap(arr, i, j);
+                i++;
+            }
+        }
+        swap(arr, i, high);
+        return i;
+    }
+
+    private static void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+}
+```
+**Explanation:** Choose the last element as pivot, partition the array so elements ≤ pivot are on the left, then recursively quicksort the subarrays on either side. Swapping in-place avoids extra allocations.
+**Complexity:** Time: O(n log n) average, O(n²) worst-case; Space: O(log n) for recursion stack.
+**Example:**
+Input: [3, 7, 2, 5]
+Output: [2, 3, 5, 7]
+**Notes:**
+- Randomize or median-of-three pivot selection to reduce worst-case chances.
+- Tail recursion elimination is not guaranteed; consider iterative implementation for very large arrays.
+- Stable sorting is not provided by this quicksort variant.

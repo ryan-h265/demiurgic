@@ -1,0 +1,30 @@
+java
+```java
+import java.util.*;
+
+public class Graph {
+    private final Map<Integer, Set<Integer>> adj = new HashMap<>();
+
+    public void addEdge(int u, int v, boolean bidirectional) {
+        adj.computeIfAbsent(u, k -> new LinkedHashSet<>()).add(v);
+        if (bidirectional) adj.computeIfAbsent(v, k -> new LinkedHashSet<>()).add(u);
+    }
+
+    public Iterable<Integer> neighbors(int u) {
+        return adj.getOrDefault(u, Collections.emptySet());
+    }
+
+    public Iterable<Integer> vertices() {
+        return adj.keySet();
+    }
+}
+```
+**Explanation:** Adjacency-list graph with iterable neighbors/vertices. Uses LinkedHashSet to provide deterministic traversal order and lazy iteration via the collections views.
+**Complexity:** Time: O(1) average for edge insert; Space: O(V + E).
+**Example:**
+Input: addEdge(1,2,true); neighbors(1)
+Output: [2]
+**Notes:**
+- Extend with weights by storing neighbor-weight pairs.
+- Add removal methods as needed.
+- Not thread-safe; synchronize if used concurrently.

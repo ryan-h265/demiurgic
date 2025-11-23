@@ -1,0 +1,30 @@
+java
+```java
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public class Streamer {
+    public interface ChunkHandler { void handle(byte[] chunk, int len) throws IOException; }
+
+    public static void streamFile(Path path, int chunkSize, ChunkHandler handler) throws IOException {
+        try (InputStream in = Files.newInputStream(path)) {
+            byte[] buf = new byte[chunkSize];
+            int read;
+            while ((read = in.read(buf)) != -1) {
+                handler.handle(buf, read);
+            }
+        }
+    }
+}
+```
+**Explanation:** Opens a file as an InputStream and reads it in fixed-size chunks, invoking a handler for each chunk. Uses try-with-resources for cleanup and propagates IOExceptions.
+**Complexity:** Time: O(file_size); Space: O(chunk_size) buffer.
+**Example:**
+Input: streamFile(Path.of("data.bin"), 8192, (buf,len) -> System.out.println(len))
+Output: Prints sizes of each chunk read
+**Notes:**
+- Handler can write to network, compute hashes, etc.
+- Choose chunkSize based on performance requirements.
+- Add retries or throttling at call sites if needed.

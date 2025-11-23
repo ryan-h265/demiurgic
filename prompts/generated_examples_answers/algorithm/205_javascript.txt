@@ -1,0 +1,31 @@
+javascript
+```javascript
+class UnionFind {
+  constructor(n) {
+    this.parent = Array.from({ length: n }, (_, i) => i);
+    this.rank = Array(n).fill(0);
+  }
+  find(x) {
+    if (this.parent[x] !== x) {
+      this.parent[x] = this.find(this.parent[x]);
+    }
+    return this.parent[x];
+  }
+  union(a, b) {
+    let ra = this.find(a), rb = this.find(b);
+    if (ra === rb) return;
+    if (this.rank[ra] < this.rank[rb]) [ra, rb] = [rb, ra];
+    this.parent[rb] = ra;
+    if (this.rank[ra] === this.rank[rb]) this.rank[ra]++;
+  }
+}
+```
+**Explanation:** Implements union-find with path compression in `find` and union by rank to attach shallower trees under deeper ones, keeping operations nearly constant time.
+**Complexity:** Time: Amortized ~O(α(n)) per op; Space: O(n).
+**Example:**
+Input: uf.union(0,1); uf.union(1,2); uf.find(2)
+Output: representative of set {0,1,2}
+**Notes:**
+- Ensure indices are within bounds.
+- Add a `connected(a,b)` helper for readability.
+- Capacity is fixed at construction; create a new instance to grow.

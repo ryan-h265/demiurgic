@@ -1,0 +1,6 @@
+Category: algorithm
+Language: java
+
+============================================================
+
+Implement binary search in Java with detailed comments

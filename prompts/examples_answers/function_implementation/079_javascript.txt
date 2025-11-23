@@ -1,0 +1,17 @@
+javascript
+```javascript
+// Convert a non-negative integer to its binary string representation
+function decimalToBinary(n) {
+  if (n < 0 || !Number.isInteger(n)) throw new Error('n must be a non-negative integer');
+  return n.toString(2);
+}
+```
+**Explanation:** Validate input and use JavaScript's built-in `Number.prototype.toString` with radix 2 to produce the binary representation.
+**Complexity:** Time: O(log n); Space: O(log n) for the output string length.
+**Example:**
+Input: 10
+Output: "1010"
+**Notes:**
+- For padding, wrap with `result.padStart(width, '0')`.
+- For very large integers beyond `Number.MAX_SAFE_INTEGER`, use `BigInt` and call `.toString(2)` on it.
+- Throws on negative or non-integer input to avoid surprising results.

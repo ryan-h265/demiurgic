@@ -1,0 +1,17 @@
+Category: refactoring
+Language: python
+
+============================================================
+
+Refactor this Python code to be more idiomatic:
+```python
+def get_even_numbers(numbers):
+    result = []
+    for i in range(len(numbers)):
+        if numbers[i] % 2 == 0:
+            result.append(numbers[i])
+    return result
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+evens = get_even_numbers(numbers)
+```

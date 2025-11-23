@@ -1,0 +1,25 @@
+javascript
+```javascript
+/** Normalize dictionary keys to lower-case and trim string values. */
+function normalizeDict(obj) {
+  const out = {};
+  for (const [k, v] of Object.entries(obj)) {
+    const key = k.trim().toLowerCase();
+    if (typeof v === 'string') {
+      out[key] = v.trim();
+    } else {
+      out[key] = v;
+    }
+  }
+  return out;
+}
+```
+**Explanation:** Iterates over entries, lowercases and trims keys, trims string values, and copies others as-is into a new object, leaving the original untouched.
+**Complexity:** Time: O(n) over properties; Space: O(n) for the new object.
+**Example:**
+Input: {" Name ": " Alice ", age: 30}
+Output: {"name": "Alice", age: 30}
+**Notes:**
+- Adjust normalization rules for values (e.g., lowercasing) as needed.
+- Nested objects are not deep-normalized; apply recursively if required.
+- Skip or validate keys that become duplicates after normalization.

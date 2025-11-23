@@ -1,0 +1,40 @@
+java
+```java
+import java.util.*;
+
+public class TopoSort {
+    /**
+     * Kahn's algorithm: returns topological order or throws on cycle.
+     */
+    public static List<Integer> topoOrder(int n, List<int[]> edges) {
+        List<List<Integer>> adj = new ArrayList<>();
+        int[] indeg = new int[n];
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+        for (int[] e : edges) {
+            adj.get(e[0]).add(e[1]);
+            indeg[e[1]]++;
+        }
+        Queue<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) if (indeg[i] == 0) q.add(i);
+        List<Integer> order = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int u = q.poll();
+            order.add(u);
+            for (int v : adj.get(u)) {
+                if (--indeg[v] == 0) q.add(v);
+            }
+        }
+        if (order.size() != n) throw new IllegalStateException("Cycle detected");
+        return order;
+    }
+}
+```
+**Explanation:** Builds adjacency and indegree arrays, enqueues zero-indegree nodes, repeatedly removes them, and decreases neighbors’ indegrees. If nodes remain with indegree > 0, a cycle exists.
+**Complexity:** Time: O(V + E); Space: O(V + E).
+**Example:**
+Input: n=3, edges=[[0,1],[1,2]]
+Output: [0,1,2]
+**Notes:**
+- Works only on DAGs; cycles trigger an exception.
+- Multiple valid orders can exist depending on queue tie-breaking.
+- For DFS-based topo sort, postorder nodes onto a stack instead of indegree processing.

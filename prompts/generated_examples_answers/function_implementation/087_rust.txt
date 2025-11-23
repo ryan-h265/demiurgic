@@ -1,0 +1,27 @@
+rust
+```rust
+pub fn calculate(lhs: f64, op: char, rhs: f64) -> Result<f64, String> {
+    match op {
+        '+' => Ok(lhs + rhs),
+        '-' => Ok(lhs - rhs),
+        '*' => Ok(lhs * rhs),
+        '/' => {
+            if rhs == 0.0 {
+                Err("division by zero".into())
+            } else {
+                Ok(lhs / rhs)
+            }
+        }
+        _ => Err("unsupported operator".into()),
+    }
+}
+```
+**Explanation:** Dispatches on the operator to perform arithmetic, returning a `Result` for error reporting (unsupported op or division by zero).
+**Complexity:** Time: O(1); Space: O(1).
+**Example:**
+Input: calculate(6.0, '/', 3.0)
+Output: Ok(2.0)
+**Notes:**
+- Extend with more operators or parentheses by adding parsing logic.
+- Consider using `f64::EPSILON` comparisons for floating-point equality.
+- Propagate errors rather than panicking for robustness.

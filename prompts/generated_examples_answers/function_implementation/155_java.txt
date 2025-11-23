@@ -1,0 +1,31 @@
+java
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class LogTransformer {
+    public static record LogRecord(String timestamp, String level, String message) {}
+
+    public static List<LogRecord> transform(List<String> lines) {
+        List<LogRecord> out = new ArrayList<>();
+        for (String line : lines) {
+            if (line == null || line.isBlank()) continue;
+            String[] parts = line.trim().split("\\s+", 3);
+            String ts = parts.length > 0 ? parts[0] : "";
+            String level = parts.length > 1 ? parts[1].toUpperCase() : "INFO";
+            String msg = parts.length > 2 ? parts[2] : "";
+            out.add(new LogRecord(ts, level, msg));
+        }
+        return out;
+    }
+}
+```
+**Explanation:** Splits each log line into timestamp, level, and message (max 3 parts), uppercases the level, and returns structured `LogRecord` objects, skipping blank lines.
+**Complexity:** Time: O(n * m) over lines and length; Space: O(n) for output.
+**Example:**
+Input: ["2024-01-01 info started"]
+Output: LogRecord(timestamp="2024-01-01", level="INFO", message="started")
+**Notes:**
+- Adjust parsing if timestamps include spaces; a regex with capture groups may be needed.
+- Validate level against an allowlist if important.
+- For streaming, emit records incrementally rather than collecting in a list.

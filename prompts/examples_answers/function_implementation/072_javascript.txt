@@ -1,0 +1,22 @@
+javascript
+```javascript
+/**
+ * Transform a string by trimming, collapsing whitespace, and capitalizing each word.
+ */
+function transformString(input) {
+  return input
+    .trim()
+    .split(/\s+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+```
+**Explanation:** Trim leading/trailing whitespace, split on runs of whitespace, title-case each word, and join back with single spaces. This normalizes spacing and casing in one pass.
+**Complexity:** Time: O(n); Space: O(n) for the array of words and output string.
+**Example:**
+Input: "  hello   WORLD  "
+Output: "Hello World"
+**Notes:**
+- For locale-sensitive casing, use `toLocaleUpperCase`/`toLocaleLowerCase`.
+- If the input can be empty or whitespace-only, the result will be an empty string.
+- Extend with slugification by lowercasing and joining with `-` instead of capitalizing.

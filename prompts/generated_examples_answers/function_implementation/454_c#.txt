@@ -1,0 +1,33 @@
+csharp
+```csharp
+using System;
+using System.IO;
+using System.Text.Json;
+
+public static class ConfigLoader
+{
+    public static T Load<T>(string path)
+    {
+        if (!File.Exists(path)) throw new FileNotFoundException(path);
+        var json = File.ReadAllText(path);
+        try
+        {
+            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                   ?? throw new InvalidOperationException("Deserialized to null");
+        }
+        catch (JsonException ex)
+        {
+            throw new InvalidDataException("Invalid JSON", ex);
+        }
+    }
+}
+```
+**Explanation:** Reads a JSON config file, deserializes into a typed object with case-insensitive property binding, and throws descriptive errors for missing files or parse failures.
+**Complexity:** Time: O(n) to read/parse; Space: O(n) for the JSON text/object.
+**Example:**
+Input: Config file `{ "port": 8080 }`, `Load<Config>(path)`
+Output: Config instance with port set
+**Notes:**
+- Define the `Config` type with required properties; add validation after deserialization.
+- For large configs, stream the JSON with `JsonSerializer.DeserializeAsync`.
+- Catch and handle exceptions at the call site to surface user-friendly messages.

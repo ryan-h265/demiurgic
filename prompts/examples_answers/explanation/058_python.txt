@@ -1,0 +1,16 @@
+python
+```python
+from functools import reduce
+
+# Using Python's reduce to sum the list
+result = reduce(lambda acc, x: acc + x, [1, 2, 3, 4], 0)
+```
+**Explanation:** `reduce` applies the lambda cumulatively from left to right. Starting at 0, it adds each element: (((0 + 1) + 2) + 3) + 4, resulting in 10. The arrow syntax shown in the prompt is JavaScript-style, but the behavior is equivalent to the Python example above.
+**Complexity:** Time: O(n); Space: O(1) auxiliary.
+**Example:**
+Input: [1, 2, 3, 4]
+Output: 10
+**Notes:**
+- Always supply an initial value when the list might be empty to avoid `TypeError`.
+- For readability, `sum([1, 2, 3, 4])` is preferred when simply adding numbers.
+- The lambda can be replaced with any associative operation (product, max, merging dicts, etc.).

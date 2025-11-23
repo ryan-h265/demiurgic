@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: go
+
+============================================================
+
+Create a Go utility that retries HTTP requests with exponential backoff with proper error handling

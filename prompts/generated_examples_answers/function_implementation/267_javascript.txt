@@ -1,0 +1,36 @@
+javascript
+```javascript
+/**
+ * Debounce an async function; rejects prior calls when superseded.
+ */
+function debounceAsync(fn, wait = 200) {
+  let timer = null;
+  let rejectPrev = null;
+  return (...args) => {
+    if (timer) clearTimeout(timer);
+    if (rejectPrev) rejectPrev(new Error('debounced'));
+    return new Promise((resolve, reject) => {
+      rejectPrev = reject;
+      timer = setTimeout(async () => {
+        timer = null;
+        rejectPrev = null;
+        try {
+          const result = await fn(...args);
+          resolve(result);
+        } catch (err) {
+          reject(err);
+        }
+      }, wait);
+    });
+  };
+}
+```
+**Explanation:** Returns a wrapper that resets a timeout on each call. Previous pending calls are rejected to signal cancellation. Only the last call within the wait window invokes `fn`, and its result/error resolves/rejects the returned promise.
+**Complexity:** Time: O(1) per call; Space: O(1) for timer state.
+**Example:**
+Input: rapid invocations of `debounceAsync(fetchData, 300)`
+Output: Only the final call runs `fetchData`; earlier calls reject with `debounced`.
+**Notes:**
+- Remove the rejection if you prefer silent cancellation.
+- Works in Node; for browsers, timer types remain compatible.
+- Ensure `fn` is idempotent if multiple rapid calls are possible.

@@ -1,0 +1,17 @@
+Category: code_review
+Language: javascript
+
+============================================================
+
+Review this JavaScript code and suggest improvements for security:
+```javascript
+function login(username, password) {
+    localStorage.setItem('password', password);
+    const url = '/api/login?user=' + username + '&pass=' + password;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            eval('handleLogin(' + JSON.stringify(data) + ')');
+        });
+}
+```

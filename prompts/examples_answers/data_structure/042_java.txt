@@ -1,0 +1,99 @@
+java
+```java
+import java.util.*;
+
+public class HashTable<K, V> {
+    private static final double LOAD_FACTOR = 0.75;
+    private List<Entry<K, V>>[] buckets;
+    private int size = 0;
+
+    @SuppressWarnings("unchecked")
+    public HashTable(int capacity) {
+        buckets = new List[Math.max(1, capacity)];
+    }
+
+    public V put(K key, V value) {
+        ensureCapacity();
+        int idx = index(key);
+        if (buckets[idx] == null) buckets[idx] = new LinkedList<>();
+        for (Entry<K, V> e : buckets[idx]) {
+            if (Objects.equals(e.key, key)) {
+                V old = e.value;
+                e.value = value;
+                return old;
+            }
+        }
+        buckets[idx].add(new Entry<>(key, value));
+        size++;
+        return null;
+    }
+
+    public V get(K key) {
+        int idx = index(key);
+        List<Entry<K, V>> bucket = buckets[idx];
+        if (bucket == null) return null;
+        for (Entry<K, V> e : bucket) {
+            if (Objects.equals(e.key, key)) return e.value;
+        }
+        return null;
+    }
+
+    public V remove(K key) {
+        int idx = index(key);
+        List<Entry<K, V>> bucket = buckets[idx];
+        if (bucket == null) return null;
+        Iterator<Entry<K, V>> it = bucket.iterator();
+        while (it.hasNext()) {
+            Entry<K, V> e = it.next();
+            if (Objects.equals(e.key, key)) {
+                it.remove();
+                size--;
+                return e.value;
+            }
+        }
+        return null;
+    }
+
+    public boolean containsKey(K key) {
+        return get(key) != null;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    private int index(K key) {
+        return (key == null ? 0 : key.hashCode() & 0x7fffffff) % buckets.length;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void ensureCapacity() {
+        if (size >= buckets.length * LOAD_FACTOR) {
+            List<Entry<K, V>>[] old = buckets;
+            buckets = new List[old.length * 2];
+            size = 0;
+            for (List<Entry<K, V>> bucket : old) {
+                if (bucket == null) continue;
+                for (Entry<K, V> e : bucket) {
+                    put(e.key, e.value); // rehash
+                }
+            }
+        }
+    }
+
+    private static class Entry<K, V> {
+        final K key;
+        V value;
+        Entry(K key, V value) { this.key = key; this.value = value; }
+    }
+}
+```
+**Explanation:** Implements a hash table with separate chaining for collisions. Buckets are lists storing key-value entries. `put` inserts or updates an entry, `get` retrieves by linear scan of the bucket, and `remove` deletes while maintaining size. The table resizes (rehashes) when the load factor exceeds 0.75.
+**Complexity:** Time: O(1) average for put/get/remove; worst-case O(n) if all keys collide. Space: O(n) for entries and bucket array.
+**Example:**
+Input: put("a",1), put("b",2), get("a")
+Output: 1
+**Notes:**
+- Uses separate chaining; for open addressing adjust indexing strategy accordingly.
+- `containsKey` treats `null` value as absent; adapt if null values should be stored.
+- Hash quality depends on `hashCode`/`equals` implementations of K.

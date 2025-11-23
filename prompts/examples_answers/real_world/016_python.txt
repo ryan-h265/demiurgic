@@ -1,0 +1,20 @@
+python
+```python
+import requests
+
+
+def fetch_json(url: str) -> dict:
+    """Perform an HTTP GET request and return parsed JSON."""
+    resp = requests.get(url, timeout=10)
+    resp.raise_for_status()
+    return resp.json()
+```
+**Explanation:** Send a GET request with a 10-second timeout, raise for non-2xx responses, and parse the body as JSON via `response.json()`, returning the decoded Python object.
+**Complexity:** Time: O(response_size); Space: O(response_size) for the loaded JSON structure.
+**Example:**
+Input: url = "https://api.github.com"
+Output: Parsed JSON dict (e.g., {"current_user_url": ...})
+**Notes:**
+- Wrap in try/except to handle network errors gracefully.
+- For large payloads, stream and incrementally parse instead of loading all at once.
+- Ensure `requests` is installed; alternatively use `http.client` or `urllib.request` from the stdlib.

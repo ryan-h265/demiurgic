@@ -1,0 +1,23 @@
+rust
+```rust
+pub fn is_palindrome(s: &str) -> bool {
+    let cleaned: Vec<char> = s.chars().filter(|c| c.is_alphanumeric()).map(|c| c.to_lowercase().next().unwrap()).collect();
+    let mut i = 0usize;
+    let mut j = cleaned.len().saturating_sub(1);
+    while i < j {
+        if cleaned[i] != cleaned[j] { return false; }
+        i += 1;
+        j -= 1;
+    }
+    true
+}
+```
+**Explanation:** Normalizes the string by keeping alphanumerics and lowercasing, then uses two pointers to compare characters from both ends, returning false on first mismatch.
+**Complexity:** Time: O(n); Space: O(n) for the cleaned vector.
+**Example:**
+Input: "RaceCar!"
+Output: true
+**Notes:**
+- For byte-based palindromes, skip normalization and operate on bytes.
+- `to_lowercase` may yield multiple chars for some Unicode; using `.next().unwrap()` suffices for basic Latin; use full iterator for complete support.
+- Handles empty strings as palindromes.

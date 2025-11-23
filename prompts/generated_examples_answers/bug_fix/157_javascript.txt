@@ -1,0 +1,22 @@
+javascript
+```javascript
+function hasCycle(head) {
+  let slow = head;
+  let fast = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) return true;
+  }
+  return false;
+}
+```
+**Explanation:** The original loop dereferenced `head.next.next` without null checks. This uses Floyd's cycle detection with guards on `fast` and `fast.next` to avoid null-pointer errors while safely detecting cycles.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1 -> 2 -> 3 -> 2 (cycle)
+Output: true
+**Notes:**
+- Works for empty or single-node lists (returns false).
+- To find cycle entry, reset one pointer to head after detection and move both one step at a time.
+- Does not modify the list structure.

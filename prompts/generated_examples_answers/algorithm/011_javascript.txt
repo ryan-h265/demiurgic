@@ -1,0 +1,41 @@
+javascript
+```javascript
+// LRU Cache with Map + doubly-linked list semantics using Map insertion order
+class LRUCache {
+  constructor(capacity) {
+    if (capacity <= 0) throw new Error('capacity must be positive');
+    this.cap = capacity;
+    this.map = new Map();
+  }
+
+  get(key) {
+    if (!this.map.has(key)) return -1;
+    const value = this.map.get(key);
+    // refresh recency by re-inserting
+    this.map.delete(key);
+    this.map.set(key, value);
+    return value;
+  }
+
+  put(key, value) {
+    if (this.map.has(key)) {
+      this.map.delete(key);
+    }
+    this.map.set(key, value);
+    if (this.map.size > this.cap) {
+      // remove least-recently used (Map iteration order is insertion order)
+      const lruKey = this.map.keys().next().value;
+      this.map.delete(lruKey);
+    }
+  }
+}
+```
+**Explanation:** Stores entries in a `Map`, which preserves insertion order. On `get`/`put`, the accessed key is removed and reinserted to mark it as most recently used. When capacity is exceeded, evict the oldest key via `map.keys().next().value`.
+**Complexity:** Time: O(1) amortized for get/put; Space: O(capacity).
+**Example:**
+Input: `cache = new LRUCache(2); cache.put(1,1); cache.put(2,2); cache.get(1); cache.put(3,3); cache.get(2);`
+Output: `get(1) => 1`, `get(2) => -1` (2 evicted)
+**Notes:**
+- Map order semantics are defined in ES2015+; safe in modern runtimes.
+- For very large caches, consider a custom doubly-linked list to avoid Map rehashing costs.
+- Evict on every put that exceeds capacity to keep size bounded.

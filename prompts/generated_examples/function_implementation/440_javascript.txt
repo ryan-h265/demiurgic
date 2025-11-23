@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: javascript
+
+============================================================
+
+Implement a JavaScript function to validate given a stream of log lines

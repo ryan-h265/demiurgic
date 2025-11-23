@@ -1,0 +1,6 @@
+Category: algorithm
+Language: python
+
+============================================================
+
+Implement union-find with path compression in Python with detailed comments

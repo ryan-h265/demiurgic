@@ -1,0 +1,40 @@
+rust
+```rust
+pub struct Queue<T> {
+    data: std::collections::VecDeque<T>,
+}
+
+impl<T> Queue<T> {
+    pub fn new() -> Self {
+        Self { data: std::collections::VecDeque::new() }
+    }
+
+    pub fn insert(&mut self, item: T) {
+        self.data.push_back(item);
+    }
+
+    pub fn delete(&mut self) -> Option<T> {
+        self.data.pop_front()
+    }
+
+    pub fn search(&self, target: &T) -> Option<usize>
+    where
+        T: PartialEq,
+    {
+        self.data.iter().position(|x| x == target)
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.data.is_empty()
+    }
+}
+```
+**Explanation:** Wraps `VecDeque` to provide enqueue (`insert`), dequeue (`delete`), and linear search. Maintains FIFO ordering with O(1) head/tail operations.
+**Complexity:** Time: O(1) for insert/delete, O(n) for search; Space: O(n).
+**Example:**
+Input: enqueue 1,2; search 2; delete()
+Output: search -> 1 (index), delete -> 1
+**Notes:**
+- `search` returns the zero-based position; return bool if only existence matters.
+- For thread safety, wrap in `Mutex`/`RwLock` as needed.
+- Accepts any type; requires `PartialEq` only when searching.

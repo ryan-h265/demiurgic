@@ -1,0 +1,32 @@
+rust
+```rust
+use std::cmp::Reverse;
+use std::collections::BinaryHeap;
+
+pub fn k_way_merge(lists: Vec<Vec<i32>>) -> Vec<i32> {
+    let mut heap: BinaryHeap<(Reverse<i32>, usize, usize)> = BinaryHeap::new();
+    for (i, list) in lists.iter().enumerate() {
+        if let Some(&val) = list.get(0) {
+            heap.push((Reverse(val), i, 0));
+        }
+    }
+    let mut out = Vec::new();
+    while let Some((Reverse(val), li, idx)) = heap.pop() {
+        out.push(val);
+        let next = idx + 1;
+        if let Some(&v) = lists[li].get(next) {
+            heap.push((Reverse(v), li, next));
+        }
+    }
+    out
+}
+```
+**Explanation:** Initializes a min-heap with the first element of each list, repeatedly extracts the smallest, appends it to output, and pushes the next element from that list. This preserves sorted order across k sorted inputs.
+**Complexity:** Time: O(N log k) where N is total elements; Space: O(k) for the heap plus output.
+**Example:**
+Input: [[1,4],[2,3],[0,5]]
+Output: [0,1,2,3,4,5]
+**Notes:**
+- Skips empty lists gracefully.
+- Wrap values with `Reverse` to simulate a min-heap using `BinaryHeap`'s max-heap default.
+- For large merges, stream output instead of collecting into a Vec.

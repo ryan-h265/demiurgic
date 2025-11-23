@@ -1,0 +1,6 @@
+Category: data_structure
+Language: python
+
+============================================================
+
+Design and implement a disjoint set (union-find) in Python supporting range queries and point updates

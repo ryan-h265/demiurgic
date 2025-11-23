@@ -1,0 +1,31 @@
+c++
+```cpp
+#include <unordered_map>
+#include <vector>
+
+class Graph {
+public:
+    void addEdge(int u, int v, bool bidirectional = false) {
+        adj_[u].push_back(v);
+        if (bidirectional) adj_[v].push_back(u);
+    }
+
+    const std::vector<int>& neighbors(int u) const {
+        static const std::vector<int> empty;
+        auto it = adj_.find(u);
+        return it == adj_.end() ? empty : it->second;
+    }
+
+private:
+    std::unordered_map<int, std::vector<int>> adj_;
+};
+```
+**Explanation:** Uses an adjacency list backed by an unordered_map for O(1) average insertions and neighbor lookups. Supports optional bidirectional edges and returns neighbor vectors by reference.
+**Complexity:** Time: O(1) average for addEdge; Space: O(V + E).
+**Example:**
+Input: addEdge(1,2,true); neighbors(1)
+Output: [2]
+**Notes:**
+- Extend with edge weights by storing pairs (v, w).
+- Add node deletion by removing keys and pruning neighbor lists if required.
+- Keys are ints here; template the class for other key types.

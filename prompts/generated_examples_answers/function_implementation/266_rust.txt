@@ -1,0 +1,21 @@
+rust
+```rust
+pub fn sum_matrix(mat: &[Vec<i32>]) -> i32 {
+    let mut total = 0;
+    for row in mat {
+        for &v in row {
+            total += v;
+        }
+    }
+    total
+}
+```
+**Explanation:** Iterates through each row and element, accumulating a running total of all entries in the matrix.
+**Complexity:** Time: O(r * c); Space: O(1) extra.
+**Example:**
+Input: [[1,2],[3,4]]
+Output: 10
+**Notes:**
+- Replace the aggregation with min/max/average as needed.
+- Handle empty matrices naturally; result stays 0.
+- For large matrices, consider parallel iteration (e.g., Rayon) if performance is critical.

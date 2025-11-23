@@ -1,0 +1,22 @@
+c++
+```cpp
+#include <vector>
+
+// Compute the sum of all elements in a 2D matrix.
+long long sumMatrix(const std::vector<std::vector<int>>& mat) {
+    long long total = 0;
+    for (const auto& row : mat) {
+        for (int v : row) total += v;
+    }
+    return total;
+}
+```
+**Explanation:** Iterates rows and elements, accumulating a running sum of all entries in the matrix.
+**Complexity:** Time: O(r*c); Space: O(1) extra.
+**Example:**
+Input: [[1,2],[3,4]]
+Output: 10
+**Notes:**
+- Adjust aggregation to compute min/max/average or other metrics.
+- Handles empty matrices naturally (returns 0).
+- Use larger integer types if sums may overflow int.

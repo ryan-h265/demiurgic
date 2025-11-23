@@ -1,0 +1,23 @@
+javascript
+```javascript
+import minimist from 'minimist';
+
+export function parseArgs(argv = process.argv.slice(2)) {
+  const args = minimist(argv, {
+    string: ['name'],
+    boolean: ['verbose'],
+    alias: { n: 'name', v: 'verbose' },
+    default: { verbose: false },
+  });
+  return args;
+}
+```
+**Explanation:** Uses `minimist` to parse command-line arguments, setting up aliases and defaults. Returns the parsed args object for further processing.
+**Complexity:** Time: O(n) over arguments; Space: O(n) for parsed structure.
+**Example:**
+Input: `node app.js --name Alice -v`
+Output: `{ _: [], name: 'Alice', verbose: true }`
+**Notes:**
+- Install with `npm install minimist`.
+- Add validation for required flags or value types as needed.
+- For subcommands or richer schemas, consider Commander or yargs.

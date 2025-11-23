@@ -1,0 +1,39 @@
+rust
+```rust
+use std::collections::{HashMap, VecDeque};
+
+/// Kahn's algorithm for topological sort; returns None if a cycle exists.
+pub fn topo_sort(n: usize, edges: &[(usize, usize)]) -> Option<Vec<usize>> {
+    let mut adj: Vec<Vec<usize>> = vec![Vec::new(); n];
+    let mut indeg = vec![0usize; n];
+    for &(u, v) in edges {
+        adj[u].push(v);
+        indeg[v] += 1;
+    }
+    let mut q: VecDeque<usize> = indeg
+        .iter()
+        .enumerate()
+        .filter_map(|(i, &d)| if d == 0 { Some(i) } else { None })
+        .collect();
+    let mut order = Vec::with_capacity(n);
+    while let Some(u) = q.pop_front() {
+        order.push(u);
+        for &v in &adj[u] {
+            indeg[v] -= 1;
+            if indeg[v] == 0 {
+                q.push_back(v);
+            }
+        }
+    }
+    if order.len() == n { Some(order) } else { None }
+}
+```
+**Explanation:** Builds adjacency and indegree arrays, enqueues all zero-indegree nodes, and repeatedly removes them, decrementing indegrees of neighbors. If all nodes are emitted, returns the order; otherwise returns `None` to signal a cycle.
+**Complexity:** Time: O(V + E); Space: O(V + E).
+**Example:**
+Input: n=3, edges=[(0,1),(1,2)]
+Output: Some([0,1,2])
+**Notes:**
+- Use DFS-based topo sort if you prefer recursion; still detect cycles when a back edge is found.
+- Ensure node indices are within [0, n).
+- Multiple valid orders may exist depending on queue ordering.

@@ -1,0 +1,6 @@
+Category: algorithm
+Language: typescript
+
+============================================================
+
+Write TypeScript code to solve: Trapping rain water

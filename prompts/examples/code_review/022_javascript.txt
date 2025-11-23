@@ -1,0 +1,21 @@
+Category: code_review
+Language: javascript
+
+============================================================
+
+Review this JavaScript code and suggest improvements for performance:
+```javascript
+function filterAndMap(data) {
+    let result = [];
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].active) {
+            result.push(data[i]);
+        }
+    }
+    let mapped = [];
+    for (let i = 0; i < result.length; i++) {
+        mapped.push(result[i].value * 2);
+    }
+    return mapped;
+}
+```

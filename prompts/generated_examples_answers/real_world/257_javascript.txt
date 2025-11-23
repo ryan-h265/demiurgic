@@ -1,0 +1,28 @@
+javascript
+```javascript
+import fs from 'fs';
+
+class Logger {
+  constructor(logFile = null) {
+    this.logFile = logFile;
+  }
+  log(level, message, meta = {}) {
+    const entry = { ts: new Date().toISOString(), level, message, ...meta };
+    const line = JSON.stringify(entry);
+    console.log(line);
+    if (this.logFile) fs.appendFileSync(this.logFile, line + '\n');
+  }
+  info(msg, meta) { this.log('INFO', msg, meta); }
+  warn(msg, meta) { this.log('WARN', msg, meta); }
+  error(msg, meta) { this.log('ERROR', msg, meta); }
+}
+```
+**Explanation:** Simple structured logger that prints JSON lines to stdout and optionally appends to a file. Provides convenience methods for common levels.
+**Complexity:** Time: O(1) per call (plus I/O); Space: O(1).
+**Example:**
+Input: `const logger = new Logger('app.log'); logger.info('started', {pid: process.pid});`
+Output: Logs a JSON line to console and file.
+**Notes:**
+- For async performance, switch to non-blocking `appendFile` or use a dedicated logging library like pino/winston.
+- Add rotation to avoid unbounded file growth.
+- Ensure log directory exists before writing.

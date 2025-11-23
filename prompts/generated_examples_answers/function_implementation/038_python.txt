@@ -1,0 +1,34 @@
+python
+```python
+from typing import Iterable, NamedTuple
+
+class Summary(NamedTuple):
+    count: int
+    total: float
+    minimum: float
+    maximum: float
+    average: float
+
+
+def summarize(numbers: Iterable[float]) -> Summary:
+    nums = list(numbers)
+    if not nums:
+        return Summary(0, 0.0, float('inf'), float('-inf'), 0.0)
+    total = sum(nums)
+    return Summary(
+        count=len(nums),
+        total=total,
+        minimum=min(nums),
+        maximum=max(nums),
+        average=total / len(nums),
+    )
+```
+**Explanation:** Materializes the iterable to reuse values for sum/min/max, then returns a `NamedTuple` containing count, total, min, max, and average. Handles an empty input by returning sentinel min/max and zero totals.
+**Complexity:** Time: O(n); Space: O(n) due to list materialization (reduce to O(1) by streaming once and tracking aggregates).
+**Example:**
+Input: [2, 4, 6]
+Output: Summary(count=3, total=12, minimum=2, maximum=6, average=4.0)
+**Notes:**
+- For large streams, iterate once while tracking running min/max/total to avoid full materialization.
+- Adjust empty-case behavior (e.g., raise ValueError) if sentinels are undesirable.
+- Convert inputs to Decimal if you need exact decimal arithmetic.

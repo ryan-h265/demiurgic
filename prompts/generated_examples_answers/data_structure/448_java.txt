@@ -1,0 +1,43 @@
+java
+```java
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class RangeUnionFind {
+    private final int[] parent;
+    private final int[] rank;
+
+    public RangeUnionFind(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+
+    public int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    public void union(int a, int b) {
+        int ra = find(a), rb = find(b);
+        if (ra == rb) return;
+        if (rank[ra] < rank[rb]) { int t = ra; ra = rb; rb = t; }
+        parent[rb] = ra;
+        if (rank[ra] == rank[rb]) rank[ra]++;
+    }
+
+    public boolean sameRange(int a, int b) {
+        return find(a) == find(b);
+    }
+}
+```
+**Explanation:** Standard union-find with path compression and union by rank to support connectivity queries ("range queries" here interpreted as connectivity). `sameRange` checks if two indices are in the same set.
+**Complexity:** Time: Amortized ~O(α(n)) per op; Space: O(n).
+**Example:**
+Input: union(0,1); union(2,3); sameRange(1,2)
+Output: false
+**Notes:**
+- If true range-sum/segment operations are needed, use a segment tree instead; this structure handles connectivity.
+- Not thread-safe; add synchronization if used concurrently.
+- Capacity fixed at construction.

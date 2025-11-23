@@ -1,0 +1,17 @@
+rust
+```rust
+pub fn is_valid_string(s: &str, min_len: usize, max_len: usize) -> bool {
+    let trimmed = s.trim();
+    let len = trimmed.chars().count();
+    len >= min_len && len <= max_len
+}
+```
+**Explanation:** Trims whitespace, counts Unicode scalar values, and checks length bounds to validate the string.
+**Complexity:** Time: O(n) to count chars; Space: O(1) extra.
+**Example:**
+Input: s="  hello  ", min_len=1, max_len=10
+Output: true
+**Notes:**
+- For byte-length checks, use `trimmed.len()` instead of `chars().count()`.
+- Extend with regex or character class checks to enforce format.
+- Consider returning detailed errors rather than a boolean for better UX.

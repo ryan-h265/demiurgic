@@ -1,0 +1,67 @@
+java
+```java
+import java.util.NoSuchElementException;
+
+public class ArrayQueue<T> {
+    private Object[] data;
+    private int head = 0; // points to current front
+    private int tail = 0; // points to next insertion spot
+    private int size = 0;
+
+    public ArrayQueue(int capacity) {
+        data = new Object[Math.max(1, capacity)];
+    }
+
+    public void enqueue(T value) {
+        ensureCapacity();
+        data[tail] = value;
+        tail = (tail + 1) % data.length;
+        size++;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T dequeue() {
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        T value = (T) data[head];
+        data[head] = null; // help GC
+        head = (head + 1) % data.length;
+        size--;
+        return value;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T peek() {
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        return (T) data[head];
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    private void ensureCapacity() {
+        if (size == data.length) {
+            Object[] newData = new Object[data.length * 2];
+            for (int i = 0; i < size; i++) {
+                newData[i] = data[(head + i) % data.length];
+            }
+            data = newData;
+            head = 0;
+            tail = size;
+        }
+    }
+}
+```
+**Explanation:** Implements a circular buffer queue backed by an array. Enqueue writes at `tail` and advances it modulo capacity; dequeue reads from `head`. When full, the array doubles and elements are realigned so head resets to 0. Size tracks occupancy for constant-time operations.
+**Complexity:** Time: O(1) amortized for enqueue/dequeue; Space: O(n) for stored elements.
+**Example:**
+Input: enqueue 1, enqueue 2, dequeue -> 1, peek -> 2
+Output: queue order [2]
+**Notes:**
+- Throws `NoSuchElementException` when peeking/dequeuing an empty queue.
+- Generic storage uses Object array with unchecked casts; acceptable in Java due to type erasure.
+- For thread safety, wrap methods with synchronization or use `ConcurrentLinkedQueue`.

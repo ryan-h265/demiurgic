@@ -1,0 +1,6 @@
+Category: algorithm
+Language: java
+
+============================================================
+
+Write Java code to solve: Detect a cycle in a linked list

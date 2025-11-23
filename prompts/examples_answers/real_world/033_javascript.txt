@@ -1,0 +1,23 @@
+javascript
+```javascript
+/**
+ * Validate a user input string: trimmed length within bounds and optional pattern.
+ */
+function validateInput(value, { min = 1, max = 100, pattern = null } = {}) {
+  if (typeof value !== 'string') return { valid: false, error: 'Input must be a string' };
+  const trimmed = value.trim();
+  if (trimmed.length < min) return { valid: false, error: `Minimum length is ${min}` };
+  if (trimmed.length > max) return { valid: false, error: `Maximum length is ${max}` };
+  if (pattern && !pattern.test(trimmed)) return { valid: false, error: 'Input does not match required format' };
+  return { valid: true, value: trimmed };
+}
+```
+**Explanation:** Normalize the input by trimming, then enforce length bounds and an optional regex pattern. Returns a result object indicating validity and either the cleaned value or an error message.
+**Complexity:** Time: O(n) for string length/pattern checks; Space: O(1) auxiliary.
+**Example:**
+Input: value = " user@example.com ", options = { pattern: /^[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/ }
+Output: { valid: true, value: 'user@example.com' }
+**Notes:**
+- Extend with additional rules (profanity filters, blocked domains, etc.).
+- For multiple fields, reuse this helper with different patterns/limits.
+- Validate on both client and server to avoid relying solely on front-end checks.

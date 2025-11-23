@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: python
+
+============================================================
+
+Create a Python utility that memoizes expensive computations with proper error handling

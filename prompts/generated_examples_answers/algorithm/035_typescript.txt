@@ -1,0 +1,41 @@
+typescript
+```typescript
+// Validate if a binary tree is a BST using inorder traversal (iterative)
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val: number, left: TreeNode | null = null, right: TreeNode | null = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function isValidBST(root: TreeNode | null): boolean {
+  const stack: TreeNode[] = [];
+  let prev: number | null = null;
+  let node = root;
+
+  while (stack.length || node) {
+    while (node) {
+      stack.push(node);
+      node = node.left;
+    }
+    node = stack.pop()!;
+    if (prev !== null && node.val <= prev) return false;
+    prev = node.val;
+    node = node.right;
+  }
+  return true;
+}
+```
+**Explanation:** Inorder traversal of a BST should yield a strictly increasing sequence. The iterative traversal tracks the previously visited value; any violation (`current <= prev`) means the BST property is broken.
+**Complexity:** Time: O(n); Space: O(h) where h is tree height (stack).
+**Example:**
+Input: root with values [2,1,3]
+Output: true
+**Notes:**
+- Use `prev` initialized to `null` to allow any first value; adjust for duplicates if your BST allows equality.
+- Recursive traversal is simpler but may hit stack limits on deep trees.
+- Ensure all subtree values respect both min and max bounds; inorder check covers this for BSTs.

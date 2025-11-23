@@ -1,0 +1,13 @@
+javascript
+```javascript
+list(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))
+```
+**Explanation:** Filters numbers 0..9 to keep evens, then maps each to its square, collecting the results. In JavaScript the equivalent is `Array.from({length:10}, (_,i)=>i).filter(x => x % 2 === 0).map(x => x * x)`.
+**Complexity:** Time: O(n); Space: O(n) for the output list.
+**Example:**
+Input: 0..9
+Output: [0, 4, 16, 36, 64]
+**Notes:**
+- Order of operations matters: filtering first avoids extra work.
+- Replace `range(10)` with your desired iterable length.
+- Use lazy generators if the dataset is large to avoid holding all results in memory.

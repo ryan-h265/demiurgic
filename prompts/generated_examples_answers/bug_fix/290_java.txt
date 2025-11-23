@@ -1,0 +1,22 @@
+java
+```java
+public class Factorial {
+    public static long factorial(int n) {
+        if (n < 0) throw new IllegalArgumentException("n must be non-negative");
+        long result = 1;
+        for (int i = 2; i <= n; i++) {
+            result *= i;
+        }
+        return result;
+    }
+}
+```
+**Explanation:** Replaces the erroneous recursive snippet with an iterative implementation that handles n=0 correctly and validates input. Avoids out-of-bounds recursion or missing base cases.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: factorial(5)
+Output: 120
+**Notes:**
+- Use BigInteger for large n to avoid overflow.
+- Returns 1 for n=0/1 per definition.
+- Iterative approach is stack-safe.

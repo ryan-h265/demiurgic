@@ -1,0 +1,64 @@
+rust
+```rust
+use std::cmp::Ordering;
+use std::collections::BinaryHeap;
+
+#[derive(Eq, PartialEq)]
+struct Node {
+    f: i32,
+    g: i32,
+    pos: (i32, i32),
+}
+
+impl Ord for Node {
+    fn cmp(&self, other: &Self) -> Ordering {
+        other.f.cmp(&self.f) // min-heap via reverse
+    }
+}
+
+impl PartialOrd for Node {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+pub fn a_star(grid: &[Vec<i32>], start: (i32, i32), goal: (i32, i32)) -> Option<i32> {
+    let rows = grid.len() as i32;
+    let cols = grid[0].len() as i32;
+    let dirs = [(1,0),(-1,0),(0,1),(0,-1)];
+    let h = |r: i32, c: i32| (r - goal.0).abs() + (c - goal.1).abs();
+    let mut open = BinaryHeap::new();
+    open.push(Node { f: h(start.0, start.1), g: 0, pos: start });
+    let mut gscore = vec![vec![i32::MAX; cols as usize]; rows as usize];
+    gscore[start.0 as usize][start.1 as usize] = 0;
+
+    while let Some(Node { f: _, g, pos }) = open.pop() {
+        if pos == goal {
+            return Some(g);
+        }
+        let (r, c) = pos;
+        for (dr, dc) in dirs {
+            let nr = r + dr;
+            let nc = c + dc;
+            if nr < 0 || nc < 0 || nr >= rows || nc >= cols { continue; }
+            if grid[nr as usize][nc as usize] == 1 { continue; }
+            let tentative = g + 1;
+            if tentative < gscore[nr as usize][nc as usize] {
+                gscore[nr as usize][nc as usize] = tentative;
+                let fscore = tentative + h(nr, nc);
+                open.push(Node { f: fscore, g: tentative, pos: (nr, nc) });
+            }
+        }
+    }
+    None
+}
+```
+**Explanation:** A* on a grid: uses a min-heap ordered by f = g + heuristic (Manhattan). Skips walls (cells with 1). Updates g-scores when a better path is found and pushes neighbors with their new f-score. Returns path cost if the goal is reached.
+**Complexity:** Time: O(E log V); Space: O(V) for scores and heap.
+**Example:**
+Input: grid [[0,0],[0,0]], start (0,0), goal (1,1)
+Output: Some(2)
+**Notes:**
+- Heuristic assumes 4-direction movement; adjust for diagonals.
+- For path reconstruction, store parents when relaxing edges.
+- Ensure start/goal are walkable before running.

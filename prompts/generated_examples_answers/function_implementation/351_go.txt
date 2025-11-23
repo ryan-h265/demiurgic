@@ -1,0 +1,24 @@
+go
+```go
+package main
+
+// Filter returns a new slice containing elements that satisfy the predicate.
+func Filter(nums []int, keep func(int) bool) []int {
+    out := make([]int, 0, len(nums))
+    for _, n := range nums {
+        if keep(n) {
+            out = append(out, n)
+        }
+    }
+    return out
+}
+```
+**Explanation:** Iterates through the input slice, applies the predicate, and appends values that return true to a new slice, leaving the original untouched.
+**Complexity:** Time: O(n); Space: O(n) for the filtered slice.
+**Example:**
+Input: nums=[1,2,3,4], keep even
+Output: [2,4]
+**Notes:**
+- Adjust predicate for different criteria (e.g., > threshold).
+- For in-place filtering, overwrite elements and reslice to avoid allocations.
+- Works with nil slices; returns an empty slice.

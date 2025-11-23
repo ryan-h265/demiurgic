@@ -1,0 +1,48 @@
+c++
+```cpp
+#include <vector>
+#include <list>
+#include <utility>
+#include <stdexcept>
+
+class HashTable {
+public:
+    explicit HashTable(size_t capacity = 16) : buckets_(capacity) {}
+
+    void put(const std::string& key, const std::string& value) {
+        auto& bucket = buckets_[index(key)];
+        for (auto& [k, v] : bucket) {
+            if (k == key) { v = value; return; }
+        }
+        bucket.emplace_back(key, value);
+    }
+
+    std::string get(const std::string& key) const {
+        const auto& bucket = buckets_[index(key)];
+        for (const auto& [k, v] : bucket) if (k == key) return v;
+        throw std::out_of_range("key not found");
+    }
+
+    bool contains(const std::string& key) const {
+        const auto& bucket = buckets_[index(key)];
+        for (const auto& [k, _] : bucket) if (k == key) return true;
+        return false;
+    }
+
+private:
+    std::vector<std::list<std::pair<std::string, std::string>>> buckets_;
+
+    size_t index(const std::string& key) const {
+        return std::hash<std::string>{}(key) % buckets_.size();
+    }
+};
+```
+**Explanation:** Separate-chaining hash table using a vector of lists. `put` inserts or updates, `get` retrieves or throws on miss, and `contains` checks existence. Hashes keys to bucket indices via `std::hash`.
+**Complexity:** Time: O(1) average per op; Space: O(n) for entries.
+**Example:**
+Input: put("a","1"); get("a")
+Output: "1"
+**Notes:**
+- Resize when load factor grows to keep performance consistent.
+- Replace `std::string` with templates for generic keys/values if needed.
+- Not thread-safe; wrap in locks for concurrent access.

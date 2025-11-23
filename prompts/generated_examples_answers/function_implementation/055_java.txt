@@ -1,0 +1,27 @@
+java
+```java
+import java.util.List;
+import java.util.function.ToDoubleFunction;
+
+public class ObjectSummarizer {
+    /**
+     * Sum a numeric property across a list of objects.
+     */
+    public static <T> double summarize(List<T> items, ToDoubleFunction<T> getter) {
+        double total = 0.0;
+        for (T item : items) {
+            total += getter.applyAsDouble(item);
+        }
+        return total;
+    }
+}
+```
+**Explanation:** Accepts a list and a lambda extracting a numeric field. Iterates once, accumulating the extracted values into a running total.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: items = [{price: 10}, {price: 15}], getter = item -> item.price
+Output: 25.0
+**Notes:**
+- Replace `double` with `BigDecimal` for currency to avoid floating-point drift.
+- Validate input list for null before iterating.
+- Extend to return count/avg/min/max by tracking additional aggregates.

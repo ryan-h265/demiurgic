@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: rust
+
+============================================================
+
+Implement a Rust function to transform given an array of objects

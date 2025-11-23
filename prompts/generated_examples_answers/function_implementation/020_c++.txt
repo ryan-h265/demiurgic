@@ -1,0 +1,27 @@
+c++
+```cpp
+#include <map>
+#include <string>
+#include <vector>
+
+// Validate that required keys exist and have non-empty values.
+bool validateDict(const std::map<std::string, std::string>& dict,
+                  const std::vector<std::string>& requiredKeys) {
+    for (const auto& key : requiredKeys) {
+        auto it = dict.find(key);
+        if (it == dict.end() || it->second.empty()) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+**Explanation:** Treats the dictionary as a `std::map` of string keys/values and checks that every required key is present and maps to a non-empty string. Returns `false` on any missing or empty required entry.
+**Complexity:** Time: O(k log n) where k is required keys and n map size; Space: O(1).
+**Example:**
+Input: dict = {"name":"Ada","role":"dev"}, required = ["name","role"]
+Output: true
+**Notes:**
+- Extend validation to enforce patterns (e.g., regex) or type coercion.
+- Swap `std::map` for `std::unordered_map` if you prefer average O(1) lookups.
+- Optional keys can be omitted from `requiredKeys` and validated separately.

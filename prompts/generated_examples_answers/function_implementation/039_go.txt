@@ -1,0 +1,47 @@
+go
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// Debounce wraps fn so it runs only after wait elapses without a new call.
+func Debounce(wait time.Duration, fn func() error) func() error {
+	var mu sync.Mutex
+	var timer *time.Timer
+	return func() error {
+		mu.Lock()
+		defer mu.Unlock()
+		if timer != nil {
+			timer.Stop()
+		}
+		done := make(chan error, 1)
+		timer = time.AfterFunc(wait, func() {
+			done <- fn()
+		})
+		return <-done
+	}
+}
+
+func main() {
+	debounced := Debounce(200*time.Millisecond, func() error {
+		fmt.Println("executed")
+		return nil
+	})
+	_ = debounced()
+	_ = debounced() // resets timer
+	time.Sleep(300 * time.Millisecond)
+}
+```
+**Explanation:** `Debounce` returns a closure that resets a timer on each call; the wrapped function executes only after `wait` passes without further invocations. A mutex guards the shared timer for thread safety, and errors propagate via a channel.
+**Complexity:** Time: O(1) per call; Space: O(1) for timer state.
+**Example:**
+Input: Rapid successive calls to the debounced function
+Output: Underlying `fn` runs once after 200ms of silence
+**Notes:**
+- In production, handle potential timer leaks; discard the channel receive if you don't need synchronous behavior.
+- For asynchronous fire-and-forget, drop the `done` channel and return immediately.
+- Ensure `fn` itself is thread-safe if multiple goroutines may call the wrapper.

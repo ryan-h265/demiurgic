@@ -1,0 +1,33 @@
+rust
+```rust
+pub fn quicksort(arr: &mut [i32]) {
+    if arr.len() <= 1 { return; }
+    let pivot = partition(arr);
+    let (left, right) = arr.split_at_mut(pivot);
+    quicksort(left);
+    quicksort(&mut right[1..]);
+}
+
+fn partition(arr: &mut [i32]) -> usize {
+    let len = arr.len();
+    let pivot = arr[len - 1];
+    let mut i = 0;
+    for j in 0..len-1 {
+        if arr[j] <= pivot {
+            arr.swap(i, j);
+            i += 1;
+        }
+    }
+    arr.swap(i, len - 1);
+    i
+}
+```
+**Explanation:** In-place quicksort using Lomuto partition: choose last element as pivot, partition slice so elements ≤ pivot come before it, then recursively sort sub-slices on each side.
+**Complexity:** Time: O(n log n) average, O(n²) worst; Space: O(log n) stack.
+**Example:**
+Input: [3,1,4,1]
+Output: [1,1,3,4]
+**Notes:**
+- Randomize pivot to reduce worst-case chance.
+- For tiny partitions, switch to insertion sort to improve constants.
+- Not stable; equal elements may reorder.

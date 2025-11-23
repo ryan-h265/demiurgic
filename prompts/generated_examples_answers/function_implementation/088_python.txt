@@ -1,0 +1,28 @@
+python
+```python
+def eval_postfix(tokens: list[str]) -> int:
+    if not tokens:
+        raise ValueError("empty expression")
+    stack: list[int] = []
+    for t in tokens:
+        if t in {"+", "-", "*", "/"}:
+            b = stack.pop(); a = stack.pop()
+            if t == "+": stack.append(a + b)
+            elif t == "-": stack.append(a - b)
+            elif t == "*": stack.append(a * b)
+            else: stack.append(int(a / b))  # truncate toward zero
+        else:
+            stack.append(int(t))
+    if len(stack) != 1:
+        raise ValueError("invalid postfix expression")
+    return stack[0]
+```
+**Explanation:** Scans tokens left to right, pushing operands to a stack; on an operator, pops the top two operands, applies the operation, and pushes the result. After processing, the stack should contain exactly one result.
+**Complexity:** Time: O(n); Space: O(n) for the stack.
+**Example:**
+Input: ["2", "1", "+", "3", "*"]
+Output: 9
+**Notes:**
+- Integer division uses truncation toward zero; adjust for floor division if needed.
+- Validate token lists to avoid `pop` from an empty stack.
+- Extend to support unary operators or exponentiation as required.

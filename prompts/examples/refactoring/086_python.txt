@@ -1,0 +1,17 @@
+Category: refactoring
+Language: python
+
+============================================================
+
+Refactor this Python code to be more readable:
+```python
+def process(data):
+    temp = []
+    for item in data:
+        if item['status'] == 'active':
+            temp.append(item)
+    result = []
+    for t in temp:
+        result.append({'id': t['id'], 'val': t['value'] * 2})
+    return result
+```

@@ -1,0 +1,33 @@
+javascript
+```javascript
+/**
+ * Paginate a collection with bounds checking and error handling.
+ * Returns an object containing items for the requested page and metadata.
+ */
+function paginate(items, page = 1, pageSize = 10) {
+  if (!Array.isArray(items)) throw new Error('items must be an array');
+  if (page <= 0 || pageSize <= 0) throw new Error('page and pageSize must be positive');
+
+  const total = items.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * pageSize;
+  const end = Math.min(start + pageSize, total);
+  return {
+    items: items.slice(start, end),
+    page: currentPage,
+    pageSize,
+    total,
+    totalPages,
+  };
+}
+```
+**Explanation:** Validates inputs, computes total pages, clamps the requested page within range, slices the items for that page, and returns pagination metadata alongside the data slice.
+**Complexity:** Time: O(k) where k = pageSize for the slice; Space: O(k) for the returned items.
+**Example:**
+Input: items = [1,2,3,4,5], page = 2, pageSize = 2
+Output: `{items:[3,4], page:2, pageSize:2, total:5, totalPages:3}`
+**Notes:**
+- Customize behavior when `page` exceeds `totalPages` (e.g., throw instead of clamp).
+- For huge lists, paginate at the data source rather than slicing in memory.
+- Add sorting/filtering before pagination as needed.

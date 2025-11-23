@@ -1,0 +1,40 @@
+java
+```java
+import java.util.*;
+
+public class StringPermutations {
+    public static List<String> permutations(String s) {
+        List<String> result = new ArrayList<>();
+        char[] chars = s.toCharArray();
+        backtrack(chars, 0, result);
+        return result;
+    }
+
+    private static void backtrack(char[] chars, int start, List<String> result) {
+        if (start == chars.length) {
+            result.add(new String(chars));
+            return;
+        }
+        for (int i = start; i < chars.length; i++) {
+            swap(chars, start, i);
+            backtrack(chars, start + 1, result);
+            swap(chars, start, i); // restore
+        }
+    }
+
+    private static void swap(char[] arr, int i, int j) {
+        char tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+}
+```
+**Explanation:** Convert the string to a mutable character array and use backtracking. For each position, swap each remaining character into place, recurse for the next position, then swap back to restore state. When the position reaches the end, record the permutation.
+**Complexity:** Time: O(n·n!) due to n! permutations and O(n) copy for each; Space: O(n) recursion depth (output excluded).
+**Example:**
+Input: "abc"
+Output: ["abc", "acb", "bac", "bca", "cba", "cab"]
+**Notes:**
+- For duplicate characters, add a `HashSet` at each depth to avoid repeating permutations.
+- Works for empty input (returns list with empty string).
+- Swapping in-place avoids repeated string concatenations.

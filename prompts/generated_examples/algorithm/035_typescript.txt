@@ -1,0 +1,6 @@
+Category: algorithm
+Language: typescript
+
+============================================================
+
+Write TypeScript code to solve: Validate binary search tree

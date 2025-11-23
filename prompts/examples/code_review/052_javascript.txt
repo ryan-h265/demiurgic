@@ -1,0 +1,17 @@
+Category: code_review
+Language: javascript
+
+============================================================
+
+Review this JavaScript code and suggest improvements for security:
+```javascript
+function displayUserComment(comment) {
+    const container = document.getElementById('comments');
+    container.innerHTML += '<div>' + comment + '</div>';
+}
+
+function executeQuery(userId) {
+    const query = "SELECT * FROM users WHERE id = " + userId;
+    return db.execute(query);
+}
+```

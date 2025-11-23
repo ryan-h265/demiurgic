@@ -1,0 +1,28 @@
+javascript
+```javascript
+async function runTask() {
+  try {
+    const result = await riskyOperation();
+    console.log('Success:', result);
+  } catch (err) {
+    console.error('Operation failed', err);
+    // optional retry or fallback
+  } finally {
+    console.log('Cleanup goes here');
+  }
+}
+
+async function riskyOperation() {
+  // placeholder for real work
+  return 'ok';
+}
+```
+**Explanation:** Wraps an async operation in try/catch/finally to log failures, optionally retry, and perform cleanup. Keeps error propagation explicit.
+**Complexity:** Time/Space: O(1) overhead around the wrapped call.
+**Example:**
+Input: call `runTask()`
+Output: Logs either success or failure and runs cleanup.
+**Notes:**
+- Add specific error handling branches (network vs validation).
+- Re-throw after logging if upstream callers must handle the error.
+- For sync code, omit `await`/`async` and use plain try/catch.

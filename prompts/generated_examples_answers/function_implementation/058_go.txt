@@ -1,0 +1,42 @@
+go
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+// Summarize a string: length, word count, and normalized lowercase form.
+type Summary struct {
+	Length int
+	Words  int
+	Lower  string
+}
+
+func Summarize(input string) Summary {
+	trimmed := strings.TrimSpace(input)
+	words := 0
+	if trimmed != "" {
+		words = len(strings.Fields(trimmed))
+	}
+	return Summary{
+		Length: len(trimmed),
+		Words:  words,
+		Lower:  strings.ToLower(trimmed),
+	}
+}
+
+func main() {
+	fmt.Println(Summarize(" Hello World "))
+}
+```
+**Explanation:** Trims whitespace, counts words via `Fields`, records trimmed length, and stores a lowercase version. Returns a `Summary` struct with the aggregated metadata.
+**Complexity:** Time: O(n); Space: O(n) for the lowercase copy.
+**Example:**
+Input: " Hello World "
+Output: Summary{Length:11, Words:2, Lower:"hello world"}
+**Notes:**
+- Adjust to include character frequency or other metrics as needed.
+- If empty input is allowed, word count is zero and length reflects trimmed size.
+- For very large strings, avoid multiple passes by combining scans if performance critical.

@@ -1,0 +1,21 @@
+javascript
+```javascript
+// Fix: add base cases for n <= 1 and validate input
+function factorial(n) {
+  if (n < 0) throw new Error('n must be non-negative');
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+  return result;
+}
+```
+**Explanation:** The original recursion lacked a base case for n = 0 and used Python syntax. This JavaScript version validates input, iteratively multiplies numbers from 2..n, and returns 1 for 0! and 1!.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 4
+Output: 24
+**Notes:**
+- Avoids recursion depth limits common in JS environments.
+- Throws on negative inputs instead of producing undefined behavior.
+- For memoization, cache results if computing factorials repeatedly.

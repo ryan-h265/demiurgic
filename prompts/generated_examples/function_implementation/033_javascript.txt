@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: javascript
+
+============================================================
+
+Create a JavaScript utility that generates paginated results from a collection with proper error handling

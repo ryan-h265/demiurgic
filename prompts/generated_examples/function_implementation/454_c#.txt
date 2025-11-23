@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: c#
+
+============================================================
+
+Create a C# utility that parses and validates configuration files with proper error handling

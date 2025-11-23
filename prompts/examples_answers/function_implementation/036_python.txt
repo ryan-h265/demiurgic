@@ -1,0 +1,20 @@
+python
+```python
+import re
+
+
+def process_string(s: str) -> str:
+    """Normalize a string: strip, lowercase, collapse whitespace, and remove extra punctuation spacing."""
+    s = s.strip().lower()
+    s = re.sub(r"\s+", " ", s)  # collapse whitespace
+    return s
+```
+**Explanation:** Performs a simple normalization pipeline: trim leading/trailing whitespace, lowercase all characters, and collapse runs of whitespace into a single space. This is a common preprocessing step before downstream text tasks.
+**Complexity:** Time: O(n); Space: O(n) for the new normalized string.
+**Example:**
+Input: "  Hello,   WORLD\n"
+Output: "hello, world"
+**Notes:**
+- Extend with punctuation removal using another regex if desired.
+- For locale-aware case folding, use `str.casefold()` instead of `lower()`.
+- Works safely on empty strings, returning an empty string.

@@ -1,0 +1,14 @@
+python
+```python
+from functools import reduce
+result = reduce((lambda acc, x: acc + x), [1, 2, 3, 4], 0)
+```
+**Explanation:** `reduce` starts with accumulator `0` and applies `acc + x` for each list element, producing a running sum: (((0+1)+2)+3)+4 = 10. The final value is assigned to `result`.
+**Complexity:** Time: O(n); Space: O(1) auxiliary.
+**Example:**
+Input: [1, 2, 3, 4]
+Output: 10
+**Notes:**
+- Without an initial value, the first list element would become the initial accumulator.
+- For summing numbers, `sum([1,2,3,4])` is clearer, but `reduce` generalizes to other fold operations.
+- On empty lists, always provide an initial value to avoid `TypeError`.

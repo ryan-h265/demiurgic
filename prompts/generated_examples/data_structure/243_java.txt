@@ -1,0 +1,6 @@
+Category: data_structure
+Language: java
+
+============================================================
+
+Design and implement a LRU cache in Java supporting thread-safe operations

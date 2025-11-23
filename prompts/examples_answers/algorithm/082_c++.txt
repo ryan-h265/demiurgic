@@ -1,0 +1,33 @@
+c++
+```cpp
+#include <vector>
+using Graph = std::vector<std::vector<int>>;
+
+// Depth-first search traversal returning visitation order
+void dfsHelper(const Graph &graph, int node, std::vector<bool> &visited, std::vector<int> &order) {
+    visited[node] = true;
+    order.push_back(node);
+    for (int neighbor : graph[node]) {
+        if (!visited[neighbor]) {
+            dfsHelper(graph, neighbor, visited, order);
+        }
+    }
+}
+
+std::vector<int> dfs(const Graph &graph, int start) {
+    std::vector<int> order;
+    if (graph.empty()) return order;
+    std::vector<bool> visited(graph.size(), false);
+    dfsHelper(graph, start, visited, order);
+    return order;
+}
+```
+**Explanation:** Recursively explore each vertex, marking it visited to avoid cycles. Append the node when first seen, then recursively visit its neighbors. The helper manages state (visited/order) while the public `dfs` initializes storage and guards empty graphs.
+**Complexity:** Time: O(V + E); Space: O(V) for visited plus recursion stack.
+**Example:**
+Input: graph = {{1,2},{0,3},{0,3},{1,2}}, start = 0
+Output: [0,1,3,2] (one valid DFS order)
+**Notes:**
+- For deep graphs, convert to iterative stack-based DFS to avoid stack overflow.
+- Works for directed graphs if adjacency reflects direction.
+- Ensure `start` is within bounds; here assumed valid.

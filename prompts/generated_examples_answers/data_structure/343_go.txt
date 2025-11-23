@@ -1,0 +1,42 @@
+go
+```go
+package main
+
+import "container/list"
+
+type BSTNode struct {
+	Val         int
+	Left, Right *BSTNode
+}
+
+// Iterator lazily yields nodes in-order over a channel.
+func Iterate(root *BSTNode) <-chan int {
+	ch := make(chan int)
+	go func() {
+		var stack list.List
+		cur := root
+		for cur != nil || stack.Len() > 0 {
+			for cur != nil {
+				stack.PushBack(cur)
+				cur = cur.Left
+			}
+			e := stack.Back()
+			stack.Remove(e)
+			node := e.Value.(*BSTNode)
+			ch <- node.Val
+			cur = node.Right
+		}
+		close(ch)
+	}()
+	return ch
+}
+```
+**Explanation:** Basic BST node definition and a lazy in-order iterator implemented with an explicit stack and a goroutine producing values on a channel. Consumes O(h) stack space and yields nodes without materializing a list.
+**Complexity:** Time: O(n) total iteration; Space: O(h) for stack.
+**Example:**
+Input: BST with values 2<-3->4
+Output: channel yields 3,2,4
+**Notes:**
+- Insert/search/delete not shown; add standard BST ops as needed.
+- Caller must range over the channel to drain the goroutine.
+- For concurrency, ensure consumers handle the channel lifecycle properly.

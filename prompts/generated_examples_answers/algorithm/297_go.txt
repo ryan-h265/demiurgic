@@ -1,0 +1,40 @@
+go
+```go
+package main
+
+import "container/list"
+
+// BFS returns visitation order from start in an adjacency list graph.
+func BFS(graph [][]int, start int) []int {
+	order := []int{}
+	if start < 0 || start >= len(graph) {
+		return order
+	}
+	visited := make([]bool, len(graph))
+	q := list.New()
+	visited[start] = true
+	q.PushBack(start)
+	for q.Len() > 0 {
+		e := q.Front()
+		node := e.Value.(int)
+		q.Remove(e)
+		order = append(order, node)
+		for _, nei := range graph[node] {
+			if !visited[nei] {
+				visited[nei] = true
+				q.PushBack(nei)
+			}
+		}
+	}
+	return order
+}
+```
+**Explanation:** Uses a queue to explore neighbors level by level. Marks nodes visited on enqueue to avoid duplicates, appending each dequeued node to the output order.
+**Complexity:** Time: O(V + E); Space: O(V) for visited and queue.
+**Example:**
+Input: graph = [[1,2],[3],[3],[]], start=0
+Output: [0,1,2,3]
+**Notes:**
+- Bounds-check start to prevent panics.
+- Works for directed/undirected graphs based on adjacency input.
+- Replace list with slice-based queue if preferred.

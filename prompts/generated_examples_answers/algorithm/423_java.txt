@@ -1,0 +1,43 @@
+java
+```java
+import java.util.*;
+
+public class Dijkstra {
+    public static int[] shortestPaths(int n, List<int[]> edges, int source) {
+        List<List<int[]>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+        for (int[] e : edges) {
+            int u = e[0], v = e[1], w = e[2];
+            adj.get(u).add(new int[]{v, w});
+        }
+        int INF = Integer.MAX_VALUE / 4;
+        int[] dist = new int[n];
+        Arrays.fill(dist, INF);
+        dist[source] = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
+        pq.add(new int[]{0, source});
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            int d = cur[0], u = cur[1];
+            if (d != dist[u]) continue; // stale entry
+            for (int[] nxt : adj.get(u)) {
+                int v = nxt[0], w = nxt[1];
+                if (d + w < dist[v]) {
+                    dist[v] = d + w;
+                    pq.add(new int[]{dist[v], v});
+                }
+            }
+        }
+        return dist;
+    }
+}
+```
+**Explanation:** Builds adjacency lists, initializes distances to INF, and uses a min-heap to extract the closest node. Skips stale heap entries and relaxes outgoing edges, updating distances and pushing improved estimates.
+**Complexity:** Time: O((V + E) log V); Space: O(V + E).
+**Example:**
+Input: n=3, edges=[(0,1,2),(1,2,1),(0,2,5)], source=0
+Output: dist = [0,2,3]
+**Notes:**
+- Requires non-negative weights; negative edges break Dijkstra.
+- Track parents to reconstruct paths if needed.
+- For dense graphs, consider adjacency matrix + O(V^2) approach.

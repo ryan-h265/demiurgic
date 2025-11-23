@@ -1,0 +1,20 @@
+python
+```python
+import re
+
+EMAIL_RE = re.compile(r"^[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
+
+def is_valid_email(s: str) -> bool:
+    if not isinstance(s, str):
+        return False
+    return EMAIL_RE.fullmatch(s.strip()) is not None
+```
+**Explanation:** Strips whitespace and applies a simple regex to check common email structure (local@domain.tld). Returns False for non-string input or mismatches.
+**Complexity:** Time: O(n); Space: O(1) auxiliary.
+**Example:**
+Input: " user@example.com "
+Output: True
+**Notes:**
+- Regex is simplified; full RFC compliance is more complex.
+- Trim prevents leading/trailing spaces from causing false positives.
+- Use casefolding on the domain if you need case-insensitive comparison.

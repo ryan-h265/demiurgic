@@ -1,0 +1,26 @@
+go
+```go
+package main
+
+type Item map[string]interface{}
+
+type TransformFn func(Item) Item
+
+// TransformObjects applies fn to each object and returns a new slice.
+func TransformObjects(items []Item, fn TransformFn) []Item {
+	out := make([]Item, 0, len(items))
+	for _, it := range items {
+		out = append(out, fn(it))
+	}
+	return out
+}
+```
+**Explanation:** Defines a generic transformer over a slice of map-like objects. Applies the provided function to each element, building a new slice so the original data is unchanged.
+**Complexity:** Time: O(n); Space: O(n) for the new slice.
+**Example:**
+Input: items=[{"count":1}], fn adds 10 -> count
+Output: [{"count":11}]
+**Notes:**
+- Replace `map[string]interface{}` with a struct for type safety and performance.
+- If in-place mutation is acceptable, modify elements directly and return the same slice.
+- Handle nil slices gracefully (returns empty slice).

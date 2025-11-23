@@ -1,0 +1,35 @@
+python
+```python
+import heapq
+from typing import Dict, List, Tuple
+
+Graph = Dict[str, List[Tuple[str, int]]]
+
+
+def dijkstra(graph: Graph, source: str) -> Dict[str, int]:
+    """Compute shortest path distances from source using Dijkstra's algorithm."""
+    dist: Dict[str, int] = {node: float('inf') for node in graph}
+    dist[source] = 0
+    pq: List[Tuple[int, str]] = [(0, source)]
+
+    while pq:
+        current_dist, node = heapq.heappop(pq)
+        # Skip stale entries
+        if current_dist > dist[node]:
+            continue
+        for neighbor, weight in graph[node]:
+            new_dist = current_dist + weight
+            if new_dist < dist.get(neighbor, float('inf')):
+                dist[neighbor] = new_dist
+                heapq.heappush(pq, (new_dist, neighbor))
+    return dist
+```
+**Explanation:** Initialize all distances to infinity except the source. Use a min-heap priority queue keyed by tentative distance. Repeatedly extract the closest node; if the popped distance is stale, skip it. Relax all outgoing edges and push improved distances back onto the heap. Distances only decrease, so the first time a node is finalized its shortest path is known.
+**Complexity:** Time: O((V + E) log V) with the heap; Space: O(V) for distances and heap entries.
+**Example:**
+Input: graph = {'A': [('B', 2), ('C', 5)], 'B': [('C', 1)], 'C': []}, source = 'A'
+Output: {'A': 0, 'B': 2, 'C': 3}
+**Notes:**
+- Assumes non-negative edge weights; Dijkstra fails with negative edges.
+- If graph is disconnected, unreachable nodes remain at infinity.
+- To reconstruct paths, store predecessors when relaxing edges.

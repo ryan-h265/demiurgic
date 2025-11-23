@@ -1,0 +1,44 @@
+rust
+```rust
+/// Disjoint set union (union-find) with path compression and union by rank.
+pub struct UnionFind {
+    parent: Vec<usize>,
+    rank: Vec<usize>,
+}
+
+impl UnionFind {
+    pub fn new(n: usize) -> Self {
+        Self { parent: (0..n).collect(), rank: vec![0; n] }
+    }
+
+    pub fn find(&mut self, x: usize) -> usize {
+        if self.parent[x] != x {
+            let root = self.find(self.parent[x]);
+            self.parent[x] = root;
+        }
+        self.parent[x]
+    }
+
+    pub fn union(&mut self, a: usize, b: usize) {
+        let mut ra = self.find(a);
+        let mut rb = self.find(b);
+        if ra == rb { return; }
+        if self.rank[ra] < self.rank[rb] {
+            std::mem::swap(&mut ra, &mut rb);
+        }
+        self.parent[rb] = ra;
+        if self.rank[ra] == self.rank[rb] {
+            self.rank[ra] += 1;
+        }
+    }
+}
+```
+**Explanation:** Maintains parent/rank arrays; `find` flattens paths, `union` attaches the shallower tree under the deeper one. This yields near-constant amortized performance for connectivity checks.
+**Complexity:** Time: ~O(α(n)) per op; Space: O(n).
+**Example:**
+Input: uf.union(0,1); uf.union(1,2); uf.find(2)
+Output: root index shared by 0,1,2
+**Notes:**
+- Index bounds should be validated in production.
+- Add a `connected(a,b)` helper to test membership quickly.
+- Fixed capacity; recreate if you need to grow beyond `n`.

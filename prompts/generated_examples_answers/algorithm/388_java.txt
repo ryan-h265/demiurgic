@@ -1,0 +1,42 @@
+java
+```java
+import java.util.*;
+
+public class NumIslands {
+    public static int numIslands(char[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        int count = 0;
+        int[][] dirs = {{1,0},{-1,0},{0,1},{0,-1}};
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (grid[r][c] == '1') {
+                    count++;
+                    Queue<int[]> q = new ArrayDeque<>();
+                    q.add(new int[]{r,c});
+                    grid[r][c] = '0';
+                    while (!q.isEmpty()) {
+                        int[] cur = q.poll();
+                        for (int[] d : dirs) {
+                            int nr = cur[0] + d[0], nc = cur[1] + d[1];
+                            if (nr>=0 && nc>=0 && nr<rows && nc<cols && grid[nr][nc]=='1') {
+                                grid[nr][nc]='0';
+                                q.add(new int[]{nr,nc});
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}
+```
+**Explanation:** Scans the grid; upon finding land, increments the island count and BFS-flood-fills to mark all connected land as water, preventing recounting. Uses four-direction adjacency.
+**Complexity:** Time: O(RC); Space: O(RC) worst-case for the queue.
+**Example:**
+Input: [['1','1','0'],['0','1','0'],['1','0','1']]
+Output: 3
+**Notes:**
+- Mutates the grid; clone if mutation is undesired.
+- Replace BFS with DFS if preferred; ensure recursion depth is safe.
+- Extend dirs for diagonal adjacency if required.

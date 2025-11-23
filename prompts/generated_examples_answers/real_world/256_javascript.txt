@@ -1,0 +1,39 @@
+javascript
+```javascript
+import { program } from 'commander';
+
+program
+  .name('demo')
+  .description('Example CLI with subcommands');
+
+program
+  .command('greet <name>')
+  .description('Greet a user')
+  .action((name) => {
+    console.log(`Hello, ${name}!`);
+  });
+
+program
+  .command('add <a> <b>')
+  .description('Add two numbers')
+  .action((a, b) => {
+    const sum = Number(a) + Number(b);
+    if (Number.isNaN(sum)) {
+      console.error('Arguments must be numbers');
+      process.exitCode = 1;
+      return;
+    }
+    console.log(sum);
+  });
+
+program.parse(process.argv);
+```
+**Explanation:** Uses Commander to define two subcommands (`greet` and `add`), each with arguments and handlers. Parsing `process.argv` dispatches to the appropriate action with basic validation.
+**Complexity:** Time: O(1) parse overhead for small CLIs; Space: O(1).
+**Example:**
+Input: `node cli.js add 2 3`
+Output: `5`
+**Notes:**
+- Install Commander: `npm install commander`.
+- Add error handling and more subcommands as needed.
+- For ESM/CommonJS compatibility, adjust import syntax per environment.

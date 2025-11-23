@@ -1,0 +1,6 @@
+Category: algorithm
+Language: javascript
+
+============================================================
+
+Implement depth-first search (DFS) in JavaScript with detailed comments

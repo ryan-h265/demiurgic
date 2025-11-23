@@ -1,0 +1,30 @@
+java
+```java
+public class BinarySearch {
+    /**
+     * Return index of target in sorted array nums, or -1 if not found.
+     */
+    public static int search(int[] nums, int target) {
+        int lo = 0, hi = nums.length - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2; // avoid overflow
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
+```
+**Explanation:** Standard iterative binary search on a sorted array. Narrow the search interval based on the mid comparison until the target is found or the interval is empty.
+**Complexity:** Time: O(log n); Space: O(1).
+**Example:**
+Input: nums = [1, 3, 5, 7], target = 5
+Output: 2
+**Notes:**
+- Requires sorted input; otherwise results are undefined.
+- For first/last occurrence in duplicates, bias the bounds accordingly.
+- Mid computation uses `lo + (hi - lo) / 2` to prevent overflow on large indices.

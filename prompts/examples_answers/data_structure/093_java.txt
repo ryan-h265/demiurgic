@@ -1,0 +1,80 @@
+java
+```java
+import java.util.*;
+
+public class SimpleHashTable<K, V> {
+    private static final double LOAD_FACTOR = 0.75;
+    private List<Entry<K, V>>[] buckets;
+    private int size = 0;
+
+    @SuppressWarnings("unchecked")
+    public SimpleHashTable(int capacity) {
+        buckets = new List[Math.max(1, capacity)];
+    }
+
+    public void put(K key, V value) {
+        ensureCapacity();
+        int idx = index(key);
+        if (buckets[idx] == null) buckets[idx] = new LinkedList<>();
+        for (Entry<K, V> e : buckets[idx]) {
+            if (Objects.equals(e.key, key)) {
+                e.value = value;
+                return;
+            }
+        }
+        buckets[idx].add(new Entry<>(key, value));
+        size++;
+    }
+
+    public V get(K key) {
+        List<Entry<K, V>> bucket = buckets[index(key)];
+        if (bucket == null) return null;
+        for (Entry<K, V> e : bucket) {
+            if (Objects.equals(e.key, key)) return e.value;
+        }
+        return null;
+    }
+
+    public boolean containsKey(K key) {
+        return get(key) != null;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    private int index(K key) {
+        return (key == null ? 0 : key.hashCode() & 0x7fffffff) % buckets.length;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void ensureCapacity() {
+        if (size >= buckets.length * LOAD_FACTOR) {
+            List<Entry<K, V>>[] old = buckets;
+            buckets = new List[old.length * 2];
+            size = 0;
+            for (List<Entry<K, V>> bucket : old) {
+                if (bucket == null) continue;
+                for (Entry<K, V> e : bucket) {
+                    put(e.key, e.value);
+                }
+            }
+        }
+    }
+
+    private static class Entry<K, V> {
+        K key;
+        V value;
+        Entry(K key, V value) { this.key = key; this.value = value; }
+    }
+}
+```
+**Explanation:** A lightweight hash table using separate chaining. Keys hash to bucket indices, and collisions are stored in linked lists. Insertions update existing keys or append new entries; lookups scan the bucket for the matching key. Capacity doubles when the load factor is exceeded to keep operations near O(1).
+**Complexity:** Time: O(1) average for put/get/contains, worst-case O(n) on poor hashing; Space: O(n).
+**Example:**
+Input: put("id", 7); get("id")
+Output: 7
+**Notes:**
+- Stores null keys by mapping them to bucket 0; adjust if null keys are disallowed.
+- Resize strategy keeps performance predictable; tune load factor for memory vs speed trade-offs.
+- Not synchronized; wrap with external locks for concurrent use.

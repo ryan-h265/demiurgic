@@ -1,0 +1,42 @@
+go
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type MemoizedFunc[T any] func(args ...any) (T, error)
+
+// Memoize wraps a function that returns (T, error) using JSON-serialized args as key.
+func Memoize[T any](fn func(args ...any) (T, error)) MemoizedFunc[T] {
+	cache := make(map[string]T)
+	return func(args ...any) (T, error) {
+		var zero T
+		keyBytes, err := json.Marshal(args)
+		if err != nil {
+			return zero, fmt.Errorf("cannot memoize args: %w", err)
+		}
+		key := string(keyBytes)
+		if val, ok := cache[key]; ok {
+			return val, nil
+		}
+		val, err := fn(args...)
+		if err != nil {
+			return zero, err
+		}
+		cache[key] = val
+		return val, nil
+	}
+}
+```
+**Explanation:** Wraps a variadic function, hashing arguments via JSON, and caches successful results in a map. Returns cached values on repeat calls; bubbles errors without caching them.
+**Complexity:** Time: O(1) average for cache hits plus serialization cost; Space: O(m) for m cached entries.
+**Example:**
+Input: memoized fib-like function called multiple times
+Output: Subsequent calls reuse cached results
+**Notes:**
+- Serialization fails on non-JSONable arguments; we surface that as an error.
+- Cache is unbounded; add eviction if needed.
+- Not concurrency-safe; guard with a mutex for concurrent use.

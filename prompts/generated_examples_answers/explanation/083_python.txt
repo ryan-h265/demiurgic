@@ -1,0 +1,13 @@
+python
+```python
+[x for x in range(100) if x % 3 == 0 and x % 5 == 0]
+```
+**Explanation:** List comprehension iterates numbers 0–99 and keeps those divisible by both 3 and 5 (i.e., multiples of 15), producing a list of such numbers.
+**Complexity:** Time: O(n) over the range; Space: O(k) for the resulting list.
+**Example:**
+Input: range(0, 31)
+Output: [0, 15, 30]
+**Notes:**
+- Replace `range(100)` with any iterable to change scope.
+- Using `% 15 == 0` yields the same result and can be marginally faster.
+- For generator behavior, wrap with parentheses instead of brackets to produce values lazily.

@@ -1,0 +1,26 @@
+javascript
+```javascript
+import { Client } from 'pg';
+
+export async function runQuery() {
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+  });
+  await client.connect();
+  try {
+    const res = await client.query('SELECT id, name FROM users WHERE active = $1', [true]);
+    return res.rows;
+  } finally {
+    await client.end();
+  }
+}
+```
+**Explanation:** Uses `node-postgres` to connect with a connection string, executes a parameterized query, and returns the result rows. Ensures the client closes in a `finally` block.
+**Complexity:** Time: O(n) over returned rows; Space: O(n) for loaded results.
+**Example:**
+Input: `await runQuery()`
+Output: Array of active user records
+**Notes:**
+- Install dependency: `npm install pg`.
+- Prefer pooled clients (`Pool`) for repeated queries.
+- Handle errors with try/catch around the call site for logging or retries.

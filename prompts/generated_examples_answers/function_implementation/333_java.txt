@@ -1,0 +1,36 @@
+java
+```java
+import java.util.List;
+
+public class Paginator<T> {
+    public static class Page<T> {
+        public final List<T> items;
+        public final int page;
+        public final int totalPages;
+        public Page(List<T> items, int page, int totalPages) {
+            this.items = items; this.page = page; this.totalPages = totalPages;
+        }
+    }
+
+    public Page<T> paginate(List<T> items, int page, int pageSize) {
+        if (page <= 0 || pageSize <= 0) {
+            throw new IllegalArgumentException("page and pageSize must be positive");
+        }
+        int total = items.size();
+        int totalPages = Math.max(1, (int) Math.ceil(total / (double) pageSize));
+        int current = Math.min(page, totalPages);
+        int start = (current - 1) * pageSize;
+        int end = Math.min(start + pageSize, total);
+        return new Page<>(items.subList(start, end), current, totalPages);
+    }
+}
+```
+**Explanation:** Validates inputs, computes total pages, clamps the requested page, slices the list for that window, and returns a Page object with metadata.
+**Complexity:** Time: O(k) to build the sublist view; Space: O(1) extra.
+**Example:**
+Input: items=[1,2,3,4,5], page=2, pageSize=2
+Output: items=[3,4], page=2, totalPages=3
+**Notes:**
+- Throws on invalid page/pageSize; adjust to return empty results if preferred.
+- For very large data sets, paginate at the data source rather than slicing an in-memory list.
+- SubList is a view; modifying it affects the original list.

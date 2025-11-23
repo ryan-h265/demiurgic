@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: javascript
+
+============================================================
+
+Write a JavaScript function that flattens a nested list of numbers

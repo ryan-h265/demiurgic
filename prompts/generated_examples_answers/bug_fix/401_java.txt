@@ -1,0 +1,25 @@
+java
+```java
+public class SafeCycleCheck {
+    static class ListNode { int val; ListNode next; }
+
+    public static boolean hasCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) return true;
+        }
+        return false;
+    }
+}
+```
+**Explanation:** Adds null checks before advancing `fast.next.next`, avoiding out-of-bounds when the list is short. Uses Floyd's tortoise-hare to detect cycles safely.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: 1->2->3->2
+Output: true
+**Notes:**
+- Works for empty or single-node lists (returns false).
+- To locate cycle start, reset one pointer to head after detection and move both one step at a time.
+- Leaves list unchanged.

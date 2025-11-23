@@ -1,0 +1,6 @@
+Category: data_structure
+Language: go
+
+============================================================
+
+Implement a graph in Go with efficient lookup and insertion

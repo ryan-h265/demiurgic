@@ -1,0 +1,6 @@
+Category: real_world
+Language: javascript
+
+============================================================
+
+Write JavaScript code to make an HTTP GET request and parse JSON

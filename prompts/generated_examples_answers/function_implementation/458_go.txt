@@ -1,0 +1,17 @@
+go
+```go
+package main
+
+// Aggregate a string by returning its length.
+func AggregateString(s string) int {
+	return len(s)
+}
+```
+**Explanation:** Simple aggregation computing the byte-length of the input string.
+**Complexity:** Time: O(1) for len; Space: O(1).
+**Example:**
+Input: "hello"
+Output: 5
+**Notes:**
+- For rune count, use utf8.RuneCountInString.
+- Adjust aggregation to suit your use case (word count, hashing, etc.).

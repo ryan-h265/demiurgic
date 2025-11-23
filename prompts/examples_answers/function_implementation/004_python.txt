@@ -1,0 +1,16 @@
+python
+```python
+def is_palindrome(s: str) -> bool:
+    """Check if a string reads the same forward and backward."""
+    cleaned = ''.join(ch.lower() for ch in s if ch.isalnum())
+    return cleaned == cleaned[::-1]
+```
+**Explanation:** Normalize the string by lowercasing and removing non-alphanumeric characters, then compare it to its reverse slice. Equality indicates a palindrome.
+**Complexity:** Time: O(n); Space: O(n) for the cleaned copy.
+**Example:**
+Input: "A man, a plan, a canal: Panama"
+Output: True
+**Notes:**
+- Remove the cleaning step if punctuation and case should be considered.
+- Handles empty strings (treated as palindrome).
+- For very long strings, compare characters from both ends to reduce temporary allocations.

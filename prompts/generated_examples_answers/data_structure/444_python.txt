@@ -1,0 +1,36 @@
+python
+```python
+import threading
+
+class ThreadSafeUnionFind:
+    def __init__(self, n: int):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.lock = threading.Lock()
+
+    def find(self, x: int) -> int:
+        with self.lock:
+            if self.parent[x] != x:
+                self.parent[x] = self.find(self.parent[x])
+            return self.parent[x]
+
+    def union(self, a: int, b: int) -> None:
+        with self.lock:
+            ra, rb = self.find(a), self.find(b)
+            if ra == rb:
+                return
+            if self.rank[ra] < self.rank[rb]:
+                ra, rb = rb, ra
+            self.parent[rb] = ra
+            if self.rank[ra] == self.rank[rb]:
+                self.rank[ra] += 1
+```
+**Explanation:** Disjoint set union with path compression and union by rank, guarded by a lock for thread safety. `find` flattens paths; `union` attaches the shallower tree under the deeper one.
+**Complexity:** Time: Amortized ~O(α(n)) per op; Space: O(n).
+**Example:**
+Input: union(0,1); union(1,2); find(2)
+Output: representative of merged set
+**Notes:**
+- Recursion under lock could re-enter; for large n, use iterative find to avoid deep recursion.
+- Coarse-grained lock keeps it simple; fine-grained locking can improve concurrency.
+- No resizing; initialize with known capacity.

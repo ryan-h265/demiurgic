@@ -1,0 +1,54 @@
+rust
+```rust
+use std::collections::HashMap;
+use std::collections::VecDeque;
+
+pub struct LRUCache {
+    cap: usize,
+    map: HashMap<i32, i32>,
+    order: VecDeque<i32>,
+}
+
+impl LRUCache {
+    pub fn new(capacity: usize) -> Self {
+        Self { cap: capacity, map: HashMap::new(), order: VecDeque::new() }
+    }
+
+    pub fn get(&mut self, key: i32) -> Option<i32> {
+        if let Some(&val) = self.map.get(&key) {
+            self.touch(key);
+            return Some(val);
+        }
+        None
+    }
+
+    pub fn put(&mut self, key: i32, value: i32) {
+        if self.map.contains_key(&key) {
+            self.map.insert(key, value);
+            self.touch(key);
+            return;
+        }
+        if self.map.len() == self.cap {
+            if let Some(lru) = self.order.pop_back() {
+                self.map.remove(&lru);
+            }
+        }
+        self.order.push_front(key);
+        self.map.insert(key, value);
+    }
+
+    fn touch(&mut self, key: i32) {
+        self.order.retain(|&k| k != key);
+        self.order.push_front(key);
+    }
+}
+```
+**Explanation:** Stores key/value pairs in a HashMap and tracks recency in a deque. `get`/`put` move keys to the front; when capacity is exceeded, evicts the least recently used from the back.
+**Complexity:** Time: O(1) average for get/put (touch uses retain O(n); for tighter bounds, use linked list + map of pointers); Space: O(capacity).
+**Example:**
+Input: cap=2; put(1,1); put(2,2); get(1); put(3,3)
+Output: key 2 evicted; get(1) -> 1
+**Notes:**
+- For strict O(1) updates, replace retain with a linked list and key->node map.
+- Assumes small capacities where retain cost is acceptable.
+- Keys/values typed as i32 for simplicity; generalize as needed.

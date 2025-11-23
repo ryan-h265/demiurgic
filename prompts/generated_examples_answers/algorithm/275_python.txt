@@ -1,0 +1,24 @@
+python
+```python
+import heapq
+from typing import Iterable
+
+def kth_largest(nums: Iterable[int], k: int) -> int:
+    heap = []
+    for n in nums:
+        heapq.heappush(heap, n)
+        if len(heap) > k:
+            heapq.heappop(heap)
+    if len(heap) < k:
+        raise ValueError("k larger than number of elements")
+    return heap[0]
+```
+**Explanation:** Maintains a min-heap of size k containing the k largest elements seen. After processing all numbers, the heap root is the kth largest.
+**Complexity:** Time: O(n log k); Space: O(k).
+**Example:**
+Input: nums=[3,2,1,5,6,4], k=2
+Output: 5
+**Notes:**
+- Validate k>0 before running.
+- For kth smallest, invert comparisons or use a max-heap.
+- Stream-friendly: works on any iterable, including generators.

@@ -1,0 +1,6 @@
+Category: data_structure
+Language: rust
+
+============================================================
+
+Implement a trie in Rust with O(1) get-min or get-max support

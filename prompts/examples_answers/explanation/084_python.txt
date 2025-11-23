@@ -1,0 +1,14 @@
+python
+```python
+# Squares even numbers from 0 through 9
+even_squares = list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, range(10))))
+```
+**Explanation:** `range(10)` produces 0..9, `filter` keeps values where `x % 2 == 0`, and `map` squares each remaining number. Wrapping with `list` materializes the results.
+**Complexity:** Time: O(n) over the range size; Space: O(n) for the resulting list (filter/map are lazy but list allocates the output).
+**Example:**
+Input: range(10)
+Output: [0, 4, 16, 36, 64]
+**Notes:**
+- Equivalent list comprehension: `[x * x for x in range(10) if x % 2 == 0]`.
+- Using generator expressions keeps evaluation lazy until consumed.
+- Replace `range(10)` with any iterable to reuse the pattern.

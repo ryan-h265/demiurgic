@@ -1,0 +1,34 @@
+go
+```go
+package main
+
+// LongestCommonSubstring returns the length of the longest common substring.
+func LongestCommonSubstring(a, b string) int {
+	m, n := len(a), len(b)
+	dp := make([][]int, m+1)
+	best := 0
+	for i := range dp {
+		dp[i] = make([]int, n+1)
+	}
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n; j++ {
+			if a[i-1] == b[j-1] {
+				dp[i][j] = dp[i-1][j-1] + 1
+				if dp[i][j] > best {
+					best = dp[i][j]
+				}
+			}
+		}
+	}
+	return best
+}
+```
+**Explanation:** DP table `dp[i][j]` holds the longest common suffix ending at `a[i-1]` and `b[j-1]`. Matching chars extend the diagonal; track the maximum cell value as the answer.
+**Complexity:** Time: O(mn); Space: O(mn) (use rolling rows to reduce to O(n)).
+**Example:**
+Input: a="abcdxyz", b="xyzabcd"
+Output: 4
+**Notes:**
+- Returns length; track indices to recover the substring if needed.
+- For memory savings, keep two rows instead of the full table.
+- Substring requires contiguity; for subsequence use a different DP.

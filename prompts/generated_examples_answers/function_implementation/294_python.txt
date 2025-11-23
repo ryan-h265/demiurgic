@@ -1,0 +1,24 @@
+python
+```python
+from typing import Callable
+
+def stream_file(path: str, chunk_size: int = 8192, handler: Callable[[bytes], None] = lambda _: None) -> None:
+    try:
+        with open(path, "rb") as f:
+            while True:
+                chunk = f.read(chunk_size)
+                if not chunk:
+                    break
+                handler(chunk)
+    except OSError as exc:
+        raise RuntimeError(f"failed to stream {path}: {exc}")
+```
+**Explanation:** Opens the file in binary mode and reads it in fixed-size chunks, invoking a handler for each chunk. Wraps I/O errors in a RuntimeError to surface failures cleanly.
+**Complexity:** Time: O(file_size); Space: O(chunk_size).
+**Example:**
+Input: stream_file("big.bin", 1024, lambda c: print(len(c)))
+Output: Prints sizes of each 1KB chunk until EOF
+**Notes:**
+- Customize `handler` for processing (hashing, uploading, etc.).
+- Tune `chunk_size` for performance vs. memory.
+- Caller can catch the RuntimeError to retry or report errors.

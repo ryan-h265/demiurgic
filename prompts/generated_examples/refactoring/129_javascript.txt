@@ -1,0 +1,7 @@
+Category: refactoring
+Language: javascript
+
+============================================================
+
+Refactor this JavaScript code to be more maintainable:
+# Code snippet here

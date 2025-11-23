@@ -1,0 +1,53 @@
+go
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+// Paginate returns a slice for the requested page along with total pages.
+type PageResult[T any] struct {
+	Items      []T
+	Page       int
+	PageSize   int
+	Total      int
+	TotalPages int
+}
+
+func Paginate[T any](items []T, page, pageSize int) (PageResult[T], error) {
+	if page <= 0 || pageSize <= 0 {
+		return PageResult[T]{}, fmt.Errorf("page and pageSize must be positive")
+	}
+	total := len(items)
+	totalPages := int(math.Max(1, math.Ceil(float64(total)/float64(pageSize))))
+	if page > totalPages {
+		page = totalPages
+	}
+	start := (page - 1) * pageSize
+	if start > total {
+		start = total
+	}
+	end := start + pageSize
+	if end > total {
+		end = total
+	}
+	return PageResult[T]{
+		Items:      items[start:end],
+		Page:       page,
+		PageSize:   pageSize,
+		Total:      total,
+		TotalPages: totalPages,
+	}, nil
+}
+```
+**Explanation:** Validates parameters, computes total pages, clamps the requested page, slices the backing collection to the desired window, and returns pagination metadata. Errors out on invalid inputs.
+**Complexity:** Time: O(k) to copy page items (k = pageSize); Space: O(k) for the slice view.
+**Example:**
+Input: items=[1,2,3,4,5], page=2, pageSize=2
+Output: Items=[3,4], Page=2, TotalPages=3
+**Notes:**
+- Adjust behavior when `page` exceeds `totalPages` (throw instead of clamp) as needed.
+- For very large datasets, paginate at the data source instead of slicing in memory.
+- Consider returning iterators if copying is undesirable.

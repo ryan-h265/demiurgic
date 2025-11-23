@@ -1,0 +1,42 @@
+python
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        node = self.root
+        for ch in word:
+            node = node.children.setdefault(ch, TrieNode())
+        node.end = True
+
+    def search(self, word: str) -> bool:
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return node.end
+
+    def starts_with(self, prefix: str) -> bool:
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return True
+```
+**Explanation:** Each node holds a map of child characters and an end-of-word flag. Insert walks/creates nodes for each char; search follows links and checks the end flag; `starts_with` verifies prefix existence without needing the end flag.
+**Complexity:** Time: O(L) for insert/search on word length; Space: O(total characters stored).
+**Example:**
+Input: insert("cat"), search("cat"), search("car")
+Output: True, False
+**Notes:**
+- Case-sensitive; normalize input if needed.
+- To delete words, unset `end` and prune orphaned nodes.
+- Replace dict with arrays for fixed alphabets to improve performance.

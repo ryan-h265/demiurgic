@@ -1,0 +1,50 @@
+javascript
+```javascript
+class Heap {
+  constructor(compare = (a, b) => a - b) {
+    this.data = [];
+    this.compare = compare;
+  }
+  push(x) { this.data.push(x); this._up(this.data.length - 1); }
+  pop() {
+    if (!this.data.length) return undefined;
+    const root = this.data[0];
+    const last = this.data.pop();
+    if (this.data.length && last !== undefined) { this.data[0] = last; this._down(0); }
+    return root;
+  }
+  peek() { return this.data[0]; }
+  _up(i) {
+    while (i > 0) {
+      const p = (i - 1) >> 1;
+      if (this.compare(this.data[p], this.data[i]) <= 0) break;
+      [this.data[p], this.data[i]] = [this.data[i], this.data[p]];
+      i = p;
+    }
+  }
+  _down(i) {
+    const n = this.data.length;
+    while (true) {
+      let s = i;
+      const l = 2 * i + 1, r = 2 * i + 2;
+      if (l < n && this.compare(this.data[l], this.data[s]) < 0) s = l;
+      if (r < n && this.compare(this.data[r], this.data[s]) < 0) s = r;
+      if (s === i) break;
+      [this.data[i], this.data[s]] = [this.data[s], this.data[i]];
+      i = s;
+    }
+  }
+  *[Symbol.iterator]() {
+    for (const x of this.data) yield x;
+  }
+}
+```
+**Explanation:** Generic binary heap with customizable comparator. Supports push/pop/peek and iteration over internal array (not sorted order). Default comparator yields a min-heap.
+**Complexity:** Time: O(log n) push/pop; O(1) peek; Space: O(n).
+**Example:**
+Input: push 3,1,2; pop() -> 1
+Output: min-heap behavior with default comparator
+**Notes:**
+- Iteration yields heap array order, not sorted; copy and sort if you need sorted iteration.
+- For max-heap, pass `(a,b) => b - a`.
+- No capacity limit; add if desired.

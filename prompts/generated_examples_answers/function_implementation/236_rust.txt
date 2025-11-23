@@ -1,0 +1,31 @@
+rust
+```rust
+#[derive(Debug)]
+pub struct Item {
+    pub value: i32,
+}
+
+pub fn summarize(items: &[Item]) -> (usize, i32, Option<i32>, Option<i32>) {
+    if items.is_empty() {
+        return (0, 0, None, None);
+    }
+    let mut total = 0;
+    let mut min = items[0].value;
+    let mut max = items[0].value;
+    for it in items {
+        total += it.value;
+        if it.value < min { min = it.value; }
+        if it.value > max { max = it.value; }
+    }
+    (items.len(), total, Some(min), Some(max))
+}
+```
+**Explanation:** Iterates once over the slice of objects, accumulating count, sum, and tracking min/max on a `value` field. Returns tuple with optional min/max to cover the empty case.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: items = [{value:1}, {value:4}]
+Output: (2, 5, Some(1), Some(4))
+**Notes:**
+- Adjust return type to a struct for clarity if preferred.
+- Extend to compute average or other metrics as needed.
+- If Item shape differs, change the accessed field accordingly.

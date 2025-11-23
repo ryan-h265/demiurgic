@@ -1,0 +1,16 @@
+javascript
+```javascript
+// Equivalent behavior in JavaScript
+const result = Array.from({ length: 10 }, (_, i) => i)
+  .filter(x => x % 2 === 0)
+  .map(x => x ** 2);
+```
+**Explanation:** The original expression filters numbers 0 through 9 to keep only even values, then maps each to its square, finally materializing the results in a list. The JavaScript translation above mirrors that pipeline: generate 0..9, filter by parity, then square.
+**Complexity:** Time: O(n) where n is the input range length; Space: O(n) for the resulting array.
+**Example:**
+Input: range 0..9
+Output: [0, 4, 16, 36, 64]
+**Notes:**
+- Uses `**` for exponentiation; replace with `Math.pow` for older runtimes.
+- Composition order matters: filtering first avoids unnecessary work during mapping.
+- For large streams, use lazy iterators to avoid allocating intermediate arrays.

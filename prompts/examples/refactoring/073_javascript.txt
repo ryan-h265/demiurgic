@@ -1,0 +1,21 @@
+Category: refactoring
+Language: javascript
+
+============================================================
+
+Refactor this JavaScript code to be more efficient:
+```javascript
+function searchArray(arr, target) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === target) {
+            return i;
+        }
+    }
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].id === target) {
+            return i;
+        }
+    }
+    return -1;
+}
+```

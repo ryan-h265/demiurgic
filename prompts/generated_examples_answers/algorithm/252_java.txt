@@ -1,0 +1,23 @@
+java
+```java
+public class MaxSubarray {
+    public static int maxSubArray(int[] nums) {
+        int best = nums[0];
+        int curr = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            curr = Math.max(nums[i], curr + nums[i]);
+            best = Math.max(best, curr);
+        }
+        return best;
+    }
+}
+```
+**Explanation:** Kadane’s algorithm keeps a running maximum ending at the current index (`curr`) and a global best. At each step, either extend the previous subarray or start new at the current element.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+**Notes:**
+- Works when all numbers are negative (returns the largest single element).
+- To recover indices, track start/end positions alongside `curr`.
+- Requires non-empty array; guard if input may be empty.

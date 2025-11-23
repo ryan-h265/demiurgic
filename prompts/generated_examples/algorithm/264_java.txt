@@ -1,0 +1,6 @@
+Category: algorithm
+Language: java
+
+============================================================
+
+Write Java code to solve: Implement LRU cache

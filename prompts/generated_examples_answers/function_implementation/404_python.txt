@@ -1,0 +1,33 @@
+python
+```python
+from typing import List
+
+def quicksort(arr: List[int]) -> None:
+    def sort(lo: int, hi: int) -> None:
+        if lo >= hi:
+            return
+        p = partition(lo, hi)
+        sort(lo, p - 1)
+        sort(p + 1, hi)
+
+    def partition(lo: int, hi: int) -> int:
+        pivot = arr[hi]
+        i = lo
+        for j in range(lo, hi):
+            if arr[j] <= pivot:
+                arr[i], arr[j] = arr[j], arr[i]
+                i += 1
+        arr[i], arr[hi] = arr[hi], arr[i]
+        return i
+
+    sort(0, len(arr) - 1)
+```
+**Explanation:** Lomuto partition quicksort: choose the last element as pivot, partition the subarray around it, and recursively sort left/right partitions.
+**Complexity:** Time: O(n log n) average, O(n²) worst; Space: O(log n) recursion.
+**Example:**
+Input: [3, 7, 2, 5]
+Output: [2, 3, 5, 7]
+**Notes:**
+- Randomize pivot to mitigate worst cases on sorted input.
+- Not stable; equal elements may reorder.
+- Tail recursion optimization is not guaranteed in Python; for huge arrays, consider iterative quicksort or Timsort (built-in sorted).

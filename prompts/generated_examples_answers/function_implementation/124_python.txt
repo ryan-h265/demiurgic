@@ -1,0 +1,33 @@
+python
+```python
+from typing import Iterable, List, Dict
+
+def normalize_logs(lines: Iterable[str]) -> List[Dict[str, str]]:
+    records = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        parts = line.split(maxsplit=2)
+        if len(parts) == 3:
+            ts, level, msg = parts
+        elif len(parts) == 2:
+            ts, msg = parts; level = "INFO"
+        else:
+            ts, level, msg = line, "INFO", ""
+        records.append({
+            "timestamp": ts,
+            "level": level.upper(),
+            "message": msg,
+        })
+    return records
+```
+**Explanation:** Iterates log lines, trims whitespace, skips blanks, splits into timestamp/level/message (with sensible defaults), and returns structured dictionaries.
+**Complexity:** Time: O(n * m) where m is avg line length; Space: O(n) for parsed records.
+**Example:**
+Input: ["2024-01-01 INFO started", "2024-01-01 WARN high load"]
+Output: [{timestamp:"2024-01-01", level:"INFO", message:"started"}, ...]
+**Notes:**
+- Adjust parsing if timestamps contain spaces; use regex for richer formats.
+- Validate log levels against an allowlist if needed.
+- Add error handling/logging for malformed lines instead of defaulting.

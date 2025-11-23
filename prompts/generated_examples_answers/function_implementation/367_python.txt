@@ -1,0 +1,29 @@
+python
+```python
+import time
+import requests
+from typing import Callable, Any
+
+
+def retry_with_backoff(func: Callable[[], Any], retries: int = 3, base_delay: float = 0.5) -> Any:
+    """Call func with exponential backoff on exceptions."""
+    attempt = 0
+    while True:
+        try:
+            return func()
+        except Exception as exc:
+            attempt += 1
+            if attempt > retries:
+                raise
+            delay = base_delay * (2 ** (attempt - 1))
+            time.sleep(delay)
+```
+**Explanation:** Wraps a callable in a retry loop. On failure, waits with exponential backoff before retrying, raising the exception after exceeding the retry limit.
+**Complexity:** Time: O(retries * work); Space: O(1).
+**Example:**
+Input: `retry_with_backoff(lambda: requests.get(url, timeout=5).raise_for_status())`
+Output: Returns the response if a retry succeeds; otherwise raises the last exception
+**Notes:**
+- Adjust `retries`/`base_delay` and add jitter to avoid thundering herds.
+- Catch specific exceptions (e.g., `requests.exceptions.RequestException`) instead of blanket `Exception` in production.
+- If func is stateful, ensure it is safe to retry.

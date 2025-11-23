@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: rust
+
+============================================================
+
+Write a Rust function that implements a simple calculator

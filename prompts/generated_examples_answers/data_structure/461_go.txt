@@ -1,0 +1,33 @@
+go
+```go
+package main
+
+// Graph with adjacency lists
+type Graph struct {
+	adj map[int][]int
+}
+
+func NewGraph() *Graph {
+	return &Graph{adj: make(map[int][]int)}
+}
+
+func (g *Graph) AddEdge(u, v int, bidirectional bool) {
+	g.adj[u] = append(g.adj[u], v)
+	if bidirectional {
+		g.adj[v] = append(g.adj[v], u)
+	}
+}
+
+func (g *Graph) Neighbors(u int) []int {
+	return g.adj[u]
+}
+```
+**Explanation:** Uses a map of slices for adjacency to support efficient edge insertions and neighbor lookups; optional bidirectional insertion for undirected graphs.
+**Complexity:** Time: O(1) average for add/lookup; Space: O(V+E).
+**Example:**
+Input: AddEdge(1,2,true); Neighbors(1)
+Output: [2]
+**Notes:**
+- Deduplicate edges if needed; current code allows duplicates.
+- For weighted graphs, store structs with weights.
+- Add bounds/exists checks if accessing arbitrary keys.

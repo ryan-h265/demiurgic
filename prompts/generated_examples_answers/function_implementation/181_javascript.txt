@@ -1,0 +1,26 @@
+javascript
+```javascript
+function longestCommonSubstring(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  let best = 0;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (a[i - 1] === b[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+        best = Math.max(best, dp[i][j]);
+      }
+    }
+  }
+  return best;
+}
+```
+**Explanation:** Dynamic programming where `dp[i][j]` stores the length of the longest common suffix ending at `a[i-1]` and `b[j-1]`. Matching chars extend the diagonal value, and the maximum over the table is the LCS length.
+**Complexity:** Time: O(mn); Space: O(mn) (optimize to O(n) with rolling arrays).
+**Example:**
+Input: a="abcdxyz", b="xyzabcd"
+Output: 4
+**Notes:**
+- To retrieve the substring, track the index where `best` occurs and slice back `best` chars.
+- For memory savings, keep only two rows.
+- This is substring (contiguous); for subsequence use a different DP.

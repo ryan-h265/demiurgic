@@ -1,0 +1,7 @@
+Category: refactoring
+Language: java
+
+============================================================
+
+Refactor this Java code to be more readable:
+# Code snippet here

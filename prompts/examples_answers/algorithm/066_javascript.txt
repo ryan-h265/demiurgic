@@ -1,0 +1,42 @@
+javascript
+```javascript
+/**
+ * Return the length of the shortest transformation sequence from beginWord to endWord.
+ * Each step must change one letter and produce a word in wordList.
+ */
+function wordLadder(beginWord, endWord, wordList) {
+  const wordSet = new Set(wordList);
+  if (!wordSet.has(endWord)) return 0;
+
+  const queue = [[beginWord, 1]]; // [word, steps]
+  const visited = new Set([beginWord]);
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+  while (queue.length) {
+    const [word, steps] = queue.shift();
+    if (word === endWord) return steps;
+
+    for (let i = 0; i < word.length; i++) {
+      for (const ch of alphabet) {
+        if (ch === word[i]) continue; // skip identical replacement
+        const next = word.slice(0, i) + ch + word.slice(i + 1);
+        if (wordSet.has(next) && !visited.has(next)) {
+          visited.add(next);
+          queue.push([next, steps + 1]);
+        }
+      }
+    }
+  }
+
+  return 0; // no transformation
+}
+```
+**Explanation:** Use BFS from `beginWord`, exploring all one-letter mutations present in the dictionary. Track visited words to prevent cycles. The first time `endWord` is dequeued gives the shortest transformation length due to BFS ordering.
+**Complexity:** Time: O(N * L * 26) where N is dictionary size and L is word length; Space: O(N) for the set and queue.
+**Example:**
+Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+Output: 5 (hit -> hot -> dot -> dog -> cog)
+**Notes:**
+- Returns 0 when `endWord` is unreachable or missing.
+- Assumes all words are same length; if not, filter beforehand.
+- For better performance, use bidirectional BFS when dictionaries are large.

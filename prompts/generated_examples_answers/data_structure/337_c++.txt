@@ -1,0 +1,57 @@
+c++
+```cpp
+#include <list>
+#include <unordered_map>
+#include <stdexcept>
+
+template <typename K, typename V>
+class LRUCache {
+public:
+    explicit LRUCache(size_t capacity) : cap_(capacity) {
+        if (capacity == 0) throw std::invalid_argument("capacity must be > 0");
+    }
+
+    V get(const K& key) {
+        auto it = map_.find(key);
+        if (it == map_.end()) throw std::out_of_range("key not found");
+        touch(it);
+        return it->second.first;
+    }
+
+    void put(const K& key, const V& value) {
+        auto it = map_.find(key);
+        if (it != map_.end()) {
+            it->second.first = value;
+            touch(it);
+            return;
+        }
+        if (map_.size() == cap_) {
+            auto lru = order_.back();
+            map_.erase(lru);
+            order_.pop_back();
+        }
+        order_.push_front(key);
+        map_[key] = {value, order_.begin()};
+    }
+
+private:
+    void touch(typename std::unordered_map<K, std::pair<V, typename std::list<K>::iterator>>::iterator it) {
+        order_.erase(it->second.second);
+        order_.push_front(it->first);
+        it->second.second = order_.begin();
+    }
+
+    size_t cap_;
+    std::list<K> order_;
+    std::unordered_map<K, std::pair<V, typename std::list<K>::iterator>> map_;
+};
+```
+**Explanation:** Stores cache entries in a map for O(1) lookups and a list to track recency. `get` moves the accessed key to the front; `put` updates existing entries or evicts the least recently used when capacity is reached.
+**Complexity:** Time: O(1) average for get/put; Space: O(capacity).
+**Example:**
+Input: capacity=2; put(1,"a"); put(2,"b"); get(1); put(3,"c")
+Output: key 2 is evicted, cache holds keys 1 and 3
+**Notes:**
+- Exceptions signal missing keys; adjust to return sentinel values if preferred.
+- Template works for hashable keys; provide custom hash/equality if needed.
+- Not thread-safe; wrap in locks for concurrent access.

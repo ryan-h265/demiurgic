@@ -1,0 +1,59 @@
+javascript
+```javascript
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BST {
+  constructor() {
+    this.root = null;
+  }
+  insert(val) {
+    this.root = this._insert(this.root, val);
+  }
+  _insert(node, val) {
+    if (!node) return new Node(val);
+    if (val < node.val) node.left = this._insert(node.left, val);
+    else if (val > node.val) node.right = this._insert(node.right, val);
+    return node;
+  }
+  search(val) {
+    let cur = this.root;
+    while (cur) {
+      if (cur.val === val) return true;
+      cur = val < cur.val ? cur.left : cur.right;
+    }
+    return false;
+  }
+  remove(val) {
+    this.root = this._remove(this.root, val);
+  }
+  _remove(node, val) {
+    if (!node) return null;
+    if (val < node.val) node.left = this._remove(node.left, val);
+    else if (val > node.val) node.right = this._remove(node.right, val);
+    else {
+      if (!node.left) return node.right;
+      if (!node.right) return node.left;
+      let succ = node.right;
+      while (succ.left) succ = succ.left;
+      node.val = succ.val;
+      node.right = this._remove(node.right, succ.val);
+    }
+    return node;
+  }
+}
+```
+**Explanation:** Implements BST insertion, search, and deletion. Insert recurses to place the value; search walks iteratively; delete handles 0/1-child cases and uses the in-order successor when two children exist.
+**Complexity:** Time: O(h) per op (h = height); Space: O(h) recursion in insert/remove.
+**Example:**
+Input: insert 5,3,7; search 3
+Output: true
+**Notes:**
+- Unbalanced trees can degrade to O(n); use a balanced tree for guaranteed performance.
+- Duplicate inserts are ignored; change policy if duplicates should be stored.
+- Convert to iterative insert/delete to avoid recursion depth issues.

@@ -1,0 +1,48 @@
+java
+```java
+import java.util.*;
+
+public class LRUCache {
+    private final int capacity;
+    private final Map<Integer, Integer> map = new HashMap<>();
+    private final Deque<Integer> order = new ArrayDeque<>();
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int get(int key) {
+        if (!map.containsKey(key)) return -1;
+        touch(key);
+        return map.get(key);
+    }
+
+    public void put(int key, int value) {
+        if (map.containsKey(key)) {
+            map.put(key, value);
+            touch(key);
+            return;
+        }
+        if (map.size() == capacity) {
+            int lru = order.removeLast();
+            map.remove(lru);
+        }
+        map.put(key, value);
+        order.addFirst(key);
+    }
+
+    private void touch(int key) {
+        order.remove(key);
+        order.addFirst(key);
+    }
+}
+```
+**Explanation:** HashMap stores key->value; a deque tracks recency. `get`/`put` move accessed keys to the front; when capacity is exceeded, evict the least recently used key from the back.
+**Complexity:** Time: O(1) average for get/put (deque removal of known element is O(n), acceptable for small caches; switch to LinkedHashMap for strict O(1)); Space: O(capacity).
+**Example:**
+Input: cap=2; put(1,1); put(2,2); get(1); put(3,3); get(2)
+Output: get(1)=1, get(2)=-1
+**Notes:**
+- Replace deque/remove with LinkedHashMap to ensure O(1) recency updates.
+- Returns -1 on miss; adjust per needs.
+- Capacity must be > 0.

@@ -1,0 +1,6 @@
+Category: algorithm
+Language: go
+
+============================================================
+
+Implement breadth-first search (BFS) in Go with detailed comments

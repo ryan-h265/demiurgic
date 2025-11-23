@@ -1,0 +1,25 @@
+javascript
+```javascript
+import mysql from 'mysql2/promise';
+
+export async function fetchUsers() {
+  const conn = await mysql.createConnection({
+    host: 'localhost', user: 'user', password: 'pass', database: 'app'
+  });
+  try {
+    const [rows] = await conn.execute('SELECT id, name FROM users WHERE active = ?', [1]);
+    return rows;
+  } finally {
+    await conn.end();
+  }
+}
+```
+**Explanation:** Opens a MySQL connection using `mysql2/promise`, runs a parameterized query, returns the result set, and closes the connection in a `finally` block.
+**Complexity:** Time: O(n) over returned rows; Space: O(n) to hold them.
+**Example:**
+Input: `await fetchUsers()`
+Output: Array of user records
+**Notes:**
+- Install dependency: `npm install mysql2`.
+- Use pooled connections (`createPool`) for higher throughput.
+- Handle errors at the call site for logging/retries.

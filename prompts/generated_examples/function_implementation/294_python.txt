@@ -1,0 +1,6 @@
+Category: function_implementation
+Language: python
+
+============================================================
+
+Create a Python utility that streams large files without loading into memory with proper error handling

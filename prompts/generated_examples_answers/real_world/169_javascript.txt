@@ -1,0 +1,28 @@
+javascript
+```javascript
+import fetch from 'node-fetch';
+import { load } from 'cheerio';
+
+// Fetch a page and return all absolute hrefs
+export async function scrapeLinks(url) {
+  const resp = await fetch(url, { timeout: 10000 });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  const html = await resp.text();
+  const $ = load(html);
+  const links = [];
+  $('a[href]').each((_, el) => {
+    const href = $(el).attr('href');
+    if (href) links.push(href);
+  });
+  return links;
+}
+```
+**Explanation:** Downloads HTML with `fetch`, parses it with Cheerio (server-side jQuery), selects all anchor tags with `href`, and collects their URLs into an array.
+**Complexity:** Time: O(page_size + links); Space: O(page_size) for parsed DOM.
+**Example:**
+Input: `scrapeLinks('https://example.com')`
+Output: `["https://www.iana.org/domains/example"]`
+**Notes:**
+- Install deps: `npm install node-fetch cheerio`.
+- Normalize relative URLs (e.g., with WHATWG URL) if you need absolute links.
+- Respect robots.txt and rate limits when scraping.

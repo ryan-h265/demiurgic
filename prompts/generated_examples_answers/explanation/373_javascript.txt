@@ -1,0 +1,13 @@
+javascript
+```javascript
+reduce((acc, x) => acc + x, [1, 2, 3, 4], 0)
+```
+**Explanation:** Folds the array `[1,2,3,4]` with addition starting from 0, producing 10. `reduce` passes the accumulator and current element to the callback for each item.
+**Complexity:** Time: O(n); Space: O(1) auxiliary.
+**Example:**
+Input: [1,2,3,4]
+Output: 10
+**Notes:**
+- Without the initial `0`, the first element becomes the starting accumulator.
+- Replace the callback to compute products, min/max, or other aggregates.
+- On empty arrays, an initial value is required to avoid a TypeError.

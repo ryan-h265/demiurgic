@@ -1,0 +1,22 @@
+javascript
+```javascript
+function hasCycle(head) {
+  let slow = head;
+  let fast = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) return true;
+  }
+  return false;
+}
+```
+**Explanation:** Adds null checks before advancing two steps to avoid dereferencing when the list is empty or length 1. Uses Floyd’s tortoise-hare to detect a cycle without risking null pointer errors.
+**Complexity:** Time: O(n); Space: O(1).
+**Example:**
+Input: head = null
+Output: false
+**Notes:**
+- Works for any list size safely.
+- To find cycle entry, apply the standard two-pointer reset after detection.
+- Leaves the list unmodified.

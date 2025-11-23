@@ -1,0 +1,6 @@
+Category: data_structure
+Language: java
+
+============================================================
+
+Design and implement a disjoint set (union-find) in Java supporting O(1) eviction and retrieval

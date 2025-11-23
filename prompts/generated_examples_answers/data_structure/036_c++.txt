@@ -1,0 +1,46 @@
+c++
+```cpp
+#include <vector>
+#include <stdexcept>
+
+// Circular buffer that evicts on pop and supports wrap-around
+class EvictingCircularBuffer {
+public:
+    explicit EvictingCircularBuffer(size_t capacity)
+        : buf_(capacity), head_(0), tail_(0), size_(0) {
+        if (capacity == 0) throw std::invalid_argument("capacity must be > 0");
+    }
+
+    void push(int value) {
+        if (full()) throw std::overflow_error("buffer full");
+        buf_[tail_] = value;
+        tail_ = (tail_ + 1) % buf_.size();
+        ++size_;
+    }
+
+    int pop() {
+        if (empty()) throw std::underflow_error("buffer empty");
+        int v = buf_[head_];
+        head_ = (head_ + 1) % buf_.size();
+        --size_;
+        return v;
+    }
+
+    bool empty() const { return size_ == 0; }
+    bool full() const { return size_ == buf_.size(); }
+    size_t size() const { return size_; }
+
+private:
+    std::vector<int> buf_;
+    size_t head_, tail_, size_;
+};
+```
+**Explanation:** Similar to a standard ring buffer: head points to the next element to remove, tail to the next insert slot. Push advances tail, pop advances head, both modulo capacity. Size distinguishes full vs empty states.
+**Complexity:** Time: O(1) per push/pop; Space: O(capacity).
+**Example:**
+Input: capacity=2; push 10; push 20; pop -> 10; push 30
+Output: buffer now logically contains [20, 30]
+**Notes:**
+- Throws on overflow/underflow; change to overwrite-on-full by moving head when full.
+- Template the type for general use.
+- Not thread-safe; guard with mutexes if sharing across threads.

@@ -1,0 +1,6 @@
+Category: data_structure
+Language: javascript
+
+============================================================
+
+Implement a trie in JavaScript with O(1) get-min or get-max support
