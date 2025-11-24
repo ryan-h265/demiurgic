@@ -2,5 +2,8 @@
 torch>=2.0.0
 numpy>=1.24.0
 
+# llama.cpp Python bindings for GGUF inference
+llama-cpp-python>=0.2.90
+
 # Optional but recommended for testing
 pytest>=7.4.0

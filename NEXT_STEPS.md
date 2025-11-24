@@ -4,6 +4,8 @@ Use this checklist to progress from the current helpers toward a fully trained a
 
 1. **Verify local inference with the GGUF helper.**
    - Download weights via `scripts/download_chatglm3_gguf.py` if you have not already.
+   - Install the core dependencies (including `llama-cpp-python`) with `pip install -r requirements-core.txt` to satisfy the
+     llama.cpp binding import.
    - Run a smoke test with `scripts/run_chatglm3_gguf.py --model-path <path-to-gguf> --prompt "hello"` to confirm llama.cpp bindings work end-to-end.
 2. **Harvest fresh supervision data from the quantized teacher.**
    - Configure `TeacherClientConfig` and `DistillationRunConfig` in `src/distillation/config.py` and call `harvest_supervision` to generate JSONL pairs in `run_config.output_path` for the ChatGLM3 prompt format.

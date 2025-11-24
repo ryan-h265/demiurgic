@@ -14,6 +14,13 @@ Flags you might want:
 - `--token`: pass a Hugging Face token if your network throttles anonymous downloads.
 - `--force`: re-download even if the file already exists locally.
 
+## Install the llama.cpp Python bindings
+The inference helpers rely on `llama_cpp`. Install the core dependencies (including the binding) before running the scripts.
+
+```bash
+pip install -r requirements-core.txt
+```
+
 ## Quick smoke test with llama.cpp bindings
 After downloading the model, run a single prompt through the GGUF file with the lightweight helper. This is the same minimal
 flow you can embed in your agent.

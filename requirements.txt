@@ -16,6 +16,7 @@
 # Core dependencies - Always needed
 torch>=2.0.0
 numpy>=1.24.0
+llama-cpp-python>=0.2.90
 pytest>=7.4.0
 
 # Training infrastructure - Needed for actual training

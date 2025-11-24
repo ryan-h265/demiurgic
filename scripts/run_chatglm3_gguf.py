@@ -1,8 +1,9 @@
 """Lightweight offline inference helper for the ChatGLM3-6B GGUF model.
 
 This script loads a GGUF checkpoint with `llama_cpp` and runs a single-turn
-prompt. It mirrors the minimal pieces you can reuse inside a custom Python
-agent (prompt assembly + generation call).
+prompt. Install the llama.cpp Python bindings first via `pip install -r
+requirements-core.txt`. It mirrors the minimal pieces you can reuse inside a
+custom Python agent (prompt assembly + generation call).
 """
 
 import argparse
