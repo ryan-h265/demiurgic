@@ -1,41 +1,18 @@
-"""
-Knowledge distillation module for Demiurgic.
+"""ChatGLM3 distillation and data collection utilities."""
 
-Provides tools for training student models using knowledge from teacher models.
-"""
-
-from .teacher_api import (
-    TeacherAPI,
-    TeacherConfig,
-    create_teacher_api,
-)
-from .prompt_generator import (
-    PromptGenerator,
-    generate_system_prompt,
-    generate_prompts_from_categories,
-)
-from .config import (
-    DistillationConfig,
-    OutputDistillationConfig,
-    LogitDistillationConfig,
-    HybridDistillationConfig,
-)
-from .trainer import (
-    DistillationTrainer,
-    DistillationDataset,
-)
+from .config import TeacherClientConfig, DistillationRunConfig
+from .prompt_generator import PromptGenerator, generate_system_prompt
+from .teacher_api import TeacherAPI, create_teacher_api, harvest_supervision
+from .trainer import SFTConfig, ChatGLM3Trainer
 
 __all__ = [
-    "TeacherAPI",
-    "TeacherConfig",
-    "create_teacher_api",
+    "TeacherClientConfig",
+    "DistillationRunConfig",
     "PromptGenerator",
     "generate_system_prompt",
-    "generate_prompts_from_categories",
-    "DistillationConfig",
-    "OutputDistillationConfig",
-    "LogitDistillationConfig",
-    "HybridDistillationConfig",
-    "DistillationTrainer",
-    "DistillationDataset",
+    "TeacherAPI",
+    "create_teacher_api",
+    "harvest_supervision",
+    "SFTConfig",
+    "ChatGLM3Trainer",
 ]
