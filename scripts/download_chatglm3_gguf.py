@@ -1,6 +1,6 @@
 """Download the chatglm3-6b GGUF model for local inference.
 
-This script fetches `chatglm3-6b.Q4_K_M.gguf` from the THUDM/chatglm3-6b
+This script fetches `chatglm3-6b.Q4_K_M.gguf` from the mradermacher/chatglm3-6b-GGUF
 repository on Hugging Face and writes it to a local directory for use with
 `llama.cpp` or the Python `llama_cpp` bindings.
 """
@@ -12,7 +12,7 @@ from typing import Optional
 from huggingface_hub import hf_hub_download
 
 
-DEFAULT_REPO_ID = "THUDM/chatglm3-6b"
+DEFAULT_REPO_ID = "mradermacher/chatglm3-6b-GGUF"
 DEFAULT_FILENAME = "chatglm3-6b.Q4_K_M.gguf"
 DEFAULT_OUTPUT_DIR = "models"
 
