@@ -16,6 +16,7 @@
 # Core dependencies - Always needed
 torch>=2.0.0
 numpy>=1.24.0
+llama-cpp-python>=0.2.90
 pytest>=7.4.0
 
 # Training infrastructure - Needed for actual training
@@ -27,6 +28,13 @@ tqdm>=4.66.0
 pyyaml>=6.0.0
 einops>=0.7.0
 
+# API providers for data generation - Needed for cloud-based teachers
+anthropic>=0.7.0
+openai>=1.0.0
+tiktoken>=0.5.0
+aiohttp>=3.9.0
+peft>=0.7.0
+
 # Experiment tracking
 wandb>=0.15.0
 tensorboard>=2.14.0
@@ -34,6 +42,11 @@ tensorboard>=2.14.0
 # Development
 black>=23.0.0
 isort>=5.12.0
+
+# CLI/TUI interface
+rich>=13.0.0
+prompt-toolkit>=3.0.0
+pygments>=2.16.0
 
 # Optional: DeepSpeed (for multi-GPU training)
 # deepspeed>=0.12.0

@@ -39,6 +39,7 @@ htmlcov/
 # *.bin
 # data/
 # datasets/
+models/
 
 # Logs and artifacts
 logs/

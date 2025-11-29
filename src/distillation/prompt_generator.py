@@ -1,465 +1,425 @@
-"""
-Prompt generation for knowledge distillation.
+"""Comprehensive prompt generation for coding assistant knowledge distillation."""
 
-Generates diverse coding prompts for creating training data from teacher models.
-"""
-
-import random
-from typing import List, Dict
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, Iterable, List
+import random
+import json
 
 
 @dataclass
 class PromptTemplate:
-    """Template for generating prompts."""
     category: str
     template: str
     variables: Dict[str, List[str]]
 
+    def fill(self) -> Dict[str, str]:
+        values = {key: random.choice(options) for key, options in self.variables.items()}
+        filled_prompt = self.template.format(**values)
+        return {
+            "prompt": filled_prompt,
+            "category": self.category,
+            "language": values.get("language", "unknown")
+        }
+
 
 class PromptGenerator:
     """
-    Generate diverse coding prompts for knowledge distillation.
+    Comprehensive prompt generator for coding assistant knowledge distillation.
 
-    Creates prompts across different:
-    - Programming languages
-    - Task types (implementation, debugging, explanation, etc.)
-    - Difficulty levels
-    - Domains (algorithms, web dev, data processing, etc.)
+    Combines:
+    1. Existing high-quality prompts from /prompts/examples/
+    2. New templates for tool use, debugging, test generation, multi-step tasks
     """
 
-    def __init__(self, seed: int = 42):
+    def __init__(self, seed: int = 42, prompts_dir: Path = None):
         random.seed(seed)
-        self.templates = self._create_templates()
+        self.prompts_dir = prompts_dir or Path(__file__).parent.parent.parent / "prompts"
 
-    def generate_prompts(self, num_prompts: int = 1000) -> List[Dict[str, str]]:
-        """
-        Generate diverse coding prompts.
+        # Load existing prompts
+        self.existing_prompts = self._load_existing_prompts()
 
-        Args:
-            num_prompts: Number of prompts to generate
+        # Build new templates for missing categories
+        self.templates = self._build_comprehensive_templates()
 
-        Returns:
-            List of prompt dicts with 'prompt', 'category', 'language'
-        """
+        print(f"Loaded {len(self.existing_prompts)} existing prompts")
+        print(f"Created {len(self.templates)} new templates")
+
+    def _load_existing_prompts(self) -> List[Dict[str, str]]:
+        """Load existing high-quality prompts from JSONL file."""
         prompts = []
+        examples_file = self.prompts_dir / "examples" / "all_prompts.jsonl"
 
-        for _ in range(num_prompts):
-            template = random.choice(self.templates)
-            prompt_text = self._fill_template(template)
+        if not examples_file.exists():
+            print(f"Warning: {examples_file} not found, skipping existing prompts")
+            return prompts
 
-            prompts.append({
-                'prompt': prompt_text,
-                'category': template.category,
-                'language': self._extract_language(template, prompt_text),
-            })
+        try:
+            with open(examples_file, 'r', encoding='utf-8') as f:
+                for line in f:
+                    prompt_data = json.loads(line.strip())
+                    prompts.append(prompt_data)
+        except Exception as e:
+            print(f"Warning: Could not load existing prompts: {e}")
 
         return prompts
 
-    def _create_templates(self) -> List[PromptTemplate]:
-        """Create prompt templates for different task types."""
+    def _build_comprehensive_templates(self) -> List[PromptTemplate]:
+        """Build comprehensive templates for coding assistant capabilities."""
+
+        languages = ["Python", "JavaScript", "TypeScript", "Java", "Go", "Rust", "C++"]
+
         templates = []
 
-        # 1. Function Implementation
-        templates.extend(self._function_templates())
+        # === Tool Usage & Code Execution ===
+        templates.extend([
+            PromptTemplate(
+                category="tool_execution",
+                template=(
+                    "Write a {language} function to {task}. "
+                    "After writing it, explain how you would test it by executing it with sample inputs."
+                ),
+                variables={
+                    "language": languages,
+                    "task": [
+                        "calculate the factorial of a number",
+                        "find the longest common substring between two strings",
+                        "implement binary search on a sorted array",
+                        "convert a Roman numeral to an integer",
+                        "validate an email address using regex",
+                        "parse a CSV string into a list of dictionaries",
+                        "implement a simple LRU cache",
+                        "calculate the nth Fibonacci number recursively and iteratively",
+                    ]
+                },
+            ),
+            PromptTemplate(
+                category="tool_file_operations",
+                template=(
+                    "I need to {operation}. Write {language} code that uses file operations safely, "
+                    "includes error handling, and explain what tools/permissions are needed."
+                ),
+                variables={
+                    "language": languages,
+                    "operation": [
+                        "read a JSON config file and validate its schema",
+                        "append logs to a file with rotation when it exceeds 10MB",
+                        "recursively find all Python files in a directory",
+                        "safely create a directory structure with proper error handling",
+                        "read a large CSV file in chunks to avoid memory issues",
+                        "watch a file for changes and trigger an action",
+                    ]
+                },
+            ),
+            PromptTemplate(
+                category="tool_api_calls",
+                template=(
+                    "Write a {language} function to {task}. "
+                    "Include proper error handling, retries, and explain what happens if the API fails."
+                ),
+                variables={
+                    "language": languages,
+                    "task": [
+                        "fetch user data from a REST API with authentication",
+                        "make an HTTP request with exponential backoff retry logic",
+                        "call multiple APIs concurrently and aggregate results",
+                        "handle rate limiting when calling an external API",
+                        "parse and validate a JSON response from an API",
+                    ]
+                },
+            ),
+        ])
 
-        # 2. Algorithm Implementation
-        templates.extend(self._algorithm_templates())
+        # === Debugging & Error Handling ===
+        templates.extend([
+            PromptTemplate(
+                category="debugging",
+                template=(
+                    "This {language} code has a bug:\n```\n{buggy_code}\n```\n"
+                    "Find the bug, explain what's wrong, and provide the fixed code."
+                ),
+                variables={
+                    "language": languages,
+                    "buggy_code": [
+                        "def find_max(nums):\n    max_val = 0\n    for num in nums:\n        if num > max_val:\n            max_val = num\n    return max_val",
+                        "function isPalindrome(str) {\n    return str === str.reverse();\n}",
+                        "def calculate_average(numbers):\n    total = 0\n    for num in numbers:\n        total += num\n    return total / len(numbers)",
+                        "const fetchData = async (url) => {\n    const response = fetch(url);\n    return response.json();\n}",
+                    ]
+                },
+            ),
+            PromptTemplate(
+                category="debugging_errors",
+                template=(
+                    "I'm getting this error:\n```\n{error}\n```\n\n"
+                    "In this {language} code:\n```\n{code}\n```\n"
+                    "Debug the issue step-by-step and fix it."
+                ),
+                variables={
+                    "language": ["Python", "JavaScript", "Java"],
+                    "error": [
+                        "TypeError: 'NoneType' object is not subscriptable",
+                        "IndexError: list index out of range",
+                        "KeyError: 'username'",
+                        "TypeError: Cannot read property 'map' of undefined",
+                        "ReferenceError: variable is not defined",
+                    ],
+                    "code": [
+                        "data = get_user_data()\nusername = data['user']['name']",
+                        "result = process_items(items)\nfirst = result[0]",
+                        "for i in range(len(arr) + 1):\n    print(arr[i])",
+                    ]
+                },
+            ),
+            PromptTemplate(
+                category="debugging_trace",
+                template=(
+                    "Given this stack trace:\n```\n{trace}\n```\n"
+                    "Explain what went wrong, where the error originated, and how to fix it."
+                ),
+                variables={
+                    "trace": [
+                        "Traceback (most recent call last):\n  File 'main.py', line 45, in <module>\n    result = process(data)\n  File 'processor.py', line 23, in process\n    return transform(item)\n  File 'utils.py', line 10, in transform\n    return item.upper()\nAttributeError: 'int' object has no attribute 'upper'",
+                    ]
+                },
+            ),
+        ])
 
-        # 3. Data Structure Implementation
-        templates.extend(self._data_structure_templates())
+        # === Test Generation ===
+        templates.extend([
+            PromptTemplate(
+                category="test_generation",
+                template=(
+                    "Write comprehensive unit tests for this {language} function:\n```\n{function}\n```\n"
+                    "Include edge cases, error cases, and normal cases."
+                ),
+                variables={
+                    "language": languages,
+                    "function": [
+                        "def binary_search(arr, target):\n    left, right = 0, len(arr) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1",
+                        "function validateEmail(email) {\n    const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n    return re.test(email);\n}",
+                    ]
+                },
+            ),
+            PromptTemplate(
+                category="test_generation_tdd",
+                template=(
+                    "Using TDD (Test-Driven Development), write tests FIRST for a {language} function that {task}. "
+                    "Then implement the function to make the tests pass."
+                ),
+                variables={
+                    "language": languages,
+                    "task": [
+                        "validates password strength (8+ chars, uppercase, lowercase, number, special char)",
+                        "merges two sorted arrays into one sorted array",
+                        "calculates the median of a list of numbers",
+                        "converts snake_case to camelCase",
+                    ]
+                },
+            ),
+        ])
 
-        # 4. Code Explanation
-        templates.extend(self._explanation_templates())
+        # === Multi-Step Tasks ===
+        templates.extend([
+            PromptTemplate(
+                category="multistep_planning",
+                template=(
+                    "I need to build a {project}. Break this down into steps, "
+                    "then implement the first step in {language} with proper structure."
+                ),
+                variables={
+                    "language": languages,
+                    "project": [
+                        "simple REST API for a todo list with CRUD operations",
+                        "command-line tool that analyzes code complexity",
+                        "web scraper that extracts product prices from multiple sites",
+                        "file converter that transforms CSV to JSON with validation",
+                        "log analyzer that finds errors and generates a report",
+                    ]
+                },
+            ),
+            PromptTemplate(
+                category="multistep_refactor",
+                template=(
+                    "This {language} code works but needs refactoring:\n```\n{messy_code}\n```\n"
+                    "First analyze the issues, then refactor it step-by-step with explanations."
+                ),
+                variables={
+                    "language": languages,
+                    "messy_code": [
+                        "def process_data(data):\n    result = []\n    for item in data:\n        if item is not None:\n            if isinstance(item, str):\n                if len(item) > 0:\n                    result.append(item.strip().lower())\n    return result",
+                    ]
+                },
+            ),
+        ])
 
-        # 5. Bug Fixing
-        templates.extend(self._bug_fix_templates())
+        # === Documentation Generation ===
+        templates.extend([
+            PromptTemplate(
+                category="documentation",
+                template=(
+                    "Write comprehensive documentation for this {language} {code_type}:\n```\n{code}\n```\n"
+                    "Include docstrings, parameter descriptions, return values, examples, and edge cases."
+                ),
+                variables={
+                    "language": languages,
+                    "code_type": ["function", "class", "module"],
+                    "code": [
+                        "def merge_sort(arr):\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    left = merge_sort(arr[:mid])\n    right = merge_sort(arr[mid:])\n    return merge(left, right)",
+                        "class LRUCache:\n    def __init__(self, capacity):\n        self.cache = {}\n        self.capacity = capacity\n    def get(self, key):\n        return self.cache.get(key, -1)\n    def put(self, key, value):\n        self.cache[key] = value",
+                    ]
+                },
+            ),
+        ])
 
-        # 6. Code Refactoring
-        templates.extend(self._refactoring_templates())
+        # === Code Explanation ===
+        templates.extend([
+            PromptTemplate(
+                category="explanation",
+                template=(
+                    "Explain this {language} code like I'm a {level} developer:\n```\n{code}\n```"
+                ),
+                variables={
+                    "language": languages,
+                    "level": ["beginner", "intermediate", "senior"],
+                    "code": [
+                        "def quicksort(arr):\n    if len(arr) <= 1:\n        return arr\n    pivot = arr[len(arr) // 2]\n    left = [x for x in arr if x < pivot]\n    middle = [x for x in arr if x == pivot]\n    right = [x for x in arr if x > pivot]\n    return quicksort(left) + middle + quicksort(right)",
+                        "const debounce = (func, delay) => {\n    let timeout;\n    return (...args) => {\n        clearTimeout(timeout);\n        timeout = setTimeout(() => func(...args), delay);\n    };\n};",
+                    ]
+                },
+            ),
+        ])
 
-        # 7. Real-World Tasks
-        templates.extend(self._real_world_templates())
+        # === Code Review & Optimization ===
+        templates.extend([
+            PromptTemplate(
+                category="code_review",
+                template=(
+                    "Review this {language} code for {aspect}:\n```\n{code}\n```\n"
+                    "Provide specific suggestions with examples."
+                ),
+                variables={
+                    "language": languages,
+                    "aspect": [
+                        "performance issues",
+                        "security vulnerabilities",
+                        "code readability and maintainability",
+                        "potential bugs and edge cases",
+                        "best practices and idioms",
+                    ],
+                    "code": [
+                        "def find_users(query):\n    users = []\n    for user in database.all_users:\n        if query in user.name:\n            users.append(user)\n    return users",
+                    ]
+                },
+            ),
+            PromptTemplate(
+                category="optimization",
+                template=(
+                    "This {language} code is slow:\n```\n{slow_code}\n```\n"
+                    "Analyze the time complexity and optimize it. Show before/after complexity."
+                ),
+                variables={
+                    "language": languages,
+                    "slow_code": [
+                        "def find_duplicates(arr):\n    dupes = []\n    for i in range(len(arr)):\n        for j in range(i+1, len(arr)):\n            if arr[i] == arr[j] and arr[i] not in dupes:\n                dupes.append(arr[i])\n    return dupes",
+                    ]
+                },
+            ),
+        ])
 
-        # 8. Code Review
-        templates.extend(self._code_review_templates())
+        # === Real-World Scenarios ===
+        templates.extend([
+            PromptTemplate(
+                category="real_world",
+                template=(
+                    "Build a {component} in {language} that {requirement}. "
+                    "Include error handling, logging, and explain deployment considerations."
+                ),
+                variables={
+                    "language": languages,
+                    "component": [
+                        "rate limiter",
+                        "caching layer",
+                        "retry mechanism with exponential backoff",
+                        "connection pool manager",
+                        "circuit breaker",
+                    ],
+                    "requirement": [
+                        "prevents more than 100 requests per minute per user",
+                        "stores frequently accessed data with TTL",
+                        "handles transient network failures gracefully",
+                        "manages database connections efficiently",
+                        "stops calling a failing service and recovers automatically",
+                    ]
+                },
+            ),
+        ])
 
         return templates
 
-    def _function_templates(self) -> List[PromptTemplate]:
-        """Templates for function implementation tasks."""
-        return [
-            PromptTemplate(
-                category='function_implementation',
-                template='Write a {language} function that {task}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'TypeScript', 'Java', 'C++', 'Rust', 'Go'],
-                    'task': [
-                        'calculates the factorial of a number',
-                        'checks if a string is a palindrome',
-                        'reverses a linked list',
-                        'finds the nth Fibonacci number',
-                        'sorts an array using quicksort',
-                        'validates an email address',
-                        'converts a decimal number to binary',
-                        'finds the longest common substring',
-                        'implements a simple calculator',
-                        'parses a JSON string',
-                        'generates a URL-friendly slug',
-                        'flattens a nested list of numbers',
-                        'evaluates a postfix expression',
-                        'computes the greatest common divisor (GCD)',
-                    ],
-                },
-            ),
-            PromptTemplate(
-                category='function_implementation',
-                template='Implement a {language} function to {action} given {input}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'Java', 'C++', 'Go', 'Rust'],
-                    'action': [
-                        'process',
-                        'transform',
-                        'validate',
-                        'filter',
-                        'aggregate',
-                        'normalize',
-                        'summarize',
-                    ],
-                    'input': [
-                        'a list of numbers',
-                        'a string',
-                        'an array of objects',
-                        'a dictionary',
-                        'a stream of log lines',
-                        'a matrix',
-                    ],
-                },
-            ),
-            PromptTemplate(
-                category='function_implementation',
-                template='Create a {language} utility that {goal} with proper error handling',
-                variables={
-                    'language': ['Python', 'JavaScript', 'TypeScript', 'Java', 'C#', 'Go'],
-                    'goal': [
-                        'parses and validates configuration files',
-                        'debounces an async function call',
-                        'memoizes expensive computations',
-                        'streams large files without loading into memory',
-                        'retries HTTP requests with exponential backoff',
-                        'generates paginated results from a collection',
-                    ],
-                },
-            ),
-        ]
+    def sample(self, count: int, existing_weight: float = 0.5) -> List[Dict[str, str]]:
+        """
+        Sample prompts with a mix of existing and generated.
 
-    def _algorithm_templates(self) -> List[PromptTemplate]:
-        """Templates for algorithm implementation."""
-        return [
-            PromptTemplate(
-                category='algorithm',
-                template='Implement {algorithm} in {language} with detailed comments',
-                variables={
-                    'algorithm': [
-                        'binary search',
-                        'merge sort',
-                        'quick sort',
-                        'depth-first search (DFS)',
-                        'breadth-first search (BFS)',
-                        'Dijkstra\'s shortest path',
-                        'A* pathfinding',
-                        'dynamic programming for coin change',
-                        'backtracking for N-queens',
-                        'Kruskal\'s minimum spanning tree',
-                        'topological sort with cycle detection',
-                        'edit distance (Levenshtein) using DP',
-                        'sliding window maximum',
-                        'union-find with path compression',
-                        'k-way merge using heaps',
-                    ],
-                    'language': ['Python', 'Java', 'C++', 'JavaScript', 'Rust', 'Go'],
-                },
-            ),
-            PromptTemplate(
-                category='algorithm',
-                template='Write {language} code to solve: {problem}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'Java', 'TypeScript'],
-                    'problem': [
-                        'Find the kth largest element in an array',
-                        'Detect a cycle in a linked list',
-                        'Find all permutations of a string',
-                        'Implement LRU cache',
-                        'Find the median of two sorted arrays',
-                        'Longest increasing subsequence',
-                        'Word ladder problem',
-                        'Trapping rain water',
-                        'Maximum subarray sum (Kadane)',
-                        'Validate binary search tree',
-                        'Rotate a matrix 90 degrees',
-                        'Count islands in a grid',
-                        'Serialize and deserialize a binary tree',
-                    ],
-                },
-            ),
-        ]
+        Args:
+            count: Total number of prompts to generate
+            existing_weight: Proportion of existing prompts (0.0-1.0)
+                           0.5 = 50% existing, 50% new templates
 
-    def _data_structure_templates(self) -> List[PromptTemplate]:
-        """Templates for data structure implementation."""
-        return [
-            PromptTemplate(
-                category='data_structure',
-                template='Implement a {structure} in {language} with {operations}',
-                variables={
-                    'structure': ['stack', 'queue', 'binary search tree', 'hash table', 'heap', 'trie', 'graph'],
-                    'language': ['Python', 'Java', 'C++', 'JavaScript', 'Go', 'Rust'],
-                    'operations': [
-                        'insert, delete, and search operations',
-                        'all basic operations',
-                        'efficient lookup and insertion',
-                        'O(1) get-min or get-max support',
-                        'iterators with lazy traversal',
-                    ],
-                },
-            ),
-            PromptTemplate(
-                category='data_structure',
-                template='Design and implement a {structure} in {language} supporting {operations}',
-                variables={
-                    'structure': [
-                        'disjoint set (union-find)',
-                        'LRU cache',
-                        'circular buffer',
-                        'priority queue',
-                        'segment tree',
-                    ],
-                    'language': ['Python', 'C++', 'Java', 'Rust'],
-                    'operations': [
-                        'union and find with path compression',
-                        'O(1) eviction and retrieval',
-                        'bounded capacity with wrap-around semantics',
-                        'range queries and point updates',
-                        'thread-safe operations',
-                    ],
-                },
-            ),
-        ]
+        Returns:
+            List of prompt dictionaries with 'prompt', 'category', 'language' keys
+        """
+        prompts = []
 
-    def _explanation_templates(self) -> List[PromptTemplate]:
-        """Templates for code explanation tasks."""
-        return [
-            PromptTemplate(
-                category='explanation',
-                template='Explain what this {language} code does and how it works:\n{code_snippet}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'Java'],
-                    'code_snippet': [
-                        'list(map(lambda x: x**2, filter(lambda x: x % 2 == 0, range(10))))',
-                        '[x for x in range(100) if x % 3 == 0 and x % 5 == 0]',
-                        'reduce((acc, x) => acc + x, [1, 2, 3, 4], 0)',
-                    ],
-                },
-            ),
-            PromptTemplate(
-                category='explanation',
-                template='Explain the time and space complexity of {algorithm}',
-                variables={
-                    'algorithm': [
-                        'quicksort',
-                        'merge sort',
-                        'binary search',
-                        'DFS and BFS',
-                        'Dijkstra\'s algorithm',
-                        'topological sort',
-                        'two-pointer techniques',
-                    ],
-                },
-            ),
-        ]
+        # Calculate how many from each source
+        num_existing = int(count * existing_weight)
+        num_generated = count - num_existing
 
-    def _bug_fix_templates(self) -> List[PromptTemplate]:
-        """Templates for bug fixing tasks."""
-        return [
-            PromptTemplate(
-                category='bug_fix',
-                template='Find and fix the bug in this {language} code:\n{buggy_code}\nThe code should {expected}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'Java'],
-                    'buggy_code': [
-                        'def factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)',
-                        'for (let i = 0; i <= arr.length; i++) { console.log(arr[i]); }',
-                        'if (head.next == null) return false;\nwhile (head) {\n    head = head.next.next;\n}',
-                        'for i in range(len(nums)):\n    if nums[i] == target:\n        return i\n    return -1',
-                    ],
-                    'expected': [
-                        'handle n=0 correctly',
-                        'not go out of bounds',
-                        'avoid null pointer exceptions',
-                        'return correct value for missing elements',
-                    ],
-                },
-            ),
-        ]
+        # Sample from existing prompts
+        if self.existing_prompts and num_existing > 0:
+            existing_sample = random.choices(self.existing_prompts, k=num_existing)
+            prompts.extend(existing_sample)
 
-    def _refactoring_templates(self) -> List[PromptTemplate]:
-        """Templates for refactoring tasks."""
-        return [
-            PromptTemplate(
-                category='refactoring',
-                template='Refactor this {language} code to be more {quality}:\n{code}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'Java'],
-                    'quality': ['readable', 'efficient', 'maintainable', 'pythonic', 'idiomatic'],
-                    'code': ['# Code snippet here'],
-                },
-            ),
-        ]
+        # Generate from templates
+        for _ in range(num_generated):
+            template = random.choice(self.templates)
+            prompts.append(template.fill())
 
-    def _real_world_templates(self) -> List[PromptTemplate]:
-        """Templates for real-world programming tasks."""
-        return [
-            PromptTemplate(
-                category='real_world',
-                template='Write {language} code to {task}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'Java'],
-                    'task': [
-                        'read a CSV file and calculate statistics',
-                        'make an HTTP GET request and parse JSON',
-                        'create a REST API endpoint',
-                        'connect to a database and run a query',
-                        'parse command-line arguments',
-                        'read and write files',
-                        'handle exceptions gracefully',
-                        'implement logging',
-                        'create a simple web scraper',
-                        'validate user input',
-                        'implement a CLI tool with subcommands',
-                        'schedule recurring background tasks',
-                        'stream large uploads with retry support',
-                        'consume and publish messages to a queue',
-                        'process image uploads and generate thumbnails',
-                    ],
-                },
-            ),
-        ]
+        # Shuffle to mix existing and generated
+        random.shuffle(prompts)
 
-    def _code_review_templates(self) -> List[PromptTemplate]:
-        """Templates for code review tasks."""
-        return [
-            PromptTemplate(
-                category='code_review',
-                template='Review this {language} code and suggest improvements for {aspect}:\n{code}',
-                variables={
-                    'language': ['Python', 'JavaScript', 'Java'],
-                    'aspect': ['performance', 'security', 'readability', 'best practices'],
-                    'code': ['# Code snippet here'],
-                },
-            ),
-        ]
-
-    def _fill_template(self, template: PromptTemplate) -> str:
-        """Fill a template with random values from its variables."""
-        prompt = template.template
-
-        for var_name, options in template.variables.items():
-            value = random.choice(options)
-            prompt = prompt.replace(f'{{{var_name}}}', value)
-
-        return prompt
-
-    def _extract_language(self, template: PromptTemplate, prompt: str) -> str:
-        """Extract programming language from the prompt."""
-        languages = [
-            'Python',
-            'JavaScript',
-            'TypeScript',
-            'Java',
-            'C++',
-            'Rust',
-            'Go',
-            'Ruby',
-            'PHP',
-            'C#',
-            'Kotlin',
-            'Swift',
-        ]
-
-        for lang in languages:
-            if lang in prompt:
-                return lang.lower()
-
-        return 'unknown'
+        return prompts
 
 
-def generate_system_prompt() -> str:
+def generate_system_prompt(categories: Iterable[str] = None) -> str:
     """
-    Generate system prompt for the teacher model.
-
-    This instructs the model on how to generate high-quality training data.
-    """
-    return """You are an expert programmer creating training data for a code generation model.
-
-When given a coding task, provide:
-1. Clear, well-commented code
-2. Explanation of the approach
-3. Time and space complexity analysis (if relevant)
-4. Example usage
-5. Edge cases to consider
-
-Format your response as follows:
-
-```language
-# Your code here with comments
-```
-
-**Explanation:**
-Brief explanation of how the code works.
-
-**Complexity:**
-Time: O(...)
-Space: O(...)
-
-**Example:**
-```
-Input: ...
-Output: ...
-```
-
-**Notes:**
-- Any important edge cases
-- Potential optimizations
-- Common pitfalls to avoid
-
-Keep code clean, well-structured, and following best practices for the language."""
-
-
-# Convenience function
-def generate_prompts_from_categories(
-    categories: List[str],
-    num_prompts: int = 100
-) -> List[Dict[str, str]]:
-    """
-    Generate prompts from specific categories.
+    Build a comprehensive system prompt for coding assistant training.
 
     Args:
-        categories: List of categories to include
-        num_prompts: Total prompts to generate
+        categories: Optional list of categories being trained on
 
     Returns:
-        List of prompts
-
-    Example:
-        >>> prompts = generate_prompts_from_categories(
-        ...     ['function_implementation', 'algorithm'],
-        ...     num_prompts=50
-        ... )
+        System prompt string optimized for Claude/GPT-4 teachers
     """
-    generator = PromptGenerator()
-    all_prompts = generator.generate_prompts(num_prompts * 2)  # Generate extra
+    base_prompt = (
+        "You are an expert coding assistant helping to train a student model. "
+        "Your responses should be:\n"
+        "- Clear and well-structured with proper markdown formatting\n"
+        "- Include complete, working code examples with explanations\n"
+        "- Show step-by-step reasoning for complex problems\n"
+        "- Include error handling and edge cases\n"
+        "- Demonstrate best practices and idiomatic code\n"
+        "- Use code blocks with language tags (```python, ```javascript, etc.)\n"
+        "- When showing tool usage, format as JSON with clear descriptions\n"
+        "- For debugging, explain the root cause and provide fixes\n"
+        "- For multi-step tasks, break down the approach before implementing"
+    )
 
-    # Filter by category
-    filtered = [p for p in all_prompts if p['category'] in categories]
+    if categories:
+        categories_str = ", ".join(categories)
+        base_prompt += f"\n\nFocus areas: {categories_str}"
 
-    # Trim to requested number
-    return filtered[:num_prompts]
+    return base_prompt
+
+
+__all__ = ["PromptTemplate", "PromptGenerator", "generate_system_prompt"]

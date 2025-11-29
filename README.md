@@ -1,132 +1,259 @@
-# Demiurgic - Code-Focused GPT Model
+# Demiurgic - ChatGLM3 Coding Assistant
 
-A research project to build a GPT-based language model trained from scratch, optimized for code generation and software development assistance.
+Fine-tune ChatGLM3-6B into a next-level coding assistant using knowledge distillation with Claude and GPT-4.
 
-## Project Overview
+## What is This?
 
-**Demiurgic** is a medium-to-large scale transformer model (7B-70B parameters) designed to excel at:
+Demiurgic takes the open-source ChatGLM3-6B model and fine-tunes it with high-quality training data generated from Claude (Anthropic) and GPT-4 (OpenAI). The result: a powerful coding assistant that can write code, use tools, and help with software development.
 
-- **Code Completion & Generation**: Context-aware code synthesis across multiple languages
-- **Code Explanation**: Natural language descriptions of code functionality
-- **Bug Detection & Fixing**: Identifying and correcting code errors
-- **Refactoring**: Suggesting and implementing code improvements
-- **Multi-Language Support**: Python, JavaScript, TypeScript, Go, Rust, Java, C++, and more
+### Why ChatGLM3?
+
+- **6B parameters** - Perfect size for cloud training and local deployment
+- **Open source** - Full control and customization
+- **Already trained** - Start with a capable base model
+- **Efficient fine-tuning** - QLoRA allows training with 6-8GB VRAM
 
 ### Training Approach
 
-This project uses **knowledge distillation** from a large teacher model (GPT-4, Claude, or similar) rather than training from scratch. This approach:
+Instead of training from scratch (expensive and time-consuming), we use **knowledge distillation**:
 
-- **Reduces costs** by 50-70% ($3,000-9,000 vs $15,000-20,000)
-- **Improves quality** through learning from high-quality teacher outputs
-- **Decreases data requirements** (20-50B tokens vs 140B tokens)
-- **Shortens training time** (2-4 weeks vs 6-7 weeks)
+1. **Generate training data** using Claude 3.5 Sonnet or GPT-4-turbo
+2. **Fine-tune ChatGLM3** with QLoRA in cloud (Google Colab recommended)
+3. **Deploy locally** as GGUF for fast CPU/GPU inference
 
-## Key Features
-
-- **Trained from Scratch**: Full control over architecture and training process
-- **Code-First Design**: Architecture optimized for code understanding and generation
-- **Budget-Conscious**: Training strategy designed for cloud compute with cost optimization
-- **CLI-First Interface**: Direct command-line integration for developer workflows
-- **Research-Oriented**: Emphasis on experimentation and iteration
+**Cost:** $250-350 for 10,000 high-quality training examples
+**Training Time:** 2-6 hours on free/low-cost cloud GPUs
+**Result:** Custom coding assistant deployable on your laptop
 
 ## Quick Start
 
-### Prerequisites
+### 1. Install Dependencies
 
-- Python 3.10+
-- Cloud compute account (AWS/GCP/Azure)
-- Access to code datasets (The Stack, GitHub dumps, etc.)
+```bash
+pip install -r requirements.txt
+```
 
-### Repository Structure
+### 2. Generate Training Data
+
+Choose your teacher model:
+
+**Option A: Claude 3.5 Sonnet (Recommended)**
+```bash
+export ANTHROPIC_API_KEY='sk-ant-api03-...'
+
+python scripts/generate_distillation_data.py \
+    --provider anthropic \
+    --model claude-3-5-sonnet-20241022 \
+    --num-examples 5000 \
+    --output-dir data/training
+```
+**Cost:** ~$120-150 for 5,000 examples
+
+**Option B: GPT-4-turbo**
+```bash
+export OPENAI_API_KEY='sk-...'
+
+python scripts/generate_distillation_data.py \
+    --provider openai \
+    --model gpt-4-turbo \
+    --num-examples 5000 \
+    --output-dir data/training
+```
+**Cost:** ~$120-180 for 5,000 examples
+
+**Option C: Local ChatGLM3 (Free)**
+```bash
+python scripts/generate_distillation_data.py \
+    --provider local \
+    --model-path models/chatglm3-6b.Q4_K_M.gguf \
+    --num-examples 10000 \
+    --output-dir data/training
+```
+**Cost:** $0 (already downloaded!)
+
+### 3. Train ChatGLM3 (Cloud)
+
+Use Google Colab for free GPU access (coming soon - use existing ChatGLM3Trainer for now).
+
+### 4. Deploy Locally
+
+Convert trained model to GGUF and run locally (coming soon).
+
+## Project Structure
 
 ```
 demiurgic/
-├── docs/                    # Detailed documentation
-│   ├── architecture.md      # Model architecture specifications
-│   ├── training.md          # Training guide and infrastructure
-│   ├── data.md              # Data preparation and curation
-│   ├── evaluation.md        # Benchmarking and metrics
-│   └── cli.md               # CLI tool implementation
-├── src/                     # Source code
-│   ├── model/               # Model architecture
-│   ├── training/            # Training scripts
-│   ├── data/                # Data processing pipelines
-│   └── cli/                 # CLI interface
-├── configs/                 # Training configurations
-├── scripts/                 # Utility scripts
-└── tests/                   # Test suite
+├── data/
+│   ├── distillation/         # Generated training data
+│   └── humaneval/            # Evaluation benchmarks
+├── models/
+│   └── chatglm3-6b.Q4_K_M.gguf  # Local GGUF model
+├── src/
+│   ├── distillation/
+│   │   ├── providers/        # API clients (Anthropic, OpenAI, Local)
+│   │   ├── trainer.py        # ChatGLM3Trainer with QLoRA
+│   │   ├── prompt_generator.py
+│   │   └── quality_filters.py
+│   ├── evaluation/
+│   │   └── humaneval.py      # Code evaluation
+│   ├── model/
+│   │   └── model.py          # ChatGLM3 utilities
+│   ├── data/                 # Data loading utilities
+│   └── cli/                  # Chat formatting
+├── scripts/
+│   ├── generate_distillation_data.py  # Multi-provider data generation
+│   ├── run_chatglm3_gguf.py           # Local inference
+│   └── download_chatglm3_gguf.py      # Download GGUF model
+└── docs/                     # Documentation
 ```
 
 ## Documentation
 
-### Core Guides
-- **[Knowledge Distillation Guide](docs/knowledge_distillation.md)**: **START HERE** - Training using teacher model (recommended approach)
-- **[Architecture Guide](docs/architecture.md)**: Model design, tokenization, and scaling strategies
-- **[Training Guide](docs/training.md)**: Infrastructure setup, training loops, and optimization
-- **[Evaluation Guide](docs/evaluation.md)**: Metrics, benchmarks, and testing protocols
-- **[CLI Guide](docs/cli.md)**: Building the command-line interface
+### Getting Started
+- **[Multi-Provider Usage Guide](MULTI_PROVIDER_USAGE_GUIDE.md)** - How to generate training data with Claude/GPT-4
+- **[Quick Reference](QUICK_REFERENCE.md)** - Command cheat sheet
+- **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Current status and next steps
 
-### Alternative Approaches
-- **[Data Guide](docs/data.md)**: Dataset curation for training from scratch (higher cost alternative)
+### Technical Guides
+- **[Knowledge Distillation](docs/knowledge_distillation.md)** - Theory and methods
+- **[Evaluation](docs/evaluation.md)** - HumanEval and benchmarks
+- **[CLI Tools](docs/cli.md)** - Command-line utilities
 
-## Model Specifications
+### Setup Guides
+- **[Next Steps](NEXT_STEPS.md)** - ChatGLM3 GGUF workflow
+- **[HumanEval Setup](HUMANEVAL_SETUP.md)** - Code evaluation setup
 
-### Architecture Options
+## Key Features
 
-**Medium Scale (7-13B parameters)**
-- Training Time: 2-4 weeks
-- Estimated Cost: $5,000-$15,000
-- Hardware: 8x A100 GPUs
-- Context Length: 4K-8K tokens
+✅ **Multi-Provider Data Generation**
+- Claude 3.5 Sonnet, Opus, Haiku
+- GPT-4-turbo, GPT-3.5-turbo
+- Local GGUF models (free)
 
-**Large Scale (30-70B parameters)**
-- Training Time: 4-8 weeks
-- Estimated Cost: $30,000-$100,000
-- Hardware: 16-64 A100 GPUs
-- Context Length: 8K-16K tokens
+✅ **Quality Filtering**
+- Automatic removal of refusals, short responses
+- Duplicate detection
+- Code block requirement
 
-### Training Philosophy
+✅ **Cost Optimization**
+- Mix providers for best cost/quality ratio
+- Budget-friendly options (Claude Haiku, GPT-3.5)
+- Free local generation
 
-1. **Iterative Development**: Start with smaller models, validate approach
-2. **Data Quality > Quantity**: Curated, high-quality code datasets
-3. **Task-Specific Fine-Tuning**: Multi-stage training for different capabilities
-4. **Continuous Evaluation**: Regular benchmarking against code tasks
+✅ **Cloud Training Support**
+- ChatGLM3Trainer with QLoRA
+- 6-8GB VRAM requirement (Google Colab compatible)
+- Efficient fine-tuning
 
-## Getting Started
+✅ **Local Deployment Ready**
+- GGUF format for fast inference
+- CPU and GPU support
+- Already have ChatGLM3 GGUF downloaded
 
-### Recommended Path (Knowledge Distillation)
+## Current Status
 
-1. **Review Distillation Guide**: Read [docs/knowledge_distillation.md](docs/knowledge_distillation.md) - **START HERE**
-2. **Review Architecture**: Read [docs/architecture.md](docs/architecture.md)
-3. **Choose Teacher Model**: Select GPT-4, Claude, or open-source alternative
-4. **Generate Training Data**: Use teacher to create 30k-50k examples
-5. **Setup Infrastructure**: Follow [docs/training.md](docs/training.md)
-6. **Train Student Model**: 7B model on distilled data (2-3 weeks)
-7. **Evaluate**: Use [docs/evaluation.md](docs/evaluation.md) benchmarks
+### ✅ Completed
+- Multi-provider data generation system (Anthropic, OpenAI, Local)
+- Quality filtering and duplicate detection
+- ChatGLM3Trainer with QLoRA support
+- Local GGUF inference
+- HumanEval evaluation
 
-### Alternative Path (From Scratch)
+### 🚧 In Progress
+- Google Colab training notebook
+- GGUF conversion pipeline
+- Tool system (code execution, file operations)
+- Interactive chat interface
 
-For those with larger budgets or specific data requirements:
+See [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) for detailed status.
 
-1. **Prepare Data**: Execute [docs/data.md](docs/data.md) pipeline
-2. **Train from Scratch**: 4-7 weeks on 140B tokens
-3. **Higher Cost**: $15,000-20,000 vs $3,000-9,000
+## Cost Estimates
 
-## Research Goals
+### Training Data Generation (10,000 examples)
 
-- Investigate optimal architecture for code understanding
-- Explore efficient training techniques for budget constraints
-- Develop robust evaluation metrics for code generation
-- Study multi-language transfer learning in code domain
+| Provider | Cost | Quality | Speed |
+|----------|------|---------|-------|
+| Claude 3.5 Sonnet | $240-300 | ⭐⭐⭐⭐⭐ | Fast |
+| Claude 3 Haiku | $25-50 | ⭐⭐⭐⭐ | Very Fast |
+| GPT-4-turbo | $240-360 | ⭐⭐⭐⭐⭐ | Fast |
+| GPT-3.5-turbo | $50-100 | ⭐⭐⭐ | Very Fast |
+| Local ChatGLM3 | $0 | ⭐⭐⭐ | Varies |
+
+**Recommended:** Mix 40% Claude + 40% GPT-4 + 20% Local = $250-350
+
+### Cloud Training
+
+- **Google Colab (Free):** $0 with T4 GPU (slower)
+- **Colab Pro:** $10/month with better GPUs
+- **RunPod:** ~$0.20/hr for RTX 4090 (~$1-2 total)
+- **Lambda Labs:** ~$0.50/hr for A100 (~$2-5 total)
+
+**Total Project Cost:** $250-400 (data + training)
+
+## Hardware Requirements
+
+### Data Generation (Local)
+- **CPU only** - Works fine for API-based generation
+- **GPU optional** - Not needed unless using local model
+
+### Training (Cloud Recommended)
+- **Minimum:** 6-8GB VRAM (Google Colab Free)
+- **Recommended:** 12-16GB VRAM (faster training)
+- **Not suitable for <4GB laptops** - Use cloud instead
+
+### Deployment (Local)
+- **CPU:** 8GB+ RAM for GGUF inference
+- **GPU:** 4GB+ VRAM for faster inference
+- **Already works:** Your downloaded ChatGLM3 GGUF
+
+## Examples
+
+### Generate Test Data
+```bash
+# Test with 100 examples (~$2-3)
+python scripts/generate_distillation_data.py \
+    --provider anthropic \
+    --model claude-3-5-sonnet-20241022 \
+    --num-examples 100 \
+    --output-dir data/test
+```
+
+### Review Generated Data
+```bash
+# View first few examples
+head -n 5 data/test/train.jsonl
+
+# Check metadata (cost, tokens, quality stats)
+cat data/test/train_metadata.json
+```
+
+### Run Local Inference
+```bash
+# Chat with local ChatGLM3 GGUF
+python scripts/run_chatglm3_gguf.py "Write a Python function to check if a number is prime"
+```
+
+## Philosophy
+
+This project focuses on **simplicity and pragmatism**:
+
+- ✅ Use existing capable models (ChatGLM3) instead of building from scratch
+- ✅ Leverage powerful APIs (Claude, GPT-4) for data generation
+- ✅ Cloud training for accessibility (anyone with $250-400 can do this)
+- ✅ Local deployment for privacy and speed
+- ✅ Keep codebase simple and maintainable
+
+## Contributing
+
+This is a research project. Feedback and improvements welcome!
 
 ## License
 
 [To be determined]
 
-## Contributing
+## Acknowledgments
 
-This is a research project. Documentation and implementation feedback welcome.
-
-## Contact
-
-[Your contact information]
+- **ChatGLM3** by Tsinghua University (THUDM)
+- **Anthropic** for Claude API
+- **OpenAI** for GPT-4 API
+- **llama.cpp** for GGUF inference

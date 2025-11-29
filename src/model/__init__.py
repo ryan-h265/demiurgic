@@ -1,35 +1,18 @@
-"""
-Demiurgic model package.
+"""ChatGLM3 training and inference helpers."""
 
-Exports main model classes and configuration.
-"""
-
-from .config import (
-    DemiurgicConfig,
-    get_100m_config,
-    get_350m_config,
-    get_1b_config,
-    get_7b_config,
-    get_13b_config,
-    get_70b_config,
-)
+from .config import ChatGLM3Paths, GenerationConfig
 from .model import (
-    DemiurgicModel,
-    DemiurgicForCausalLM,
-    DemiurgicPreTrainedModel,
+    TrainingLoadResult,
+    load_for_training,
+    load_gguf_for_inference,
+    generate_with_llama,
 )
-from .generation_config import GenerationConfig
 
 __all__ = [
-    "DemiurgicConfig",
-    "DemiurgicModel",
-    "DemiurgicForCausalLM",
-    "DemiurgicPreTrainedModel",
+    "ChatGLM3Paths",
     "GenerationConfig",
-    "get_100m_config",
-    "get_350m_config",
-    "get_1b_config",
-    "get_7b_config",
-    "get_13b_config",
-    "get_70b_config",
+    "TrainingLoadResult",
+    "load_for_training",
+    "load_gguf_for_inference",
+    "generate_with_llama",
 ]
